@@ -1,0 +1,18 @@
+{
+  "calculation_sources": {
+    "functions/theory.py": "1d684ccd7509d8adfdc6852bffbb7c9d5ef0353386f55860cae4b44e4114fdbb",
+    "scripts/run_all.py": "f8f8232eab9aa0f30dfa630423dbc3589fe6dc2d7175b3655f07fd7e845eef77"
+  },
+  "configuration": {
+    "config/theory-v0.2.0.json": "a4dce4ba87464efde4c98c6447683a942a3c4e0f885e1fe0ad560c4d46399ee5"
+  },
+  "files": {
+    "attenuation-v0.2.0.csv": "b3c873b66563ddbd2e038db326e235d6d9a7ffdb6391e21ed2e1fb4277d904b9",
+    "capacity-v0.2.0.csv": "9fb324d10b62e588c4bc3476675057d086fe0bd2ddbecbe83cc4afc1043a83ef",
+    "kernels-v0.2.0.csv": "8341bf9674b3d3a986bbfe974bbb26aa037d342a91c93ff3c8ac355459def450",
+    "peak-lag-v0.2.0.csv": "d784dddb9339538434a62fa088415a255552fa166ac09eb02fab8bd9e2bd30f5",
+    "reference-v0.2.0.csv": "e5bfd61fc020cb6af3480a9e0fe51f2d28d6e4f8663532e973d93a1f5142676b",
+    "theory-summary-v0.2.0.json": "0e50267b9499205e59b7c36edd01bc4281d197938d1326fb9fc97233d373d474",
+    "threshold-v0.2.0.csv": "0d040a14d0623e5d0e057a8f7e86e314f2b2ea6ebba2cdea4b7093bfccd53b0a"
+  }
+}

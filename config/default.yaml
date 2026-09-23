@@ -1,2 +1,5 @@
-release: v0.0.0
-scientific_outputs_enabled: false
+release: v0.2.0
+scientific_outputs_enabled: true
+scope: theoretical_controls_only
+dtrw_simulation_enabled: false
+theory_config: config/theory-v0.2.0.json
