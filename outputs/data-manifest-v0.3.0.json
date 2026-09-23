@@ -1,0 +1,14 @@
+{
+  "config/core-v0.3.0.json": "7c23927564d3ff9cfb0c705eb7fa986db36b1bdd569bb726e4cf0ece7fa40759",
+  "functions/core.py": "1e7438b0994318da4e23e19b51f86960b1ca07a229e3c79845eaf69995b61dfb",
+  "outputs/environment-v0.3.0.json": "f0e8b4ac0cc8a3b94ff899a2d883718209e6ac617fd07e7b5fb48edf5187db7f",
+  "outputs/execution-check-snapshots-v0.3.0.csv": "251c257bf0e749f68a612845dfd2a0b75471084d2bbf0f4a6f47014ced0aaa3c",
+  "outputs/execution-check-states-v0.3.0.npz": "9f7dd7ba3ff63cbac038a0551569013e17e02c4e5d10dd499d795185c995d97f",
+  "outputs/execution-check-v0.3.0.csv": "dd2c248241be3e616eb922bb8be768a45fd361fd0fbc1ec63c8985b6798329dd",
+  "outputs/no-event-snapshots-v0.3.0.csv": "9ebc4d710a7c956e6bfa692c642bc3c13a78b438bd742727e703f04d73c72f14",
+  "outputs/no-event-states-v0.3.0.npz": "091c2b04d7fb8bdadf740339f42f88ff52229afcc861d726a8afb51b76a2c3ba",
+  "outputs/no-event-v0.3.0.csv": "9fa2e1c911f9bd2bc34629849ffad5acc00b82e2154905995562cf8368e1bba8",
+  "outputs/verification-v0.3.0.json": "c243d119ed7337b7911c0279ac37243507ff00c063cab385566d13ac6601364d",
+  "scripts/run_all.py": "b60bdaccfb96b8bfeb0f8c1905f897c5a93cd7cd13e29405488a7e1ffce48ba0",
+  "tests/test_core.py": "5628716634659cdfbf3cebe7ad036cd9484ae56a20eef14753bae703276f68cd"
+}

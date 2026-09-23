@@ -1,0 +1,48 @@
+{
+  "cases": {
+    "execution-check": {
+      "boundary_order_exits": 0,
+      "completed_ask": 0.0,
+      "completed_bid": 0.05333246649475131,
+      "max_budget_error": 3.3029134982598407e-15,
+      "max_completion_ledger_error": 2.42861286636753e-17,
+      "max_field_change_from_reference": 0.04455195685524427,
+      "max_positivity_load": 0.40299976363134915,
+      "minimum_density": 0.0,
+      "pending_ask_end": 0.0,
+      "pending_bid_end": 0.006667533505248676,
+      "snapshot_updates": 6,
+      "total_executed_buy": 0.06000000000000001,
+      "total_executed_sell": 0.0,
+      "total_unfilled": 0.0,
+      "updates": 500
+    },
+    "no-event": {
+      "boundary_order_exits": 0,
+      "completed_ask": 0.0,
+      "completed_bid": 0.0,
+      "max_budget_error": 2.7842311789427754e-15,
+      "max_completion_ledger_error": 0.0,
+      "max_field_change_from_reference": 6.153129505914734e-09,
+      "max_positivity_load": 0.4029997636180954,
+      "minimum_density": 0.0,
+      "pending_ask_end": 0.0,
+      "pending_bid_end": 0.0,
+      "snapshot_updates": 6,
+      "total_executed_buy": 0.0,
+      "total_executed_sell": 0.0,
+      "total_unfilled": 0.0,
+      "updates": 500
+    }
+  },
+  "scope": "core verification, not final scientific acceptance",
+  "stationary_initialization": {
+    "max_rate_residual": 9.983569526639258e-09,
+    "operational_duration": 16.924,
+    "steps": 8462,
+    "tolerance": 1e-08
+  },
+  "tests_failed": 0,
+  "tests_passed": 14,
+  "version": "v0.3.0"
+}

@@ -1,9 +1,9 @@
-# Scientific scope v0.2.0
+# Numerical scope v0.3.0
 
-This version implements controlled continuum-theory evaluators and renders their saved tables. The two figures show an exact reaction-off step-source reference and scalar whole-line response formulas. D=nu=1, kappa=0, unit exterior supply, placement width 12 and threshold 0.1 are declared dimensionless controls, not fitted market parameters.
+This version implements the explicit Markov two-side-density recurrence and its causal completion/placement/execution state. It runs small numerical verification fixtures. The paper's full parameter study, retained meta-order curves, convergence assessment and animation are not yet complete.
 
-The threshold spread is exact for this reaction-off reference. The paper's corresponding formula is conditional and asymptotic for the coupled positive-reaction model. Positive spread does not by itself establish the separation needed for dynamical reduction. Finite-width source attenuation is a spatially averaged density-response ratio, not a delivered-share fraction. Capacity is defined using window-average displacement rate.
+No standalone theoretical figures or analytic teaching panels are required. An analytic formula is retained only when it independently tests a numerical component or supplies a justified overlay for an actual simulation comparison.
 
-No DTRW lattice, meta-order trajectory, endogenous market-maker feedback, nonlinear reaction experiment, convergence evidence for a solver or animation is implemented in v0.2.0. These are subsequent milestones toward v1.0.0. The final science gate has not occurred.
+The registered configuration is dimensionless and illustrative. Its positive-reaction stationary field is obtained by the numerical recurrence, not substituted from an analytic reaction-off profile. The latter exists only inside a solver test. No empirical calibration, optimized market-maker strategy or universal impact law is claimed.
 
-Inputs: TwoFieldSpread v1.1.9 and SpreadLetter v0.2.0, with the explicit numerical conventions recorded in the accepted v0.1.0 design. The original manuscripts remain private and unchanged. `EQUATION-MAP.md` identifies the equations and qualifications; `SOURCES.md` pins provenance.
+The model treats all imposed executions as initiations of opposite-side completion supply; reaction matching does not create new cohorts. Threshold prices, placement quotes and their inventory sampling times are distinct. The limitations in `ALGORITHM.md` apply before interpreting any subsequent figure.
