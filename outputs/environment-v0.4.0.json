@@ -1,0 +1,7 @@
+{
+  "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+  "matplotlib": "3.10.8",
+  "numpy": "2.3.5",
+  "platform": "Linux",
+  "python": "3.12.14"
+}

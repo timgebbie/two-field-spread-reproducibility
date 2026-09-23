@@ -119,11 +119,21 @@ class CoreTests(unittest.TestCase):
         self.assertAlmostEqual(actual[1],.001)
 
     def test_threshold_failures_are_explicit(self):
-        bad=self.ref.copy();bad[0,len(self.m.x)//2]=.3
-        with self.assertRaises(ModelExit):observe(self.m,bad)
-        with self.assertRaises(ModelExit):observe(self.m,np.zeros_like(bad))
+        with self.assertRaises(ModelExit):observe(self.m,np.zeros_like(self.ref))
         z=np.linspace(.2,0,len(self.m.x));touch=np.array([z,z[::-1]])
         with self.assertRaises(ModelExit):observe(self.m,touch)
+        with self.assertRaises(ModelExit):observe(replace(self.m,slope_min=10),self.ref)
+
+    def test_threshold_uses_paper_supremum_and_infimum(self):
+        m=Model(x_min=-4,x_max=4,dx=1,du=.1)
+        # Disjoint above-threshold islands on each side; inward crossings
+        # are -0.5 and +0.5, not the outer crossings at -2.5 and +2.5.
+        bid=np.array([1, .2, 0, .2, 0, 0, 0, 0, 0])
+        obs=observe(m,np.array([bid,bid[::-1]]))
+        self.assertEqual(obs['p_b'],-.5);self.assertEqual(obs['p_a'],.5)
+        self.assertEqual(obs['crossings_b'],2);self.assertEqual(obs['crossings_a'],2)
+        plateau=bid.copy();plateau[2:4]=.1
+        with self.assertRaises(ModelExit):observe(m,np.array([plateau,bid[::-1]]))
 
     def test_stationary_reference_has_no_spurious_inventory(self):
         self.assertLess(self.relaxation['max_rate_residual'],1e-8)

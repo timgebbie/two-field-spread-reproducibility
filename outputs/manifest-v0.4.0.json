@@ -1,0 +1,23 @@
+{
+  "config/experiments-v0.4.0.json": "c78548d8e04b33feab37122839d72c732628b5544c348a28e3cd24d4335e627f",
+  "functions/core.py": "b8c4a1349b51d730fb44f0afbdf73f5e776e0376315f0d29bc5bb12a4f853315",
+  "functions/experiments.py": "571dfc17dd9d007aa18eb38583094f75a19f9ebdcf5dc3fb9fe6381ee418ee55",
+  "functions/render.py": "cf16f1e70b5a12be6e931f776ea667a6c04f57f480ee83cc4d95214a40ae9423",
+  "outputs/density-index-v0.4.0.csv": "01722f55b55d110f51d848ebb4cfff558c2fc8bba9c0486f81862241d58ca93d",
+  "outputs/density-v0.4.0.npz": "c75aa14710bfcecc01555dcf43cbc0fcb4ddc8e6ee0a4f3614b457e1edbd3c1f",
+  "outputs/environment-v0.4.0.json": "c7ee3185ccd6627e7991617e0b5c162ff5abf88fd04cea1d92ff1236e2a430bb",
+  "outputs/fixed-events-v0.4.0.csv": "0b5d36932c5acb096b2a20439153a45402d68ced22b748c9021287fa1fb3f0a4",
+  "outputs/fixed-v0.4.0.csv": "72ef0e4bcea10c6e4bf993407fb3b438a9b5ba4fd6d96b6a86de6267a693b9e4",
+  "outputs/immediate-events-v0.4.0.csv": "af2f3c0be3c357fd4f1bc9067ad4dfbef1f4df2ff247dcf6d2a11bf1c8b9bfba",
+  "outputs/immediate-v0.4.0.csv": "bb4f2eb1e10e776b4a247b18d35a400a21b376e669b21c095330f22377a37f44",
+  "outputs/mesh-pilot-events-v0.4.0.csv": "5de3841806fd1e6c5f7e9db22e534b45d76381779169bd7f1bfe4a7a41a3d650",
+  "outputs/mesh-pilot-v0.4.0.csv": "a9f47c7855d781ed754ed7daeac5f8ff8aed41ffd89cbe1a09d23ceca6e35cec",
+  "outputs/moving-events-v0.4.0.csv": "6aba2a6647466f9eb7458b524b3572b78464e7e6a72af157881a53a12c2d6d5b",
+  "outputs/moving-v0.4.0.csv": "669f8ecc778671c136b3e0ae230819abe187688a1d1fd7f42375f34d52f44f96",
+  "outputs/no-event-v0.4.0.csv": "83697d6ba110ba16b72898f797d3df085f39b2d62ab4283618a5e2f36eedf132",
+  "outputs/verification-v0.4.0.json": "89feb3c9e9f8459fa7367d3e4b60ac13e2c04347afe94d7f8bf4d8c4f0bf8e4e",
+  "outputs/video-frames-v0.4.0.csv": "483251ba369ec1ab017f0ac3c84355d8bc8d05995000ca6adc4c9aa5381f97a5",
+  "pyproject.toml": "95a5176d3fbbb3bc3c75b556bb871c9f808bc377296c3489d2d7762014023155",
+  "scripts/run_all.py": "5934bfa7520d52f1e1a0a45f0a6eb69a7be275e9f96d190f741cc83f0861a9e3",
+  "tests/test_core.py": "8dac184f73c944fc942a66e4677aabcf73596f0fb6a2e55ba9e349932c0a682b"
+}

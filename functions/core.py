@@ -4,6 +4,7 @@ Rows are [bid, ask]. Interior-node volumes use dx*sum(rho); endpoint
 densities are fixed reservoirs, excluded from the standing-volume ledger.
 """
 from dataclasses import dataclass, field
+from functools import cached_property
 import numpy as np
 
 
@@ -52,7 +53,7 @@ class Model:
             if np.shape(bc)!=(2,) or np.any(~np.isfinite(bc)) or np.any(np.asarray(bc)<0):
                 raise ValueError('Supply two finite nonnegative reservoir densities per side')
 
-    @property
+    @cached_property
     def x(self):
         return np.linspace(self.x_min,self.x_max,round((self.x_max-self.x_min)/self.dx)+1)
 
@@ -103,7 +104,7 @@ def placement_weights(m, q):
 
 
 def observe(m, rho):
-    rho=_density(rho,m);x=m.x;prices=[];slopes=[]
+    rho=_density(rho,m);x=m.x;prices=[];slopes=[];counts=[]
     for side,y in enumerate(rho):
         z=y-m.threshold
         if (side==0 and not z[0]>0>z[-1]) or (side==1 and not z[0]<0<z[-1]):
@@ -111,16 +112,21 @@ def observe(m, rho):
         down=np.flatnonzero((z[:-1]>=0)&(z[1:]<0))
         up=np.flatnonzero((z[:-1]<0)&(z[1:]>=0))
         hits=down if side==0 else up
-        if len(hits)!=1 or len(down)+len(up)!=1 or np.any((z[:-1]==0)&(z[1:]==0)):
-            raise ModelExit('Ambiguous or non-transverse threshold crossing')
-        j=int(hits[0]);slope=(y[j+1]-y[j])/m.dx
+        if not len(hits):raise ModelExit('No inward threshold crossing')
+        # Paper eq:bidLevelSet / eq:askLevelSet: sup for bid, inf for ask.
+        # Other crossings do not change this diagnostic definition.
+        j=int(hits[-1] if side==0 else hits[0])
+        if (side==0 and j>0 and z[j]==z[j-1]==0) or (side==1 and j+2<len(z) and z[j+1]==z[j+2]==0):
+            raise ModelExit('Selected threshold crossing adjoins a plateau')
+        slope=(y[j+1]-y[j])/m.dx
         if abs(slope)<m.slope_min:raise ModelExit('Ill-conditioned threshold slope')
-        prices.append(x[j]+(m.threshold-y[j])/slope);slopes.append(slope)
+        prices.append(x[j]+(m.threshold-y[j])/slope);slopes.append(slope);counts.append(len(hits))
     pb,pa=prices
     contact_roundoff=32*np.finfo(float).eps*max(1.,m.x_max-m.x_min)
     if pa-pb<=contact_roundoff:raise ModelExit('Ordered two-boundary interpretation has exited or is numerically unresolved')
     return {'p_b':pb,'p_a':pa,'midpoint':(pb+pa)/2,'spread':pa-pb,
-            'slope_b':slopes[0],'slope_a':slopes[1]}
+            'slope_b':slopes[0],'slope_a':slopes[1],
+            'crossings_b':counts[0],'crossings_a':counts[1]}
 
 
 def field_step(m, rho, source, completion=None):

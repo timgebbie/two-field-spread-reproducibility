@@ -1,24 +1,42 @@
 # Two Field Spread Reproducibility
 
-**v0.3.0 — minimal two-density DTRW core.** A numerical companion to the TwoFieldSpread paper and letter, built from the accepted v0.0.0 scaffold.
+**v0.4.0 — numerical experiment pilot.** A clean, reduced DTRW implementation of the two side-density model in the TwoFieldSpread paper and letter. The numerical results below are preliminary; convergence assessment is the next stage.
 
-## Contents
+The model evolves bid and ask densities in operational time using nearest-neighbour diffusion, cancellation and symmetric reaction. A finite buy programme consumes the ask side. Executed volume initiates causal replenishment on the bid side; residual pending inventory determines placement width and centre. Inward density thresholds determine observed bid, ask, midpoint and spread. [Algorithm and conventions](provenance/ALGORITHM.md) specify the chronology, inventories, execution cap and volume budgets.
 
-- [Numerical model](#numerical-model)
-- [Reproduce](#reproduce)
-- [Saved state](#saved-state)
-- [Verification and limits](#verification-and-limits)
-- [Next outputs](#next-outputs)
+## Focused numerical outputs
 
-## Numerical model
+![Density evolution](figures/density-v0.4.0.png)
 
-The code evolves nonnegative bid and ask densities on a uniform log-price grid in operational time. Each update uses one frozen state for nearest-neighbour diffusion, cancellation and symmetric reaction. Earlier executions generate causal opposite-side replenishment. Residual pending inventory sets placement quotes; external and completion sources use those quotes. A capped event then consumes the available side density in price priority. Threshold crossings determine observed bid, ask, midpoint and spread.
+**F2. Density evolution.** Nine snapshots of the same delayed-completion, moving-placement simulation. Six buy children of volume 0.05 arrive at u=1, 1.4, 1.8, 2.2, 2.6 and 3. Blue/red are bid/ask densities; grey is the numerically relaxed initial field. Coloured dotted lines are placement quotes q; dashed lines are observed threshold prices p. The horizontal dotted line is the fixed density threshold 0.1. Pre/post pairs show the actual execution impulse. All panels have fixed axes; the displayed log-price window is [-8,8] within the simulated domain [-12,12].
 
-The implemented baseline uses equal transport/cancellation coefficients, geometric completion weights, prescribed fixed reservoirs and a stationary initial field with empty completion prehistory. The numerical step, a child-order event and calendar time are distinct. The [algorithm and conventions](provenance/ALGORITHM.md) specify the update order, stock samples, source normalization, execution cells and volume budget.
+![Prices and market-maker state](figures/timeseries-v0.4.0.png)
+
+**F3. Same-run time series.** Observed quotes; observed spread and placement width; post-event pending stock; signed post-event inventory; cumulative executed and completed volumes; placement centre. The shaded interval spans the buy programme. P denotes stock after execution, whereas placement uses Q after old-cohort delivery and before the current execution. Panel (e) displays integrated flows in volume units, not impulse heights divided by a numerical time step. Midpoint is the arithmetic midpoint in log price.
+
+![Matched controls](figures/controls-v0.4.0.png)
+
+**F4. Matched controls.** Delayed completion with moving placement; completion at the next update; delayed completion with fixed placement. Every case executes the same six child volumes, totalling 0.3. The midpoint response subtracts the shared no-event trajectory; their empty-pending no-event equations coincide. Delayed cases have overlapping pending-stock curves. The immediate control retains each new child until the next update, producing narrow post-event spikes. These are pilot comparisons, not a systematic impact study.
+
+[![Video preview](figures/video-poster-v0.4.0.png)](figures/density-v0.4.0.mp4)
+
+**V1. [24-second profile video](figures/density-v0.4.0.mp4).** The same stored trajectory, fixed axes and explicit operational-time/phase labels, with spread and pending-stock cursors. Stored states are held between frames; each child has consecutive pre/post frames. No interpolation of densities across an impulse is used. Grey density lines retain the initial reference.
+
+PNG and PDF versions of the three figures are in `figures/`. There is no standalone theoretical-figure requirement.
 
 ## Reproduce
 
-From the extracted repository directory in Windows PowerShell, with Python 3.11+:
+Python 3.12 is the controlled environment. Install FFmpeg with the libx264 encoder and put `ffmpeg` on PATH. NumPy and Matplotlib are pinned in `pyproject.toml`.
+
+From the repository directory, Linux/macOS:
+
+```bash
+python -m venv .venv
+.venv/bin/python -m pip install -e .
+.venv/bin/python scripts/run_all.py
+```
+
+Windows PowerShell, from the repository directory with Python installed:
 
 ```powershell
 $ErrorActionPreference = 'Stop'
@@ -27,40 +45,38 @@ if ($LASTEXITCODE -ne 0) { throw 'Environment creation failed' }
 $Python = Join-Path (Get-Location) '.venv\Scripts\python.exe'
 & $Python -m pip install -e .
 if ($LASTEXITCODE -ne 0) { throw 'Installation failed' }
+ffmpeg -version
+if ($LASTEXITCODE -ne 0) { throw 'Install FFmpeg with libx264 and add it to PATH' }
 & $Python scripts/run_all.py
-if ($LASTEXITCODE -ne 0) { throw 'Core verification failed' }
+if ($LASTEXITCODE -ne 0) { throw 'Reproduction failed' }
 ```
 
-Only NumPy is required. The tested environment is Python 3.12.14 and NumPy 2.3.5 on Linux. Windows verification remains a later milestone.
+The command runs 15 numerical tests, stationary initialization, the three event cases, one no-event control and a coarser mesh pilot, then produces all figures and the video. A repeat uses the same command. `python scripts/run_all.py --render-only` verifies the configuration/code/data hashes and redraws from saved states without solving. A changed input requires the complete route. The tested runtime is Python 3.12.14, NumPy 2.3.5 and Matplotlib 3.10.8 on Linux; Windows execution remains a later milestone.
 
-The route runs 14 numerical tests, relaxes a positive-reaction reference, and saves a no-event control plus a three-child execution fixture. This fixture checks that the numerical components work together; its parameters are not the final paper experiment. No publication figure or video is generated in v0.3.0.
+## Configuration and retained data
 
-## Saved state
+`config/experiments-v0.4.0.json` is the sole experiment configuration: explicit model parameters, child programme, case overrides, mesh pilot, output samples, snapshot phases, video settings and numerical tolerances. Parameters are dimensionless and illustrative, with no empirical calibration. External lit and latent amplitudes/lengths are equal in this pilot, so their combined source is constant outside the placement edges. Completion time is 1 operational unit in the delayed cases.
 
-`config/core-v0.3.0.json` is the complete fixture configuration. The execution file specifies child times and volumes in operational units; times must coincide with positive update endpoints. The runner never silently changes the step.
-
-| Saved file | Content |
+| Directory | Active content |
 |---|---|
-| `outputs/*-v0.3.0.csv` | Per-update quotes, spread, source geometry, requested/actual/unfilled volumes, pending stocks, completed flows and volume diagnostics |
-| `outputs/*-snapshots-v0.3.0.csv` | Exact update/time/phase mapping for retained states |
-| `outputs/*-states-v0.3.0.npz` | Initial/final densities and selected incoming, pre-consumption and post-consumption states; source and removal increments |
-| `outputs/verification-v0.3.0.json` | Test count, stationary residual and run-level numerical checks |
-| `outputs/data-manifest-v0.3.0.json` | Configuration, code, test and output hashes |
+| `config/` | One complete experiment configuration |
+| `functions/` | Core recurrence, experiment driver, data renderer |
+| `scripts/` | One full-run entry point |
+| `tests/` | One focused numerical test file |
+| `outputs/` | Scalar/event CSVs, density NPZ and indices, verification/runtime records and hashes |
+| `figures/` | Three PNG/PDF pairs, one MP4 and its poster |
+| `provenance/` | Algorithm/equation mapping and source identities |
 
-The code retains `config/`, `figures/`, `functions/`, `outputs/`, `provenance/`, `scripts/` and `tests/`. `figures/` is reserved for plots of the numerical experiments.
+The density archive contains the numerical fields and the incoming/pre/post event states, removal profiles and separate source increments. Scalar data retain requested/actual/unfilled volumes, observed and placement quotes, both inventory samples, cumulative flows and source geometry. `verification-v0.4.0.json` reports extrema checked over **every** update, despite the smaller saved plotting samples. The mesh-pilot CSV is numerical verification evidence and has no extra figure.
 
-## Verification and limits
+## Verification and current limits
 
-Tests address the discrete diffusion/cancellation eigenmode, frozen reaction, reservoir flux and volume accounting, positivity rejection, source support, causal completion, immediate completion, preservation of completion time under step refinement, buy/sell reflection, execution caps, threshold exits, stationary drift and a reaction-off stationary reference.
+The tests cover the discrete eigenmode, frozen reaction, reservoir flux/budgets, positivity rejection, support normalization, causal opposite-side completion, next-update completion, fixed physical completion time under refinement, buy/sell reflection, capped execution, quote selection/failure, stationary drift and an independent reaction-off stationary solution. The quote diagnostic follows the paper's supremum/infimum rule when multiple crossings occur; selected-crossing slope, reservoir and contact checks remain active.
 
-Analytic formulas are used only as solver benchmarks. The earlier standalone theory figures and formula plotting route have been removed. They added no simulation evidence to the paper or letter.
+For this pilot, all three event cases execute 0.3 within floating-point tolerance. Maximum field-budget and completion-ledger discrepancies are below 4.3e-15 and 2.1e-15 respectively. The no-event field drift is below 9.5e-9. These accounting checks do not establish convergence.
 
-The current nodal source and execution conventions require grid, step and domain studies before interpreting price-impact curves. A discontinuous source edge has first-order grid error under the implemented nodal support convention. Positive-reaction stationary residuals and exact accounting do not establish convergence of the final meta-order experiment. Missing, ambiguous, ill-conditioned or unordered price crossings stop the calculation; densities and spreads are not clipped to manufacture valid outputs.
+The joint coarse/fine change, (dx,du)=(0.1,0.002) to (0.05,0.001), gives maximum sampled differences of 0.07778 in spread and 0.02392 in midpoint. Source supports and price-priority execution are nodal and discontinuous. In particular, initial placement edges lie on grid nodes: a small outward displacement excludes those source nodes, including late in recovery. The visible finite-grid late spread offset must not be interpreted as permanent impact. No source smoothing or altered field equation has been introduced to remove it.
 
-## Next outputs
+v0.5.0 will assess grid, time-step, domain, grid-phase/threshold and event resolution before scientific acceptance. The supplement will describe the verified implemented algorithm. A future v1.1.0 study will examine how market-maker spread dynamics affect meta-order response and impact; that systematic extension is outside this pilot.
 
-v0.4.0 will produce simulated density evolution, bid/ask/midpoint/spread and market-maker time series, and matched replenishment/placement controls. A short video will use the same saved trajectory. An initial profile can appear as a numerical snapshot; a separate analytic figure is not a release requirement. v0.5.0 assesses convergence and scientific claims before supplementary material and final reproduction work toward v1.0.0.
-
-A future v1.1.0 study will consider how market-maker spread dynamics influence meta-order response and impact. Its required event/state information is already retained.
-
-The numerical prototype is [correlation-emergence v2.2.0](https://github.com/timgebbie/correlation-emergence-reproducibility/releases/tag/v2.2.0). This is a clean, thinned implementation for two sides of one market; it has no runtime dependency on that repository. [Source provenance](provenance/SOURCES.md) records the exact antecedent and paper versions.
+The numerical/presentation prototype is [correlation-emergence v2.2.0](https://github.com/timgebbie/correlation-emergence-reproducibility/releases/tag/v2.2.0). This independent implementation represents the two sides of one market and has no runtime dependency on the prototype. [Source provenance](provenance/SOURCES.md) records the original scaffold and exact paper/prototype versions. Manuscripts and recovery administration remain outside this source tree.

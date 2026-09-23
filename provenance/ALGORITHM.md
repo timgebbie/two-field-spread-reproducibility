@@ -1,4 +1,4 @@
-# Numerical algorithm v0.3.0
+# Numerical algorithm v0.4.0
 
 Rows are bid then ask. The uniform coordinate is log price x; du is operational time per numerical update. Interior density values represent volume per log-price and each carries quadrature weight dx. Endpoint values are fixed reservoirs and are excluded from the interior standing-volume sum.
 
@@ -28,15 +28,19 @@ No density projection is used. Fully consumed cells are set to exactly zero as t
 
 ## Observations and source geometry
 
-Quotes are linearly interpolated, correctly oriented inward threshold crossings. A unique bid downward crossing and ask upward crossing must exist with reservoir values bracketing the threshold. Multiple crossings, a threshold plateau, an insufficient slope or unresolved/nonpositive spread cause an explicit exit. A machine-roundoff contact guard is 32 epsilon_machine times the larger of one and the domain width; it is not a physical contact threshold.
+Quotes are linearly interpolated, correctly oriented inward threshold crossings. Select the rightmost bid downward crossing and leftmost ask upward crossing: the paper's supremum/infimum convention, including when there are other crossings. Record crossing counts. A plateau adjoining the selected crossing, an insufficient selected slope, reservoir failure or unresolved/nonpositive spread causes an explicit exit. This corrects the v0.3.0 blanket rejection of multiple crossings; it does not alter either field equation. A machine-roundoff contact guard is 32 epsilon_machine times the larger of one and the domain width; it is not a physical contact threshold.
 
-Lit/latent sources use the paper's one-sided exponentials and support indicators. Their amplitudes and lengths happen to be equal in the fixture, yielding a constant total source outside q. The uniform completion profile uses only centres in [q_b-w,q_b] or [q_a,q_a+w], with boundary weights zero. Its actual grid centroid and standard deviation are saved. Nodal hard support and node-centre execution introduce resolution effects; their refinement is required before final comparisons. The algorithm never renormalizes a source whose intended support is cut by a reservoir.
+Lit/latent sources use the paper's one-sided exponentials and support indicators. Their amplitudes and lengths are equal in this registered pilot, yielding a constant total source outside q. The uniform completion profile uses only centres in [q_b-w,q_b] or [q_a,q_a+w], with boundary weights zero. Its actual grid centroid and standard deviation are saved. Nodal hard support and node-centre execution introduce resolution effects; their refinement is required before final comparisons. The algorithm never renormalizes a source whose intended support is cut by a reservoir.
 
 ## Initialization and retained data
 
 Explicitly relax the same positive-reaction field equations with empty pending stock and no executions until max(abs(next-current))/du is below the registered stationarity tolerance. Keep reservoirs fixed. Save the achieved residual and duration; the tolerance concerns the numerical reference, not a theorem about the continuum model.
 
-The core fixture retains a no-event control and a three-child buy programme. It saves scalar state each update and the incoming/pre/post density views, removal profiles and source increments at selected updates and every event. The snapshot index states the exact times and phases. These records are the input for subsequent numerical figures/video; no interpolation across an execution impulse is implied.
+The experiment has six buy children of volume 0.05 at u=1, 1.4, 1.8, 2.2, 2.6 and 3, followed to u=8. All three event cases start from the same stationary field. Compare delayed/moving placement, next-update completion, and delayed/fixed placement. Their empty-pending no-event equations are identical, so one no-event trajectory suffices. Actual child volumes must agree within the registered tolerance; unfilled demand is not hidden.
+
+Scalar states are saved every 0.01 operational units, at every child and at its neighbouring updates. Budget, positivity and quote checks run at every numerical update. Density states are saved every 0.025 units and at requested snapshots, with both pre/post views at every child. Event arrays additionally retain incoming densities, removals, completion and separate lit/latent increments. The video holds stored density states without interpolating them and assigns consecutive pre/post frames to each child. Its frame index gives the actual operational time and phase, independently of video time.
+
+The mesh pilot changes only dx and du, from (0.1,0.002) to (0.05,0.001), retaining physical thresholds, completion time, source width, programme and domain. It diagnoses sensitivity; it is not a convergence proof. In particular, sources are evaluated at nodes with hard indicators. The initial placement edges lie on nodes. Any small outward displacement excludes those edge nodes, even during late recovery with a small positive pending stock. The resulting finite-grid spread offset must not be interpreted as permanent impact or an additional model mechanism. v0.5.0 must check mesh phase as well as grid, time step, domain and event resolution.
 
 ## Equation and prototype mapping
 
