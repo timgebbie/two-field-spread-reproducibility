@@ -6,8 +6,9 @@ import hashlib
 import json
 import numpy as np
 from functions.core import Model, State, advance, observe, placement, stationary
+from functions.observables import trade_record,finish_tape
 
-VERSION='v0.4.0'
+VERSION='v0.4.1'
 CONFIG='config/experiments-'+VERSION+'.json'
 
 
@@ -61,7 +62,7 @@ def load_config(root):
 
 
 def run_case(name,m,c,initial,events,out,fields=False):
-    state=State(initial.copy());records=[];frames=[];frame_rows=[];event_rows=[];event_arrays=[]
+    state=State(initial.copy());records=[];frames=[];frame_rows=[];event_rows=[];event_arrays=[];trades=[];fills=[]
     sample=aligned(c['sample_du'],m.du)
     special={aligned(s['u'],m.du) for s in c['snapshots']}
     event_steps=set(np.flatnonzero(np.any(events,axis=1))+1)
@@ -91,6 +92,9 @@ def run_case(name,m,c,initial,events,out,fields=False):
         if n%sample==0 or n in keep or n==len(events):records.append(r)
         if n in event_steps:
             event_rows.append({k:r[k] for k in ('u_end','requested_buy','executed_buy','unfilled_buy','requested_sell','executed_sell','unfilled_sell','pre_p_b','pre_p_a','p_b','p_a')})
+            if r['executed_buy']+r['executed_sell']>0:
+                trade,child_fills=trade_record(m,r,d['removed'],len(trades)+1,parent_order_id=0)
+                trades.append(trade);fills.extend(child_fills)
             if fields:
                 event_arrays.append(d)
                 frame(d['pre_consumption'],r['u_end'],'pre',np.array([r['q_b'],r['q_a']]),np.array([r['Q_B_quote'],r['Q_A_quote']]))
@@ -98,6 +102,9 @@ def run_case(name,m,c,initial,events,out,fields=False):
             frame(state.rho,r['u_end'],'post',np.array([r['q_b'],r['q_a']]),state.pending)
     write_csv(out/(name+'-'+VERSION+'.csv'),records)
     if event_rows:write_csv(out/(name+'-events-'+VERSION+'.csv'),event_rows)
+    if trades:
+        finish_tape(trades);write_csv(out/(name+'-trades-'+VERSION+'.csv'),trades)
+        write_csv(out/(name+'-fills-'+VERSION+'.csv'),fills)
     if fields:
         write_csv(out/('density-index-'+VERSION+'.csv'),frame_rows)
         arrays={key:np.stack([d[key] for d in event_arrays]) for key in event_arrays[0]}

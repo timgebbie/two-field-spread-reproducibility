@@ -1,4 +1,6 @@
-# Numerical algorithm v0.4.0
+# Numerical algorithm v0.4.1
+
+[Compiled supplementary algorithms](supplement-v0.4.1.pdf) ([LaTeX source](supplement-v0.4.1.tex)) describe the implemented field update and execution tape, and clearly separate the planned long-run diagnostics and future memory/clock extension. The core equations and all existing density arrays are unchanged from v0.4.0.
 
 Rows are bid then ask. The uniform coordinate is log price x; du is operational time per numerical update. Interior density values represent volume per log-price and each carries quadrature weight dx. Endpoint values are fixed reservoirs and are excluded from the interior standing-volume sum.
 
@@ -46,4 +48,26 @@ The mesh pilot changes only dx and du, from (0.1,0.002) to (0.05,0.001), retaini
 
 Paper: TwoFieldSpread v1.1.9, `eq:bid`, `eq:ask`, `eq:positivityStep`, `eq:litBid`–`eq:latentAsk`, `eq:mmB`, `eq:mmA`, `eq:pendingBid`, `eq:pendingAsk`, `eq:placementSpreadLaw`, `eq:placementCentreLaw`, `eq:placementWeights`, `eq:placementSupportQuote`, `eq:forcingCap` and the side-level quote definitions.
 
-The code uses the audited explicit cancellation and pre-consumption source order. The v2.2.0 prototype's exponential survivor, two-book imbalance interpretation and event ordering are not asserted identical. The present core is independently implemented. The supplementary algorithm will be drawn from this actual implementation after numerical assessment.
+The code uses the audited explicit cancellation and pre-consumption source order. The v2.0.0/v2.2.0 prototype's exponential survivor, two-book imbalance interpretation and event ordering are not asserted identical. With reaction off, map the transport probability by r=2D du/dx^2. The matched interior operator agrees to roundoff at nu=0. At positive nu, prior-minus-current is (exp(-nu du)-1+nu du)rho, a one-step O(du^2) difference. The prior code consumes before advancing the field; this implementation consumes afterwards. Boundary/source geometry also differs. [Executed compatibility checks](compatibility-v0.4.1.json) record the exact comparison scope.
+
+## Trade prices and statistical observations
+
+`functions/observables.py` calculates execution log price from actual node fills as sum(v_j x_j)/sum(v_j), following the prior v2.0.0 executable convention. It stores exp(mean log price) separately from arithmetic price VWAP. Fill rows, actual aggressor signs, parent identifiers, phase-labelled quotes, placement state, both pending samples, unfilled demand and tick/quote sign classifications are retained. First consecutive-trade increments are missing rather than zero. Current children all belong to parent 0; an LMF generator must supply real distinct parent IDs.
+
+Only explicit nonzero aggressor executions create trade observations. Symmetric reaction is a field sink without a reconstructed trade tape. Completion-equivalent source delivery creates no trade print. All executed programme volume is assigned to the aggregate market-making sector in this pilot; this is an attribution assumption, not inference of individual counterparties.
+
+The implemented lag estimator is Pearson Corr(X_n,Y_(n+k)), with separate centring of the overlapping slices, as in the v2.0.0 executable `increment_autocorrelation`. Its supplementary text prints a different global-mean normalization; the new supplement follows and verifies the code convention. Positive lag means X leads Y. Missing alignment and zero-variance slices are rejected rather than silently compressed or zero-filled. Six all-buy events cannot identify a sign ACF.
+
+## Interpretation and next experimental design
+
+The solver evolves aggregate densities with an order-level DTRW interpretation, not individual traders with beliefs or wealth. External sources represent aggregate supply; specified aggressive order flow removes liquidity; the market-making closure controls replenishment and placement. Chartist/fundamentalist behaviour is not automatically present in static source terms. No additional agent population is needed for the current mechanism test. A future behavioural source must be explicit and justified by a question that the present closure cannot answer.
+
+Round-trip volume balance, stationary density, stable pending exposure and dealer profit equilibrium are distinct. Only the first is an accounting identity here. Completion probabilities are already assumed inside h and g, and completed volume is not verified by an explicit second trade. The pilot also imposes a positive Sigma0, so its baseline spread does not establish emergence from zero placement standoff. Balanced buy/sell activity with small signed Q_delta and positive total Q_sum is the key missing mechanism comparison. Width-only and centre-only feedback controls are needed to distinguish chi_s from chi_m; the existing jointly fixed control does not do that.
+
+After refinement, use a saved two-sign aggregate order-splitting tape and an independent-sign null with matched child volumes/rates. Register parent-length tail, initialization, truncation, run length, lag window, seeds and independent replicate groups before fitting. Test the LMF sign relation as an order-flow input property, then assess the resulting price and spread statistics. Do not imply that density diffusion creates the input memory or that every price ACF must exhibit a desired signature. Inspect censoring, admissibility, stationarity and boundary anchoring. A fixed mu0 and fixed reservoirs can cause mean reversion.
+
+Retain the density snapshots, same-run market-maker panels, matched controls and video. Planned F5 combines aligned paths with ACFs of true signs, mid-log increments, execution-log increments, their absolute increments, and spread. Planned F6 shows the six lagged cross-correlations listed in the supplement. Price levels remain in the tape; |P| for positive prices adds nothing, while |log P| is origin dependent. These correlation runs and figures have not yet been produced. Systematic square-root impact scaling remains a separate later study; one finite programme supplies no exponent and the single-front limit is not assumed valid in the paper's separated two-front regime.
+
+## Future Sibuya and observation contract
+
+Keep order-splitting memory, operational Sibuya transport, finite-mean round-trip completion, and calendar subordination separate. Preserve the prototype's raw kernel, single elapsed-time survival weighting, lag indexing, transport scaling and previous-completed-state observation convention. The current core has no transport history and no calendar clock. A nonlinear two-side fractional extension requires a stated treatment of reaction, births and removal in the history; it must not resurrect consumed volume. An infinite-mean completion law would violate the stationary placement assumptions even when Sibuya transport is appropriate. These are design constraints, not a claim of implemented plug-in compatibility.

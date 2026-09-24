@@ -75,6 +75,9 @@ def render(root,c,m):
     d=data['moving'];d['Q_sum']=d['Q_B_post']+d['Q_A_post']
     fig,axs=plt.subplots(2,3,figsize=(11,7.3));ax=axs.flat
     for key,label,color,pre in [('p_b','Bid',BLUE,lambda j:d['pre_p_b'][j]),('p_a','Ask',RED,lambda j:d['pre_p_a'][j]),('midpoint','Midpoint','black',lambda j:(d['pre_p_b'][j]+d['pre_p_a'][j])/2)]:ax[0].plot(*curve(d,key,pre),label=label,color=color)
+    with (out/('moving-trades-'+VERSION+'.csv')).open(newline='') as f:trades=list(csv.DictReader(f))
+    ax[0].plot([float(t['u']) for t in trades],[float(t['execution_log_price']) for t in trades],
+               'o',ms=3,color='#d95f02',label='Executed log price',ls='none')
     ax[1].plot(*curve(d,'spread',lambda j:d['pre_p_a'][j]-d['pre_p_b'][j]),color=BLUE,label='Observed s')
     ax[1].plot(d['u_end'],d['Sigma'],color=GREY,ls='--',label='Placement Sigma')
     ax[2].plot(*curve(d,'Q_sum',lambda j:d['Q_B_quote'][j]+d['Q_A_quote'][j]),color=BLUE)

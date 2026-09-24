@@ -135,6 +135,6 @@
     "tolerance": 1e-08
   },
   "status": "pilot; scientific acceptance pending v0.5.0",
-  "tests_passed": 15,
-  "version": "v0.4.0"
+  "tests_passed": 20,
+  "version": "v0.4.1"
 }

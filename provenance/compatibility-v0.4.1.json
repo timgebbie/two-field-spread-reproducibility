@@ -1,0 +1,73 @@
+{
+  "version": "v0.4.1",
+  "prior_commit": "3107bacecb407f2b90c13c5f9f1c52136aa0184c",
+  "alpha_u_one_kernel": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "matched_operator_checks": [
+    {
+      "du": 0.002,
+      "nu": 0,
+      "r": 0.07999999999999999,
+      "max_difference": 2.220446049250313e-16,
+      "max_difference_minus_predicted": 2.220446049250313e-16
+    },
+    {
+      "du": 0.002,
+      "nu": 0.7,
+      "r": 0.07999999999999999,
+      "max_difference": 1.0774971095361963e-06,
+      "max_difference_minus_predicted": 3.3077462447404e-16
+    },
+    {
+      "du": 0.001,
+      "nu": 0.7,
+      "r": 0.039999999999999994,
+      "max_difference": 2.6943712749805115e-07,
+      "max_difference_minus_predicted": 3.2763684386049566e-16
+    },
+    {
+      "du": 0.0005,
+      "nu": 0.7,
+      "r": 0.019999999999999997,
+      "max_difference": 6.736714008859224e-08,
+      "max_difference_minus_predicted": 2.360569915621204e-16
+    }
+  ],
+  "acf_estimator_max_absolute_difference": 1.1102230246251565e-16,
+  "comparison_scope": "Reaction off; matched interior state, sources and neighbours. Whole models, boundaries and event chronology differ.",
+  "core_unchanged_sha256": "b8c4a1349b51d730fb44f0afbdf73f5e776e0376315f0d29bc5bb12a4f853315",
+  "unchanged_pilot_csvs": [
+    "density-index-v0.4.1.csv",
+    "fixed-events-v0.4.1.csv",
+    "fixed-v0.4.1.csv",
+    "immediate-events-v0.4.1.csv",
+    "immediate-v0.4.1.csv",
+    "mesh-pilot-events-v0.4.1.csv",
+    "mesh-pilot-v0.4.1.csv",
+    "moving-events-v0.4.1.csv",
+    "moving-v0.4.1.csv",
+    "no-event-v0.4.1.csv"
+  ],
+  "unchanged_density_arrays": [
+    "x",
+    "rho",
+    "initial",
+    "incoming",
+    "pre_consumption",
+    "post_consumption",
+    "removed",
+    "completion_increment",
+    "lit_increment",
+    "latent_increment"
+  ],
+  "prior_documentation_mismatch": "v2.0.0 supplementary ACF formula uses a global mean; executable path_diagnostics uses separately centred Pearson pairs. This project follows the executable estimator.",
+  "fractional_transport_implemented": false,
+  "calendar_subordination_implemented": false,
+  "long_run_LMF_test_performed": false
+}
