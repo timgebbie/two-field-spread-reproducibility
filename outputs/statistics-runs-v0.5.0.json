@@ -1,0 +1,642 @@
+[
+  {
+    "name": "iid-moving-0",
+    "seed": 41001,
+    "kind": "iid",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.3824668326659646e-15,
+      "max_ledger_error": 7.180228633885122e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "iid-moving-1",
+    "seed": 41002,
+    "kind": "iid",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.2538533499548716e-15,
+      "max_ledger_error": 6.811495811831492e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "iid-moving-2",
+    "seed": 41003,
+    "kind": "iid",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.299240763400546e-15,
+      "max_ledger_error": 7.538136781448657e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "iid-moving-3",
+    "seed": 41004,
+    "kind": "iid",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.2388913599745717e-15,
+      "max_ledger_error": 6.553230180728065e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "iid-moving-4",
+    "seed": 41005,
+    "kind": "iid",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.254287030823866e-15,
+      "max_ledger_error": 7.238099009043708e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "iid-moving-5",
+    "seed": 41006,
+    "kind": "iid",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.1240743499083568e-15,
+      "max_ledger_error": 6.848133171644122e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "iid-moving-6",
+    "seed": 41007,
+    "kind": "iid",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.1537679369073035e-15,
+      "max_ledger_error": 7.214367991892345e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "iid-moving-7",
+    "seed": 41008,
+    "kind": "iid",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.4080811089909346e-15,
+      "max_ledger_error": 7.303324611740436e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fine-0",
+    "seed": 41001,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.025,
+      "du": 0.00025,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.2130128093700583e-15,
+      "max_ledger_error": 8.482381463892352e-13,
+      "minimum_spread": 8.781131032515855,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 67714,
+        "operational_duration": 16.9285,
+        "max_rate_residual": 9.99866855977416e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fine-1",
+    "seed": 41002,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.025,
+      "du": 0.00025,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.330574206185377e-15,
+      "max_ledger_error": 8.124612094206896e-13,
+      "minimum_spread": 8.781131032515855,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 67714,
+        "operational_duration": 16.9285,
+        "max_rate_residual": 9.99866855977416e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fixed-0",
+    "seed": 41001,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "chi_s": 0.0,
+      "chi_m": 0.0,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.418015111396333e-15,
+      "max_ledger_error": 7.257527911974648e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fixed-1",
+    "seed": 41002,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "chi_s": 0.0,
+      "chi_m": 0.0,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.3016666657614824e-15,
+      "max_ledger_error": 7.096823129160157e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fixed-2",
+    "seed": 41003,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "chi_s": 0.0,
+      "chi_m": 0.0,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.3550636227563935e-15,
+      "max_ledger_error": 7.592260153899133e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fixed-3",
+    "seed": 41004,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "chi_s": 0.0,
+      "chi_m": 0.0,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.621235256101585e-15,
+      "max_ledger_error": 7.41670613813028e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fixed-4",
+    "seed": 41005,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "chi_s": 0.0,
+      "chi_m": 0.0,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.2587864698396807e-15,
+      "max_ledger_error": 6.840500388349824e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fixed-5",
+    "seed": 41006,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "chi_s": 0.0,
+      "chi_m": 0.0,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.4254147912235466e-15,
+      "max_ledger_error": 7.337186413991503e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fixed-6",
+    "seed": 41007,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "chi_s": 0.0,
+      "chi_m": 0.0,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.45836098473995e-15,
+      "max_ledger_error": 8.088529845906578e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-fixed-7",
+    "seed": 41008,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "chi_s": 0.0,
+      "chi_m": 0.0,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.1988842998098566e-15,
+      "max_ledger_error": 7.323447404061767e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-moving-0",
+    "seed": 41001,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.498368044904665e-15,
+      "max_ledger_error": 7.257527911974648e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-moving-1",
+    "seed": 41002,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.4399295478076963e-15,
+      "max_ledger_error": 7.096823129160157e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-moving-2",
+    "seed": 41003,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.21376497462722e-15,
+      "max_ledger_error": 7.592260153899133e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-moving-3",
+    "seed": 41004,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.4259839973641015e-15,
+      "max_ledger_error": 7.41670613813028e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-moving-4",
+    "seed": 41005,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.206094244256885e-15,
+      "max_ledger_error": 6.840500388349824e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-moving-5",
+    "seed": 41006,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.3263322651855276e-15,
+      "max_ledger_error": 7.337186413991503e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-moving-6",
+    "seed": 41007,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.230461688083497e-15,
+      "max_ledger_error": 8.088529845906578e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "lmf-moving-7",
+    "seed": 41008,
+    "kind": "lmf",
+    "options": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "summary": {
+      "max_budget_error": 3.573069574588916e-15,
+      "max_ledger_error": 7.323447404061767e-13,
+      "minimum_spread": 8.780879283912753,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16926,
+        "operational_duration": 16.926000000000002,
+        "max_rate_residual": 9.99561544645644e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  }
+]

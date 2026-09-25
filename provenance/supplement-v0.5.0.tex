@@ -1,0 +1,365 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=23mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,booktabs,tabularx,enumitem,xcolor}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.0}
+\cfoot{\thepage}\setlength{\headheight}{14pt}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=4pt}
+\newcommand{\du}{\Delta u}\newcommand{\dx}{\Delta x}
+\newcommand{\lap}{\delta_x^2}
+\begin{document}
+\begin{center}
+{\Large\bfseries Two Field Spread: numerical algorithms}\par
+{\large v0.5.0 implementation and numerical assessment}\par
+25 September 2026
+\end{center}
+\textbf{Status.} The Markov solver, execution tape and long-run diagnostic correlations are
+implemented and tested. Numerical convergence and scientific acceptance
+remain pending; fractional transport and calendar subordination are future work. This draft describes the actual
+software; it does not amend the supplied theory paper or letter.
+
+\section{Model, agents and the inherited numerical construction}
+The state is two nonnegative densities, $\rho_B(x_j,u_n)$ and
+$\rho_A(x_j,u_n)$, in one market. A cell carries volume $\rho_i\dx$;
+$x$ is log price. Fixed endpoint reservoirs are excluded from executable
+volume. Lit and latent sources aggregate supply; diffusion aggregates
+repricing; cancellation removes standing volume; symmetric reaction removes
+overlap. These are an aggregate closure with an order-level random-walk
+interpretation. The current solver does not simulate individual traders,
+wealth, beliefs or strategy choice.
+
+The market-making sector is represented by pending completion stocks and
+source placement. All explicitly executed child volume in this pilot is
+attributed to that sector. Its opposite-side source is
+\emph{completion-equivalent}: survival and execution probabilities are
+assumed inside the completion/placement specification. Source delivery is
+neither a new trade print nor independently observed settlement. Reaction
+loss is accounted for as a field sink, without inventing aggressor signs or
+prices for it. Thus the trade tape records the specified aggressor programme,
+not every possible microscopic match.
+
+Let $Q_B$ denote bid replenishment owed after sales and $Q_A$ ask
+replenishment owed after purchases. The quote-setting sample obeys
+\begin{align}
+ Q_\Sigma&=Q_A+Q_B,& Q_\Delta&=Q_A-Q_B,\\
+ \Sigma&=\Sigma_0+\chi_s Q_\Sigma,&
+ \mu&=\mu_0-\chi_m Q_\Delta,\qquad
+ q_b=\mu-\Sigma/2,\quad q_a=\mu+\Sigma/2.
+\end{align}
+Observed quotes $p_b,p_a$ are side-density threshold crossings, not $q_b,q_a$.
+Zero signed inventory does not imply zero total pending exposure. Also,
+$\Sigma_0=12$ is imposed in this pilot: the existence of its baseline spread
+is not evidence of spontaneous spread formation from zero standoff.
+
+Diana--Gebbie explicitly identify the need for two densities to represent a
+nonzero spread \cite{cam}. The correlation-emergence software supplies the
+operational DTRW, execution-record and observation conventions \cite{ag,code}.
+Its two coupled books are not identified with the two sides of this market.
+The new density core implements the supplied spread paper's Markov branch.
+For the common reaction-free interior operator, the prototype has
+\[
+ \rho^{n+1}=e^{-\nu\du}\rho^n+\tfrac r2\lap\rho^n+\du S^n,
+ \qquad r=2D\du/\dx^2,
+\]
+where $\lap\rho_j=\rho_{j-1}-2\rho_j+\rho_{j+1}$. Here cancellation is
+$(1-\nu\du)\rho^n$. Their difference is
+$(e^{-\nu\du}-1+\nu\du)\rho^n$, of one-step order $\du^2$.
+Matched transport agrees to roundoff at $\nu=\kappa=0$; complete trajectories
+are not asserted identical. The prototype consumes before its field update;
+the present paper convention consumes after it. Phase labels preserve this
+distinction. See \texttt{compatibility-v0.4.1.json} for the executed comparison.
+
+\newpage
+\section{Algorithm 1: implemented Markov update}
+\textbf{Inputs:} previous post-event densities, post-event pending stocks
+$P_B,P_A$, fixed $\dx,\du$, parameters and event-integrated requests.
+Both sides read one frozen field; new executions cannot complete immediately.
+\begin{enumerate}
+\item Deliver old pending cohorts:
+$C_i=(1-e^{-\du/\tau_h})P_i$ and $Q_i=P_i-C_i$.
+For the next-update control set $C_i=P_i$. This is the only
+``immediate'' convention used. Form $q_b,q_a$ from $Q$ above.
+\item Evaluate the paper's lit and latent sources $S_i^{\rm ext}$ on the
+outward side of $q_i$. Normalize uniform nodal weights $g_B$ on
+$[q_b-w,q_b]$ and $g_A$ on $[q_a,q_a+w]$ so that $\dx\sum_jg_{i,j}=1$.
+Reject empty or reservoir-truncated supports. No supply is placed between
+the placement edges.
+\item For interior nodes, compute the pre-event field
+\[
+ \widetilde\rho_{i,j}=(1-2a-\nu\du-\kappa\du\rho_{\bar i,j})\rho_{i,j}
+ +a(\rho_{i,j-1}+\rho_{i,j+1})+\du S_{i,j}^{\rm ext}+C_i g_{i,j},
+ \quad a=D\du/\dx^2.
+\]
+Require $2a+\nu\du+\kappa\du\rho_{\bar i,j}\leq1$ everywhere.
+Keep endpoint reservoirs fixed; reject inadmissible states without clipping.
+\item Read pre-event quotes by linear interpolation at density threshold
+$\epsilon$: the rightmost downward bid crossing and leftmost upward ask
+crossing. Record crossing counts; reject a selected plateau, insufficient
+selected slope, reservoir failure or contact.
+\item Execute each request in outward price priority, starting at its
+pre-event quote and ending at the configured execution depth. Restrict to
+interior node centres. Remove at most $\widetilde\rho_{i,j}\dx$ per node;
+record actual fills, requests and unfilled demand. No reservoir is consumed.
+The current tape requires one aggressor side per event.
+\item Let $v_A$ be actual buy volume and $v_B$ actual sell volume. Set
+$P_B^{\rm new}=Q_B+v_A$, $P_A^{\rm new}=Q_A+v_B$.
+Read post-event quotes and save both inventory samples, actual removals and
+separate source increments. An event at $u$ is applied at the end of the
+interval ending at $u$; pre/post fields share $u$ with different phase labels.
+\end{enumerate}
+\textbf{Checks on every update.} For each side, the interior volume change is
+boundary flux minus cancellation, minus symmetric reaction, plus external
+supply, plus completion, minus execution. The boundary increment is
+$D\du(\rho_0-\rho_1+\rho_J-\rho_{J-1})/\dx$. Reaction loss is
+$\kappa\du\dx\sum_j\rho_{A,j}\rho_{B,j}$ on each side. It cancels from
+imbalance and occurs twice in total density. Cumulative initiation must equal
+cumulative completion plus post-event pending stock, separately by side.
+
+\textbf{Initialization and recovery.} Relax the same positive-reaction equations
+with empty pending stock and no executions to the configured residual.
+Recompute geometric completion weights when $\du$ changes, retaining physical
+$\tau_h$. Preserve pending tails beyond a finite plotting horizon.
+Volume-balanced round trips need not restore liquidity at the quote at the
+same time: delivery occurs elsewhere and transport takes time. Neither the
+ledger nor a stationary field establishes dealer profitability or a strategic
+equilibrium. Hard source supports require grid-phase refinement; the current
+late spread offset has not been accepted as physical.
+
+\newpage
+\section{Algorithm 2: implemented execution tape}
+\begin{enumerate}
+\item For event $n$ retain nonzero executed node volumes $v_{n,j}$, parent
+identifier, aggressor sign $\varepsilon_n$ ($+1$ buy, $-1$ sell), operational
+index and time. No fill means no trade observation. Preserve each fill row
+and the requested/unfilled amounts in the event record.
+\item Following the prior executable convention, compute the primary
+execution log price
+\[
+ z_n=\frac{\sum_jv_{n,j}x_j}{\sum_jv_{n,j}}.
+\]
+Store $e^{z_n}$ as the geometric execution price and
+$\sum_jv_{n,j}e^{x_j}/\sum_jv_{n,j}$ as the separate arithmetic price VWAP.
+Do not call these identical. Store pre/post bid, ask, log midpoint and spread,
+and the placement and pending state that generated the event.
+\item Preserve the true aggressor sign separately from the quote sign
+$\operatorname{sign}(z_n-m_n^{\rm pre})$ and tick sign
+$\operatorname{sign}(z_n-z_{n-1})$. The first tick label is zero;
+a zero tick subsequently carries the last nonzero tick label, as in v2.0.0.
+\item Using consecutive executed events, calculate
+$r^m_n=m_n^{\rm post}-m_{n-1}^{\rm post}$,
+$r^T_n=z_n-z_{n-1}$ and
+$\Delta s_n=s_n^{\rm post}-s_{n-1}^{\rm post}$.
+Retain absolute increments. First increments are missing, not zero.
+An instantaneous pre/post midpoint jump is stored separately from $r^m_n$,
+which also includes inter-event field evolution.
+\end{enumerate}
+Prices are measured from actual density consumption; there is no independent
+synthetic price process. The current six same-sign children demonstrate the
+measurement path only. Their sign variance is zero, so no sign ACF or LMF
+claim is available from this run.
+
+\section{Algorithm 3: lagged correlation}
+The estimator and the registered long-run protocol below are implemented.
+The resulting correlations remain diagnostic pending numerical acceptance. For aligned finite series $X,Y$, define
+\[
+ \widehat C_{XY}(k)=
+ \frac{\sum_{n\in I_k}(X_n-\bar X_k)(Y_{n+k}-\bar Y_k)}
+ {\sqrt{\sum_{n\in I_k}(X_n-\bar X_k)^2
+              \sum_{n\in I_k}(Y_{n+k}-\bar Y_k)^2}}.
+\]
+Each mean is taken over its own overlapping slice. Positive $k$ means $X$
+leads $Y$. Save pair counts, lag units and phase alignment. Zero variance is
+undefined, not zero correlation. Do not silently compress missing observations.
+This reproduces the v2.0.0 executable Pearson ACF. Its supplementary text
+instead prints a global-mean covariance normalization; that documentation
+mismatch is not carried into this supplement.
+
+The long runs retain raw price paths and use $r^m,r^T,|r^m|,|r^T|$ for
+price ACFs. For a positive price, $|P|=P$; an absolute log-price level depends
+on the arbitrary origin. Spread-level ACFs require a checked stationary
+window. Price-level ACFs, if retained, must be labelled descriptive rather
+than evidence of long memory. A fixed valuation centre and fixed reservoirs
+can cause mean reversion; diffusive prices are not guaranteed.
+
+\newpage
+\section{Algorithm 4: registered flow and market-maker controls}
+No chartist or fundamentalist population is required for the current spread
+question. Static sources do not already encode strategies; fixed $\mu_0$
+is a valuation reference. The retained closure is unchanged.
+\begin{enumerate}
+\item For the finite programme, execute six children of volume 0.05 at
+$u=1,1.4,1.8,2.2,2.6,3$, either all buys or alternating buys/sells.
+Compare moving placement, next-update completion, both feedbacks off,
+$\chi_s=0$ and $\chi_m=0$. Use identical actual absolute fills. Show
+total and signed pending stocks separately; delivery is not a second trade.
+\item For long runs, draw integer parent length
+$L=\min(\lfloor2(1-U)^{-1/1.5}\rfloor,512)$ with $U$ uniform on $[0,1)$.
+Draw independent centred parent signs. Sample the initial length from
+$\Pr(L_0=l)=l\Pr(L=l)/E[L]$, with uniform integer age $0,\ldots,l-1$.
+Keep distinct parent IDs even when adjacent signs agree.
+\item Execute children of volume 0.002 every 0.01 operational units.
+Use seeds 41001--41008, 2048 burn events and 8192 retained events per path.
+Compare moving placement with the same splitting tapes at fixed placement,
+and independent signs with seed offset 100000 and matched volume/rate.
+The first retained increment uses the preceding burn-event price.
+\item Compute ACFs within each path for $\varepsilon,r^m,r^T,|r^m|,|r^T|,s$.
+Compute CCFs for $(\varepsilon,r^m)$, $(\varepsilon,\Delta s)$, $(r^m,r^T)$,
+$(r^m,\Delta s)$, $(|r^m|,s)$ and $(|r^T|,s)$ through lag 128.
+Average eight independent paths; bands are descriptive mean $\pm$ twice
+the between-path standard error. Paired controls are not extra replicates.
+Save pair counts, per-path correlations and spread half-window means.
+\end{enumerate}
+The exact stationary single-active-parent sign reference is
+\[
+ C_\varepsilon(k)=\frac{E[(L-k)_+]}{E[L]}.
+\]
+For an untruncated tail with $1<\beta<2$ this renewal benchmark has exponent
+$\beta-1$, consistent with the order-splitting motivation \cite{lmf}.
+The implemented capped law is not the full concurrent-parent LMF population,
+and cannot establish asymptotic long memory. The configuration reserves
+lags 8--64 for a possible fit; no exponent has been fitted or accepted.
+Persistent signs are declared input, not memory generated by density diffusion.
+
+\textbf{Grids and retained data.} The main finite figures use
+$(\dx,\du)=(0.025,0.00025)$; F4 repeats ten cases also at $(0.05,0.001)$
+and three balanced cases at $(0.0125,0.0000625)$.
+Long-run groups use $(0.05,0.001)$ and the first two splitting seeds repeat
+at $(0.025,0.00025)$. Symmetric domains are $[-12-\dx/2,12+\dx/2]$,
+placing initial source edges between nodes. All 26 long paths retain
+actual fills, parent identities and pre/post quotes. All completed without
+material unfilled demand; no failed path was silently selected out.
+
+\textbf{Figure inventory.} F2: density snapshots; F3: prices and market-maker
+state; F4: matched mechanisms and flow; V1: held-state profile video.
+F5 has aligned execution-price, spread and sign paths plus the six ACFs.
+F6 has the six CCFs. Every panel uses retained simulation data or the
+declared sign-input reference. No independent theory gallery is required.
+
+\newpage
+\section{Assessment and limits of v0.5.0}
+The 18-case study varies grid, time step, domain, support phase, threshold
+and execution depth while retaining the supplied equations. All 23 focused
+tests pass. Main finite trajectories have field and completion-ledger errors
+below $3.2\times10^{-15}$ and $2.6\times10^{-15}$; this verifies accounting,
+not convergence. The source and execution supports remain nodal and hard.
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Grid $\dx$ & Late spread change: on-node & Between-node\\
+\midrule
+0.1    & 0.19674 & -0.00036\\
+0.05   & 0.09820 & 0.00134\\
+0.025  & 0.04973 & 0.00307\\
+0.0125 & 0.02642 & 0.00496\\
+\bottomrule
+\end{tabular}
+\end{center}
+These finite-horizon changes at $u=8$ identify a source/grid-phase effect;
+they are not permanent impact. Half-cell padding preserves reflection,
+with its small reservoir displacement assessed separately. The finest
+paired spread differences are 0.02059 on-node and 0.01224 between-node,
+both exceeding the registered 0.01 tolerance. Time-step and domain effects
+are substantially smaller over the tested pilot; execution depths 1 and 4
+produce identical paths. Source smoothing was not introduced.
+
+The balanced programme leaves the same total post-event pending stock as
+the directional programme after the sixth child, approximately 0.1379,
+with signed stock approximately 0.0272 in magnitude. Thus balanced flow
+does not empty the market-maker exposure. The balanced centre-only maximum
+midpoint effect is 0, 0.01494 and 0.00737 on successive grids. At the coarse
+grid the moving centre does not change source-node membership. It would be
+incorrect to infer from that zero that centre feedback is absent.
+
+Long-path refinement changes midpoint-increment ACFs by up to 0.225 and
+spread ACFs by up to 0.193. Their current curves are not numerically accepted.
+The order-splitting mean lag-one midpoint ACF is about 0.319, so returns
+are not white. Independent-sign trade returns have lag-one ACF about
+$-0.496$, consistent with strong bid/ask bounce. Absolute trade increments
+have an alternating short-lag pattern. Eight paths and a finite cap do not
+establish universal long memory, volatility clustering or stationary limits.
+Signed spread-change correlations and magnitude/spread correlations answer
+different symmetry questions; neither establishes causality.
+
+The next focused patch must investigate grid resolution of threshold quotes
+and price-priority execution with the same physical child volume. No extra
+agent, new equation or desired statistical signature is introduced to repair
+a discretization problem. Numerical acceptance remains open.
+
+\textbf{Square-root impact and equilibrium.} A programme of one volume
+supplies no impact exponent. A future spread/meta-order study needs matched
+baselines, volume/duration/participation controls and an applicable limit
+\cite{impact}. The separated two-front model does not automatically inherit
+the single-front limit. Positive $\Sigma_0$ is imposed; source completion
+does not establish a second executed leg or financial equilibrium.
+
+\newpage
+\section{Future memory and clock compatibility}
+Keep four mechanisms distinct: event-time order splitting ($\beta$),
+operational transport memory ($\alpha_u$), round-trip completion ($h,\tau_h$)
+and calendar observation/subordination ($\alpha_t$). Give stochastic
+components separate recorded seed streams. The event/operational/calendar
+distinction also follows the companion account \cite{clocks}; its abstract
+provides context here, not verification of a fractional two-side solver.
+
+The prior raw Sibuya kernel is
+\[
+ K_1=\alpha_u,\qquad K_2=\tfrac12\alpha_u(\alpha_u-1),\qquad
+ K_k=K_{k-1}\left(1-\frac{2-\alpha_u}{k}\right),\ k\geq3.
+\]
+The prototype applies survival $e^{-\nu(k-1)\du}$ to lagged transport
+and $e^{-\nu\du}$ to the current survivor, once each. Cancellation is not
+already folded into the raw kernel. $\alpha_u=1$ leaves only $K_1=1$.
+Its scaling is $D_{\alpha_u}=r\dx^2/(2\du^{\alpha_u})$; changing
+$\alpha_u$ while silently retaining an incompatible $r,\du,D$ is invalid.
+
+The current state has no transport-history buffer. A future fractional
+two-side model must derive the survival and history treatment of nonlinear
+reaction, cancellation, births and consumed volume. It must not resurrect
+removed liquidity through old history. This requires a stated formulation
+and tests against the prior primitive and its Markov limit; inserting the
+kernel into the existing Laplacian alone is insufficient.
+
+The paper's stationary placement construction requires a finite mean
+completion lag. A heavy-tailed transport waiting time is not permission to
+replace the completion density with an infinite-mean law. That would change
+the equilibrium assumptions and can make pending exposure diverge under
+sustained input.
+
+The correlation-emergence observation layer acts on completed operational
+paths. A future projection must select the previous completed state under
+the declared clock, retain index maps and reject out-of-support queries.
+Do not interpolate across an execution. Use a coherent book observation for
+bid, ask and midpoint before testing separate reporting delays. A held last
+trade price creates neither another trade nor another sign. Empty calendar
+bins have zero signed flow, not a repeated aggressor; distinguish them from
+missing pre-first-trade observations. Compare shocked/control paths using
+the same realized clock. These rules are specified, not yet implemented.
+
+\begin{thebibliography}{9}\small
+\bibitem{cam} D. Diana and T. Gebbie, \emph{Non-uniformly sampled simulated
+price impact of an order-book}, Journal of Computational and Applied
+Mathematics \textbf{456} (2025), 116202.
+\href{https://doi.org/10.1016/j.cam.2024.116202}{doi:10.1016/j.cam.2024.116202}.
+\bibitem{ag} C. N. Angstmann and T. Gebbie, \emph{Correlation emergence and
+the Epps effect in two coupled limit order books},
+\href{https://arxiv.org/abs/2606.14182}{arXiv:2606.14182}, version 3.
+\bibitem{code} T. Gebbie, \emph{correlation-emergence-reproducibility},
+\href{https://github.com/timgebbie/correlation-emergence-reproducibility/releases/tag/v2.0.0}{v2.0.0}
+and \href{https://github.com/timgebbie/correlation-emergence-reproducibility/releases/tag/v2.2.0}{v2.2.0}.
+Exact commits and inspected component hashes are in \texttt{SOURCES.md}.
+\bibitem{lmf} F. Lillo, S. Mike and J. D. Farmer, \emph{A theory for
+long-memory in supply and demand}, Physical Review E \textbf{71} (2005),
+066122. \href{https://arxiv.org/abs/cond-mat/0412708}{arXiv:cond-mat/0412708}.
+\bibitem{impact} J. Donier, J. Bonart, I. Mastromatteo and J.-P. Bouchaud,
+\emph{A fully consistent, minimal model for non-linear market impact},
+\href{https://arxiv.org/abs/1412.0141}{arXiv:1412.0141}.
+\bibitem{clocks} C. Angstmann and T. Gebbie, \emph{Event-Time Order-Flow
+Memory, Operational-Time Impact, and Subordinated Market Observables},
+\href{https://arxiv.org/abs/2609.13715}{arXiv:2609.13715} (2026).
+\end{thebibliography}
+\end{document}

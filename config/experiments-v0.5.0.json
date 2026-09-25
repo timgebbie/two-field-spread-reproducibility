@@ -1,0 +1,385 @@
+{
+  "version": "v0.5.0",
+  "model": {
+    "x_min": -12.0125,
+    "x_max": 12.0125,
+    "dx": 0.025,
+    "du": 0.00025,
+    "D": 1.0,
+    "nu": 1.0,
+    "kappa": 0.5,
+    "lit_amplitude": 1.0,
+    "latent_amplitude": 1.0,
+    "lit_length": 1.0,
+    "latent_length": 1.0,
+    "Sigma0": 12.0,
+    "mu0": 0.0,
+    "chi_s": 2.0,
+    "chi_m": 0.5,
+    "completion_time": 1.0,
+    "placement_width": 0.5,
+    "threshold": 0.1,
+    "slope_min": 1e-06,
+    "execution_depth": 2.0,
+    "boundary_bid": [
+      1.0,
+      0.0
+    ],
+    "boundary_ask": [
+      0.0,
+      1.0
+    ]
+  },
+  "stationarity_tolerance": 1e-08,
+  "stationarity_max_u": 30.0,
+  "horizon": 8.0,
+  "sample_du": 0.01,
+  "field_du": 0.025,
+  "events": [
+    {
+      "u": 1.0,
+      "side": "buy",
+      "volume": 0.05
+    },
+    {
+      "u": 1.4,
+      "side": "buy",
+      "volume": 0.05
+    },
+    {
+      "u": 1.8,
+      "side": "buy",
+      "volume": 0.05
+    },
+    {
+      "u": 2.2,
+      "side": "buy",
+      "volume": 0.05
+    },
+    {
+      "u": 2.6,
+      "side": "buy",
+      "volume": 0.05
+    },
+    {
+      "u": 3.0,
+      "side": "buy",
+      "volume": 0.05
+    }
+  ],
+  "cases": {
+    "moving": {},
+    "immediate": {
+      "completion_time": 0.0
+    },
+    "fixed": {
+      "chi_s": 0.0,
+      "chi_m": 0.0
+    }
+  },
+  "snapshots": [
+    {
+      "u": 1.0,
+      "phase": "pre",
+      "label": "Before first child"
+    },
+    {
+      "u": 1.0,
+      "phase": "post",
+      "label": "After first child"
+    },
+    {
+      "u": 1.2,
+      "phase": "post",
+      "label": "Early evolution"
+    },
+    {
+      "u": 2.0,
+      "phase": "post",
+      "label": "During programme"
+    },
+    {
+      "u": 3.0,
+      "phase": "pre",
+      "label": "Before last child"
+    },
+    {
+      "u": 3.0,
+      "phase": "post",
+      "label": "After last child"
+    },
+    {
+      "u": 3.5,
+      "phase": "post",
+      "label": "Early recovery"
+    },
+    {
+      "u": 5.0,
+      "phase": "post",
+      "label": "Intermediate recovery"
+    },
+    {
+      "u": 8.0,
+      "phase": "post",
+      "label": "Late recovery"
+    }
+  ],
+  "video": {
+    "seconds": 24,
+    "fps": 24,
+    "dpi": 120
+  },
+  "checks": {
+    "budget_atol": 1e-10,
+    "ledger_atol": 1e-10,
+    "unfilled_atol": 1e-12,
+    "no_event_drift_atol": 2e-08
+  },
+  "assessment": {
+    "sample_du": 0.02,
+    "workers": 4,
+    "quote_comparison_atol": 0.01,
+    "runs": [
+      {
+        "name": "mesh-0.1-0.0",
+        "options": {
+          "dx": 0.1,
+          "du": 0.00025,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "mesh-0.1-0.5",
+        "options": {
+          "dx": 0.1,
+          "du": 0.00025,
+          "phase": 0.5,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "mesh-0.05-0.0",
+        "options": {
+          "dx": 0.05,
+          "du": 0.00025,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "mesh-0.05-0.5",
+        "options": {
+          "dx": 0.05,
+          "du": 0.00025,
+          "phase": 0.5,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "mesh-0.025-0.0",
+        "options": {
+          "dx": 0.025,
+          "du": 0.00025,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "mesh-0.025-0.5",
+        "options": {
+          "dx": 0.025,
+          "du": 0.00025,
+          "phase": 0.5,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "mesh-0.0125-0.0",
+        "options": {
+          "dx": 0.0125,
+          "du": 6.25e-05,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "time-fine-0.0",
+        "options": {
+          "dx": 0.025,
+          "du": 6.25e-05,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "mesh-0.0125-0.5",
+        "options": {
+          "dx": 0.0125,
+          "du": 6.25e-05,
+          "phase": 0.5,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "time-fine-0.5",
+        "options": {
+          "dx": 0.025,
+          "du": 6.25e-05,
+          "phase": 0.5,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "time-0.001",
+        "options": {
+          "du": 0.001,
+          "dx": 0.05,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "time-0.0005",
+        "options": {
+          "du": 0.0005,
+          "dx": 0.05,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "domain-16.0",
+        "options": {
+          "half_width": 16.0,
+          "dx": 0.05,
+          "du": 0.001,
+          "phase": 0.0
+        }
+      },
+      {
+        "name": "domain-20.0",
+        "options": {
+          "half_width": 20.0,
+          "dx": 0.05,
+          "du": 0.001,
+          "phase": 0.0
+        }
+      },
+      {
+        "name": "threshold-0.08",
+        "options": {
+          "threshold": 0.08,
+          "dx": 0.05,
+          "du": 0.001,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "threshold-0.12",
+        "options": {
+          "threshold": 0.12,
+          "dx": 0.05,
+          "du": 0.001,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "depth-1.0",
+        "options": {
+          "execution_depth": 1.0,
+          "dx": 0.05,
+          "du": 0.001,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "depth-4.0",
+        "options": {
+          "execution_depth": 4.0,
+          "dx": 0.05,
+          "du": 0.001,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      }
+    ],
+    "market_maker_grids": {
+      "coarse": {
+        "dx": 0.05,
+        "du": 0.001,
+        "phase": 0.5,
+        "half_width": 12.0
+      },
+      "primary": {
+        "dx": 0.025,
+        "du": 0.00025,
+        "phase": 0.5,
+        "half_width": 12.0
+      },
+      "fine": {
+        "dx": 0.0125,
+        "du": 6.25e-05,
+        "phase": 0.5,
+        "half_width": 12.0
+      }
+    },
+    "market_maker_modes": {
+      "moving": {},
+      "immediate": {
+        "completion_time": 0.0
+      },
+      "fixed": {
+        "chi_s": 0.0,
+        "chi_m": 0.0
+      },
+      "width-fixed": {
+        "chi_s": 0.0
+      },
+      "centre-fixed": {
+        "chi_m": 0.0
+      }
+    }
+  },
+  "statistics": {
+    "events": 8192,
+    "burn_events": 2048,
+    "event_du": 0.01,
+    "child_volume": 0.002,
+    "beta": 1.5,
+    "minimum_parent": 2,
+    "parent_cap": 512,
+    "seeds": [
+      41001,
+      41002,
+      41003,
+      41004,
+      41005,
+      41006,
+      41007,
+      41008
+    ],
+    "iid_seed_offset": 100000,
+    "grid": {
+      "dx": 0.05,
+      "du": 0.001,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "fine_dx": 0.025,
+    "fine_du": 0.00025,
+    "refinement_replicates": [
+      0,
+      1
+    ],
+    "maximum_lag": 128,
+    "reference_fit_lags": [
+      8,
+      64
+    ],
+    "interpretation": "Finite truncated stationary renewal benchmark; fixed event-to-operational spacing; no calendar subordination. Correlations are diagnostic until numerical and sampling limits are assessed."
+  }
+}

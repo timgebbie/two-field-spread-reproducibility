@@ -12,7 +12,7 @@ import matplotlib
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from functions.experiments import VERSION,load_config,run_experiments,dump,save_manifest,verify_manifest
-from functions.render import render
+from functions.assessment import assess,market_maker_runs,statistical_runs,comparison_report,analyse_statistics
 
 
 def main():
@@ -28,12 +28,19 @@ def main():
         suite=unittest.defaultTestLoader.discover(str(ROOT/'tests'))
         result=unittest.TextTestRunner(verbosity=2).run(suite)
         if not result.wasSuccessful():raise SystemExit(1)
+        assess(ROOT,c,VERSION)
+        numerical=comparison_report(ROOT,c,VERSION)
+        market_maker_runs(ROOT,c,VERSION)
+        statistical_runs(ROOT,c,VERSION)
+        analyse_statistics(ROOT,c,VERSION)
         report=run_experiments(ROOT,c,m,result.testsRun)
         dump(ROOT/'outputs'/('environment-'+VERSION+'.json'),{'python':platform.python_version(),'numpy':np.__version__,
             'matplotlib':matplotlib.__version__,'platform':platform.system(),
             'ffmpeg':subprocess.check_output(['ffmpeg','-version'],text=True).splitlines()[0]})
-        print('Fine/coarse pilot differences: '+str(report['mesh_pilot']['max_absolute_fine_minus_coarse']),flush=True)
+        print('Finest-grid tolerance passed: '+str(numerical['finest_grid_tolerance_passed']),flush=True)
+    from functions.render import render,render_assessment
     render(ROOT,c,m)
+    render_assessment(ROOT,c)
     if not args.render_only:save_manifest(ROOT)
     else:verify_manifest(ROOT)
     print(VERSION+' reproduction complete; convergence acceptance remains pending.')

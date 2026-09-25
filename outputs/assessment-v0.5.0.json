@@ -1,0 +1,459 @@
+{
+  "runs": [
+    {
+      "name": "depth-1.0",
+      "options": {
+        "execution_depth": 1.0,
+        "dx": 0.05,
+        "du": 0.001,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.7308799922785,
+      "late_spread_change": 0.09818984251067953,
+      "maximum_spread_change": 0.8078453109142636,
+      "max_budget_error": 4.250939877881166e-15,
+      "max_ledger_error": 2.0285422647203788e-15,
+      "max_positivity_load": 0.8014999424790684,
+      "minimum_spread": 8.730879874037395,
+      "unfilled": 6.938893903907228e-18,
+      "initialization": {
+        "steps": 16925,
+        "operational_duration": 16.925,
+        "max_rate_residual": 9.998557537471697e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236089
+    },
+    {
+      "name": "depth-4.0",
+      "options": {
+        "execution_depth": 4.0,
+        "dx": 0.05,
+        "du": 0.001,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.7308799922785,
+      "late_spread_change": 0.09818984251067953,
+      "maximum_spread_change": 0.8078453109142636,
+      "max_budget_error": 4.250939877881166e-15,
+      "max_ledger_error": 2.0285422647203788e-15,
+      "max_positivity_load": 0.8014999424790684,
+      "minimum_spread": 8.730879874037395,
+      "unfilled": 6.938893903907228e-18,
+      "initialization": {
+        "steps": 16925,
+        "operational_duration": 16.925,
+        "max_rate_residual": 9.998557537471697e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236089
+    },
+    {
+      "name": "domain-16.0",
+      "options": {
+        "half_width": 16.0,
+        "dx": 0.05,
+        "du": 0.001,
+        "phase": 0.0
+      },
+      "initial_spread": 8.730891544127378,
+      "late_spread_change": 0.09819087030376039,
+      "maximum_spread_change": 0.8078420870771872,
+      "max_budget_error": 6.000408503403776e-15,
+      "max_ledger_error": 2.0285422647203788e-15,
+      "max_positivity_load": 0.8014999989351513,
+      "minimum_spread": 8.7308914531611,
+      "unfilled": 6.938893903907228e-18,
+      "initialization": {
+        "steps": 17652,
+        "operational_duration": 17.652,
+        "max_rate_residual": 9.993228466953497e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236089
+    },
+    {
+      "name": "domain-20.0",
+      "options": {
+        "half_width": 20.0,
+        "dx": 0.05,
+        "du": 0.001,
+        "phase": 0.0
+      },
+      "initial_spread": 8.730891516300687,
+      "late_spread_change": 0.09819090221188986,
+      "maximum_spread_change": 0.8078421169140757,
+      "max_budget_error": 9.183626081821217e-15,
+      "max_ledger_error": 2.0285422647203788e-15,
+      "max_positivity_load": 0.8014999999802991,
+      "minimum_spread": 8.73089144610229,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 18019,
+        "operational_duration": 18.019000000000002,
+        "max_rate_residual": 9.99733629214461e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236089
+    },
+    {
+      "name": "mesh-0.0125-0.0",
+      "options": {
+        "dx": 0.0125,
+        "du": 6.25e-05,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.768614753731203,
+      "late_spread_change": 0.026421983965686735,
+      "maximum_spread_change": 0.7591033512580463,
+      "max_budget_error": 3.2204591818884892e-15,
+      "max_ledger_error": 3.74201537811647e-15,
+      "max_positivity_load": 0.8000937490976338,
+      "minimum_spread": 8.76861463379327,
+      "unfilled": 2.0816681711721685e-17,
+      "initialization": {
+        "steps": 270852,
+        "operational_duration": 16.928250000000002,
+        "max_rate_residual": 9.99911264898401e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236004
+    },
+    {
+      "name": "mesh-0.0125-0.5",
+      "options": {
+        "dx": 0.0125,
+        "du": 6.25e-05,
+        "phase": 0.5,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.781114578322459,
+      "late_spread_change": 0.004958274087615067,
+      "maximum_spread_change": 0.7508710110700463,
+      "max_budget_error": 3.2734325165306548e-15,
+      "max_ledger_error": 3.797526529347728e-15,
+      "max_positivity_load": 0.8000937491021548,
+      "minimum_spread": 8.781114458378436,
+      "unfilled": 3.469446951953614e-17,
+      "initialization": {
+        "steps": 270854,
+        "operational_duration": 16.928375,
+        "max_rate_residual": 9.99911264898401e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236004
+    },
+    {
+      "name": "mesh-0.025-0.0",
+      "options": {
+        "dx": 0.025,
+        "du": 0.00025,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.756131383051407,
+      "late_spread_change": 0.04972571214912236,
+      "maximum_spread_change": 0.7741327079712512,
+      "max_budget_error": 3.3087681899912624e-15,
+      "max_ledger_error": 2.652609035203035e-15,
+      "max_positivity_load": 0.8003749927908496,
+      "minimum_spread": 8.756131264666557,
+      "unfilled": 2.0816681711721685e-17,
+      "initialization": {
+        "steps": 67713,
+        "operational_duration": 16.928250000000002,
+        "max_rate_residual": 9.997558336749535e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663235974
+    },
+    {
+      "name": "mesh-0.025-0.5",
+      "options": {
+        "dx": 0.025,
+        "du": 0.00025,
+        "phase": 0.5,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.781131034367753,
+      "late_spread_change": 0.00306898328839722,
+      "maximum_spread_change": 0.7458248373215888,
+      "max_budget_error": 3.1669723335220508e-15,
+      "max_ledger_error": 2.5970978839717773e-15,
+      "max_positivity_load": 0.8003749928592853,
+      "minimum_spread": 8.781130915970795,
+      "unfilled": 6.938893903907228e-18,
+      "initialization": {
+        "steps": 67714,
+        "operational_duration": 16.9285,
+        "max_rate_residual": 9.99866855977416e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663235974
+    },
+    {
+      "name": "mesh-0.05-0.0",
+      "options": {
+        "dx": 0.05,
+        "du": 0.00025,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.730879992400427,
+      "late_spread_change": 0.09819527491005609,
+      "maximum_spread_change": 0.8079436196161094,
+      "max_budget_error": 4.666839831246605e-15,
+      "max_ledger_error": 2.652609035203035e-15,
+      "max_positivity_load": 0.20037498561914346,
+      "minimum_spread": 8.730879874056669,
+      "unfilled": 1.3877787807814457e-17,
+      "initialization": {
+        "steps": 67724,
+        "operational_duration": 16.931,
+        "max_rate_residual": 9.99822447056431e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663235974
+    },
+    {
+      "name": "mesh-0.05-0.5",
+      "options": {
+        "dx": 0.05,
+        "du": 0.00025,
+        "phase": 0.5,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.780879285790505,
+      "late_spread_change": 0.0013433922973007384,
+      "maximum_spread_change": 0.7488823362098778,
+      "max_budget_error": 3.025405175948598e-15,
+      "max_ledger_error": 2.652609035203035e-15,
+      "max_positivity_load": 0.20037498588415462,
+      "minimum_spread": 8.78087916745316,
+      "unfilled": 2.7755575615628914e-17,
+      "initialization": {
+        "steps": 67727,
+        "operational_duration": 16.93175,
+        "max_rate_residual": 9.99778038135446e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663235974
+    },
+    {
+      "name": "mesh-0.1-0.0",
+      "options": {
+        "dx": 0.1,
+        "du": 0.00025,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.679873342786522,
+      "late_spread_change": 0.19674141803178458,
+      "maximum_spread_change": 0.8475734085032478,
+      "max_budget_error": 4.597234051773036e-15,
+      "max_ledger_error": 2.5970978839717773e-15,
+      "max_positivity_load": 0.050374971146745356,
+      "minimum_spread": 8.67987322450917,
+      "unfilled": 6.938893903907228e-18,
+      "initialization": {
+        "steps": 67746,
+        "operational_duration": 16.9365,
+        "max_rate_residual": 9.99866855977416e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663235974
+    },
+    {
+      "name": "mesh-0.1-0.5",
+      "options": {
+        "dx": 0.1,
+        "du": 0.00025,
+        "phase": 0.5,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.779871890331851,
+      "late_spread_change": -0.0003627242156145627,
+      "maximum_spread_change": 0.7777243903870037,
+      "max_budget_error": 2.9662174782097827e-15,
+      "max_ledger_error": 2.5970978839717773e-15,
+      "max_positivity_load": 0.05037497262664031,
+      "minimum_spread": 8.779509166116236,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 67752,
+        "operational_duration": 16.938,
+        "max_rate_residual": 9.99822447056431e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663235974
+    },
+    {
+      "name": "threshold-0.08",
+      "options": {
+        "threshold": 0.08,
+        "dx": 0.05,
+        "du": 0.001,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.284768294059955,
+      "late_spread_change": 0.09825823213025231,
+      "maximum_spread_change": 0.8988770561948201,
+      "max_budget_error": 4.2587461335230614e-15,
+      "max_ledger_error": 2.0285422647203788e-15,
+      "max_positivity_load": 0.8014999424790685,
+      "minimum_spread": 8.284768144162266,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 16925,
+        "operational_duration": 16.925,
+        "max_rate_residual": 9.998557537471697e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236089
+    },
+    {
+      "name": "threshold-0.12",
+      "options": {
+        "threshold": 0.12,
+        "dx": 0.05,
+        "du": 0.001,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 9.096000832768354,
+      "late_spread_change": 0.09803343423552668,
+      "maximum_spread_change": 0.7280160811439789,
+      "max_budget_error": 4.067926551165613e-15,
+      "max_ledger_error": 2.0285422647203788e-15,
+      "max_positivity_load": 0.8014999424790683,
+      "minimum_spread": 9.09600073008479,
+      "unfilled": 2.7755575615628914e-17,
+      "initialization": {
+        "steps": 16925,
+        "operational_duration": 16.925,
+        "max_rate_residual": 9.998557537471697e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236089
+    },
+    {
+      "name": "time-0.0005",
+      "options": {
+        "du": 0.0005,
+        "dx": 0.05,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.730879992359911,
+      "late_spread_change": 0.09819333734817626,
+      "maximum_spread_change": 0.8079099693701703,
+      "max_budget_error": 4.697631172945194e-15,
+      "max_ledger_error": 3.384879182499745e-15,
+      "max_positivity_load": 0.4007499712387685,
+      "minimum_spread": 8.730879874050347,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 33858,
+        "operational_duration": 16.929000000000002,
+        "max_rate_residual": 9.998335492866772e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663235996
+    },
+    {
+      "name": "time-0.001",
+      "options": {
+        "du": 0.001,
+        "dx": 0.05,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.7308799922785,
+      "late_spread_change": 0.09818984251067953,
+      "maximum_spread_change": 0.8078453109142636,
+      "max_budget_error": 4.250939877881166e-15,
+      "max_ledger_error": 2.0285422647203788e-15,
+      "max_positivity_load": 0.8014999424790684,
+      "minimum_spread": 8.730879874037395,
+      "unfilled": 6.938893903907228e-18,
+      "initialization": {
+        "steps": 16925,
+        "operational_duration": 16.925,
+        "max_rate_residual": 9.998557537471697e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236089
+    },
+    {
+      "name": "time-fine-0.0",
+      "options": {
+        "dx": 0.025,
+        "du": 6.25e-05,
+        "phase": 0.0,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.756131383106442,
+      "late_spread_change": 0.04972763127901203,
+      "maximum_spread_change": 0.774164907873157,
+      "max_budget_error": 3.5212718157984213e-15,
+      "max_ledger_error": 3.797526529347728e-15,
+      "max_positivity_load": 0.20009374819769243,
+      "minimum_spread": 8.756131264680477,
+      "unfilled": 1.3877787807814457e-17,
+      "initialization": {
+        "steps": 270874,
+        "operational_duration": 16.929625,
+        "max_rate_residual": 9.99911264898401e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.30000000000000004,
+      "pending_total": 0.0009291881663236004
+    },
+    {
+      "name": "time-fine-0.5",
+      "options": {
+        "dx": 0.025,
+        "du": 6.25e-05,
+        "phase": 0.5,
+        "half_width": 12.0
+      },
+      "initial_spread": 8.781131034398907,
+      "late_spread_change": 0.0030716838104645205,
+      "maximum_spread_change": 0.7458597229027788,
+      "max_budget_error": 3.4270004369008067e-15,
+      "max_ledger_error": 3.797526529347728e-15,
+      "max_positivity_load": 0.2000937482148016,
+      "minimum_spread": 8.781130915976323,
+      "unfilled": 1.3877787807814457e-17,
+      "initialization": {
+        "steps": 270880,
+        "operational_duration": 16.93,
+        "max_rate_residual": 9.99911264898401e-09,
+        "tolerance": 1e-08
+      },
+      "executed_volume": 0.3,
+      "pending_total": 0.0009291881663236004
+    }
+  ],
+  "status": "numerical assessment; see comparisons"
+}

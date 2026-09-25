@@ -1,0 +1,98 @@
+{
+  "assessment_file": "assessment-comparisons-v0.5.0.json",
+  "cases": {
+    "fixed": {
+      "completed_ask": 0.0,
+      "completed_bid": 0.2990708118336754,
+      "executed_buy": 0.3,
+      "executed_sell": 0.0,
+      "max_field_departure": 0.1862440913803966,
+      "maxima": {
+        "budget_error": 2.9915001411359027e-15,
+        "crossings_a": 1,
+        "crossings_b": 1,
+        "ledger_error": 2.5970978839717773e-15,
+        "positivity_load": 0.800374993120618
+      },
+      "minimum_abs_selected_slope": 0.09779068455840811,
+      "minimum_spread": 8.76246102996901,
+      "pending_ask": 0.0,
+      "pending_bid": 0.0009291881663235974,
+      "saved_scalar_rows": 813,
+      "unfilled": 0.0,
+      "updates": 32000
+    },
+    "immediate": {
+      "completed_ask": 0.0,
+      "completed_bid": 0.3,
+      "executed_buy": 0.3,
+      "executed_sell": 0.0,
+      "max_field_departure": 0.1862440913803966,
+      "maxima": {
+        "budget_error": 2.8592579692787723e-15,
+        "crossings_a": 1,
+        "crossings_b": 1,
+        "ledger_error": 1.3877787807814457e-17,
+        "positivity_load": 0.8003749932940554
+      },
+      "minimum_abs_selected_slope": 0.09671856507543042,
+      "minimum_spread": 8.781130915970795,
+      "pending_ask": 0.0,
+      "pending_bid": 0.0,
+      "saved_scalar_rows": 813,
+      "unfilled": 2.7755575615628914e-17,
+      "updates": 32000
+    },
+    "moving": {
+      "completed_ask": 0.0,
+      "completed_bid": 0.2990708118336754,
+      "executed_buy": 0.3,
+      "executed_sell": 0.0,
+      "max_field_departure": 0.20583109572616573,
+      "maxima": {
+        "budget_error": 3.1669723335220508e-15,
+        "crossings_a": 1,
+        "crossings_b": 1,
+        "ledger_error": 2.5970978839717773e-15,
+        "positivity_load": 0.8003749928592853
+      },
+      "minimum_abs_selected_slope": 0.09869296482409917,
+      "minimum_spread": 8.781130915970795,
+      "pending_ask": 0.0,
+      "pending_bid": 0.0009291881663235974,
+      "saved_scalar_rows": 813,
+      "unfilled": 6.938893903907228e-18,
+      "updates": 32000
+    },
+    "no-event": {
+      "completed_ask": 0.0,
+      "completed_bid": 0.0,
+      "executed_buy": 0.0,
+      "executed_sell": 0.0,
+      "max_field_departure": 9.457778837873576e-09,
+      "maxima": {
+        "budget_error": 2.8592579692787723e-15,
+        "crossings_a": 1,
+        "crossings_b": 1,
+        "ledger_error": 0.0,
+        "positivity_load": 0.8003749923488912
+      },
+      "minimum_abs_selected_slope": 0.10094523891055085,
+      "minimum_spread": 8.781130851871321,
+      "pending_ask": 0.0,
+      "pending_bid": 0.0,
+      "saved_scalar_rows": 801,
+      "unfilled": 0.0,
+      "updates": 32000
+    }
+  },
+  "stationary_initialization": {
+    "max_rate_residual": 9.99866855977416e-09,
+    "operational_duration": 16.9285,
+    "steps": 67714,
+    "tolerance": 1e-08
+  },
+  "status": "diagnostic experiments; numerical convergence and scientific acceptance pending",
+  "tests_passed": 23,
+  "version": "v0.5.0"
+}

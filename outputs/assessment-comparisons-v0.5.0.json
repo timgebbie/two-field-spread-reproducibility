@@ -1,0 +1,106 @@
+{
+  "quote_tolerance": 0.01,
+  "comparisons": [
+    {
+      "comparison": "grid-on-node-coarse",
+      "left": "mesh-0.1-0.0",
+      "right": "mesh-0.05-0.0",
+      "max_mid_difference": 0.02386654194636284,
+      "max_spread_difference": 0.07767720442637227,
+      "max_mid_response_difference": 0.023866541946362396,
+      "max_spread_response_difference": 0.09854614312172849
+    },
+    {
+      "comparison": "grid-on-node-middle",
+      "left": "mesh-0.05-0.0",
+      "right": "mesh-0.025-0.0",
+      "max_mid_difference": 0.01083733721907798,
+      "max_spread_difference": 0.025328029402672314,
+      "max_mid_response_difference": 0.010837337219077536,
+      "max_spread_response_difference": 0.048469562760933727
+    },
+    {
+      "comparison": "grid-on-node-fine",
+      "left": "time-fine-0.0",
+      "right": "mesh-0.0125-0.0",
+      "max_mid_difference": 0.005100257040235867,
+      "max_spread_difference": 0.020592821815794693,
+      "max_mid_response_difference": 0.005100257040235867,
+      "max_spread_response_difference": 0.023305647313325295
+    },
+    {
+      "comparison": "grid-half-cell-coarse",
+      "left": "mesh-0.1-0.5",
+      "right": "mesh-0.05-0.5",
+      "max_mid_difference": 0.026603965526791118,
+      "max_spread_difference": 0.030142067794429295,
+      "max_mid_response_difference": 0.026603965526792006,
+      "max_spread_response_difference": 0.02913467233577549
+    },
+    {
+      "comparison": "grid-half-cell-middle",
+      "left": "mesh-0.05-0.5",
+      "right": "mesh-0.025-0.5",
+      "max_mid_difference": 0.012435633710915717,
+      "max_spread_difference": 0.023348069907074276,
+      "max_mid_response_difference": 0.01243563371091394,
+      "max_spread_response_difference": 0.023096321329825642
+    },
+    {
+      "comparison": "grid-half-cell-fine",
+      "left": "time-fine-0.5",
+      "right": "mesh-0.0125-0.5",
+      "max_mid_difference": 0.004980494716006145,
+      "max_spread_difference": 0.012238520984036327,
+      "max_mid_response_difference": 0.004980494716006145,
+      "max_spread_response_difference": 0.012222064907588148
+    },
+    {
+      "comparison": "time-coarse",
+      "left": "time-0.001",
+      "right": "time-0.0005",
+      "max_mid_difference": 0.0003285110677206937,
+      "max_spread_difference": 0.0006872422630248565,
+      "max_mid_response_difference": 0.0003285110677206937,
+      "max_spread_response_difference": 0.0006872421816126462
+    },
+    {
+      "comparison": "time-fine",
+      "left": "time-0.0005",
+      "right": "mesh-0.05-0.0",
+      "max_mid_difference": 0.00016572768319145226,
+      "max_spread_difference": 0.0003460090746632005,
+      "max_mid_response_difference": 0.00016572768319145226,
+      "max_spread_response_difference": 0.00034600903414805373
+    },
+    {
+      "comparison": "domain-12-16",
+      "left": "time-0.001",
+      "right": "domain-16.0",
+      "max_mid_difference": 2.3077959778738943e-06,
+      "max_spread_difference": 1.3241001514785466e-05,
+      "max_mid_response_difference": 2.3077959783179836e-06,
+      "max_spread_response_difference": 4.473591443954206e-06
+    },
+    {
+      "comparison": "domain-16-20",
+      "left": "domain-16.0",
+      "right": "domain-20.0",
+      "max_mid_difference": 1.4468031217518273e-09,
+      "max_spread_difference": 2.7826690285337463e-08,
+      "max_mid_response_difference": 1.4468031217518273e-09,
+      "max_spread_response_difference": 3.198306686158503e-08
+    },
+    {
+      "comparison": "execution-depth",
+      "left": "depth-1.0",
+      "right": "depth-4.0",
+      "max_mid_difference": 0.0,
+      "max_spread_difference": 0.0,
+      "max_mid_response_difference": 0.0,
+      "max_spread_response_difference": 0.0
+    }
+  ],
+  "finest_grid_tolerance_passed": false,
+  "interpretation": "Nodal source/grid-phase effects dominate this pilot. Half-cell padding preserves reflection but shifts each reservoir outward by dx/2; the separate domain checks quantify the truncation effect. Scientific acceptance remains pending."
+}

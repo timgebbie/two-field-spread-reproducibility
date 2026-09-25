@@ -8,7 +8,7 @@ import numpy as np
 from functions.core import Model, State, advance, observe, placement, stationary
 from functions.observables import trade_record,finish_tape
 
-VERSION='v0.4.1'
+VERSION='v0.5.0'
 CONFIG='config/experiments-'+VERSION+'.json'
 
 
@@ -42,11 +42,10 @@ def schedule(c, m):
 
 def load_config(root):
     c=json.loads((root/CONFIG).read_text())
-    keys={'version','model','stationarity_tolerance','stationarity_max_u','horizon','sample_du','field_du','events','cases','pilot_mesh','snapshots','video','checks'}
+    keys={'version','model','stationarity_tolerance','stationarity_max_u','horizon','sample_du','field_du','events','cases','snapshots','video','checks','assessment','statistics'}
     if set(c)!=keys or c['version']!=VERSION:raise ValueError('Unknown or incomplete experiment configuration')
     if c['cases']!={'moving':{},'immediate':{'completion_time':0.},'fixed':{'chi_s':0.,'chi_m':0.}}:
         raise ValueError('Only the three registered matched controls are in scope')
-    if set(c['pilot_mesh'])!={'dx','du'}:raise ValueError('Mesh pilot may change only dx and du')
     if set(c['video'])!={'seconds','fps','dpi'} or any(v<=0 for v in c['video'].values()):raise ValueError('Invalid video controls')
     if set(c['checks'])!={'budget_atol','ledger_atol','unfilled_atol','no_event_drift_atol'} or any(v<=0 for v in c['checks'].values()):raise ValueError('Invalid numerical checks')
     m=Model(**c['model']);schedule(c,m)
@@ -57,7 +56,8 @@ def load_config(root):
             raise ValueError('Invalid snapshot')
         aligned(s['u'],m.du)
         if s['phase']=='pre' and s['u'] not in [e['u'] for e in c['events']]:raise ValueError('Pre phase requires an event')
-    coarse=replace(m,**c['pilot_mesh']);schedule(c,coarse);aligned(c['sample_du'],coarse.du)
+    if c['statistics']['burn_events']<1 or c['statistics']['maximum_lag']>=c['statistics']['events']-2:
+        raise ValueError('Invalid statistical burn or lag window')
     return c,m
 
 
@@ -124,7 +124,7 @@ def run_experiments(root,c,m,tests):
     out=root/'outputs';out.mkdir(exist_ok=True)
     initial,relaxation=stationary(m,c['stationarity_tolerance'],c['stationarity_max_u'])
     events=schedule(c,m)
-    report={'version':VERSION,'status':'pilot; scientific acceptance pending v0.5.0','tests_passed':tests,
+    report={'version':VERSION,'status':'diagnostic experiments; numerical convergence and scientific acceptance pending','tests_passed':tests,
         'stationary_initialization':relaxation,'cases':{}}
     series={}
     for name,overrides in {'no-event':{},**c['cases']}.items():
@@ -138,13 +138,7 @@ def run_experiments(root,c,m,tests):
     target=[(r['executed_buy'],r['executed_sell']) for r in series['moving']]
     for name in ('immediate','fixed'):
         np.testing.assert_allclose([(r['executed_buy'],r['executed_sell']) for r in series[name]],target,rtol=0,atol=c['checks']['unfilled_atol'])
-    coarse=replace(m,**c['pilot_mesh'])
-    start,info=stationary(coarse,c['stationarity_tolerance'],c['stationarity_max_u'])
-    summary,rows=run_case('mesh-pilot',coarse,c,start,schedule(c,coarse),out)
-    common={round(r['u_end'],10):r for r in rows};fine=[r for r in series['moving'] if round(r['u_end'],10) in common]
-    report['mesh_pilot']={'model_overrides':c['pilot_mesh'],'stationary_initialization':info,'case':summary,
-        'common_times':len(fine),'max_absolute_fine_minus_coarse':{key:max(abs(r[key]-common[round(r['u_end'],10)][key]) for r in fine) for key in ('p_b','p_a','midpoint','spread','Sigma','Q_B_post')},
-        'interpretation':'Two meshes diagnose resolution sensitivity; they do not establish convergence. No physical parameter is refitted.'}
+    report['assessment_file']='assessment-comparisons-'+VERSION+'.json'
     dump(out/('verification-'+VERSION+'.json'),report)
     return report
 

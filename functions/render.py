@@ -1,4 +1,4 @@
-"""Three numerical figures and a video from the stored experiment data."""
+"""Focused numerical figures and a video, all from stored trajectories."""
 import csv
 import numpy as np
 import matplotlib
@@ -92,21 +92,6 @@ def render(root,c,m):
         if i in (0,1,4,5):ax[i].legend(frameon=False,loc='best')
     fig.suptitle('F3  Prices and market-maker state from the same simulation',fontsize=14,y=.995)
     fig.tight_layout(rect=(0,0,1,.96));save(fig,folder,'timeseries')
-    fig,axs=plt.subplots(1,3,figsize=(11,4.2))
-    for name in c['cases']:
-        d=data[name]
-        # Only the smooth stationary no-event reference is interpolated to
-        # event-neighbour samples; impulse trajectories are never smoothed.
-        reference=np.interp(d['u_end'],data['no-event']['u_end'],data['no-event']['midpoint'])
-        d['response']=d['midpoint']-reference;d['Q_sum']=d['Q_B_post']+d['Q_A_post']
-        style={'color':COLORS[name],'ls':{'moving':'-','immediate':'--','fixed':':'}[name],'label':LABELS[name]}
-        axs[0].plot(*curve(d,'spread',lambda j:d['pre_p_a'][j]-d['pre_p_b'][j]),**style)
-        axs[1].plot(*curve(d,'response',lambda j:(d['pre_p_a'][j]+d['pre_p_b'][j])/2-reference[j]),**style)
-        axs[2].plot(*curve(d,'Q_sum',lambda j:d['Q_B_quote'][j]+d['Q_A_quote'][j]),**style)
-    for ax,title,unit in zip(axs,['(a) Observed spread','(b) Midpoint response','(c) Post-event pending exposure'],['Log-price width','Event minus no-event log price','Volume: P_B + P_A']):axis(ax,title,ylabel=unit);event_band(ax,c)
-    fig.legend(*axs[0].get_legend_handles_labels(),loc='lower center',ncol=3,frameon=False)
-    fig.suptitle('F4  Matched executed programme; completion and placement controls',fontsize=13,y=.995)
-    fig.tight_layout(rect=(0,.10,1,.94));save(fig,folder,'controls')
     video=c['video'];count=round(video['seconds']*video['fps']);nominal=np.linspace(0,c['horizon'],count)
     selected=np.searchsorted(ix['u'],nominal,side='right')-1
     # Hold stored states; each impulse gets consecutive pre/post frames.
@@ -138,4 +123,76 @@ def render(root,c,m):
             phase='pre execution' if r['phase']=='pre' else ('post execution' if any(abs(r['u']-e['u'])<1e-10 for e in c['events']) else 'stored state')
             title.set_text(f"Numerical pilot {VERSION}   |   u = {r['u']:.3f}   |   {phase}");writer.grab_frame()
             if k==round(3/c['horizon']*(count-1)):fig.savefig(folder/('video-poster-'+VERSION+'.png'),dpi=video['dpi'])
-    plt.close(fig);print('Rendered F2, F3, F4 and trajectory video from saved states.',flush=True)
+    plt.close(fig);print('Rendered F2, F3 and trajectory video from saved states.',flush=True)
+
+
+def render_assessment(root,c):
+    out=root/'outputs';folder=root/'figures'
+    mm=np.load(out/('market-maker-'+VERSION+'.npz'))
+    styles={'moving':(BLUE,'-','Moving placement'),'immediate':(RED,'--','Next-update completion'),
+      'fixed':(GREY,':','Both feedbacks off'),'width-fixed':('#762a83','--','Width feedback off'),
+      'centre-fixed':(GREEN,'-.','Centre feedback off')}
+    event_times=np.array([e['u'] for e in c['events']])
+    fig,axs=plt.subplots(2,3,figsize=(11,7.6))
+    for row,flow in enumerate(('directional','balanced')):
+        for mode,(color,ls,label) in styles.items():
+            d=mm[flow+'-'+mode];u=[];spread=[];mid=[]
+            for r in d:
+                if np.any(np.isclose(r[0],event_times,rtol=0,atol=1e-10)):
+                    u.append(r[0]);spread.append(r[12]-r[11]-d[0,4]);mid.append((r[11]+r[12])/2-d[0,3])
+                u.append(r[0]);spread.append(r[4]-d[0,4]);mid.append(r[3]-d[0,3])
+            axs[row,0].plot(u,spread,color=color,ls=ls,label=label)
+            axs[row,1].plot(u,mid,color=color,ls=ls,label=label)
+        d=mm[flow+'-moving'];u=[];total=[];signed=[]
+        for r in d:
+            if np.any(np.isclose(r[0],event_times,rtol=0,atol=1e-10)):
+                u.append(r[0]);total.append(r[9]+r[10]);signed.append(r[10]-r[9])
+            u.append(r[0]);total.append(r[7]+r[8]);signed.append(r[8]-r[7])
+        axs[row,2].plot(u,total,color=BLUE,label='Total pending')
+        axs[row,2].plot(u,signed,color=RED,ls='--',label='Signed inventory')
+        axs[row,2].legend(frameon=False,fontsize=7)
+        for col,(title,unit) in enumerate([('Spread response','Change in log-price spread'),('Midpoint response','Change in log midpoint'),('Moving case: pending modes','Volume')]):
+            ax=axs[row,col];axis(ax,f'({chr(97+row*3+col)}) {flow.capitalize()}\n{title}',ylabel=unit)
+            event_band(ax,c);ax.axhline(0,color=GREY,lw=.5)
+    fig.legend(*axs[0,0].get_legend_handles_labels(),loc='lower center',ncol=3,frameon=False,fontsize=8)
+    fig.suptitle('F4  Market-maker response to one-sided and balanced programmes',fontsize=13,y=.995)
+    fig.tight_layout(rect=(0,.085,1,.95));save(fig,folder,'controls')
+    corr=np.load(out/('correlations-'+VERSION+'.npz'));paths=np.load(out/('statistics-paths-'+VERSION+'.npz'))
+    s=c['statistics'];b=s['burn_events'];sample=paths['lmf-moving-0-values'][b:b+512]
+    signs=paths['lmf-moving-0-signs'][b:b+512];n=np.arange(1,len(sample)+1)
+    groups=[('lmf-moving',BLUE,'Order splitting / moving'),('iid-moving',RED,'Independent signs / moving'),
+            ('lmf-fixed',GREEN,'Order splitting / fixed')]
+    fig,axs=plt.subplots(3,3,figsize=(11,11))
+    axs[0,0].plot(n,sample[:,6],color='#d95f02',lw=.7,label='Execution log price')
+    axs[0,0].plot(n,sample[:,2],color='black',lw=1,label='Log midpoint');axs[0,0].legend(frameon=False,fontsize=7)
+    axs[0,1].plot(n,sample[:,3],color=BLUE,lw=1)
+    axs[0,2].step(n,signs,where='post',color=BLUE,lw=.6);axs[0,2].set_yticks([-1,1]);axs[0,2].set_ylim(-1.2,1.2)
+    for ax,title,unit in zip(axs[0],['(a) Executed prices: one path','(b) Observed spread: same path','(c) Input trade signs: same path'],['Log price','Log-price width','Aggressor sign']):
+        axis(ax,title,xlabel='Retained trade index',ylabel=unit)
+    labels=[r'Trade signs $\epsilon$',r'Midpoint increments $r_m$',r'Trade-price increments $r_T$',
+            r'Absolute midpoint increments $|r_m|$',r'Absolute trade increments $|r_T|$',r'Spread $s$']
+    lag=corr['lags'][1:]
+    for k,ax in enumerate(axs.flat[3:]):
+        for group,color,label in groups:
+            values=corr[group+'-acf'][:,k,1:];mean=values.mean(axis=0);se=values.std(axis=0,ddof=1)/np.sqrt(len(values))
+            ax.plot(lag,mean,color=color,label=label,lw=1.2);ax.fill_between(lag,mean-2*se,mean+2*se,color=color,alpha=.10,lw=0)
+        if k==0:ax.plot(lag,corr['renewal_reference'][1:],color='black',ls='--',lw=1,label='Truncated renewal reference')
+        ax.axhline(0,color=GREY,lw=.6);ax.set_xscale('log');ax.set_xlim(1,s['maximum_lag'])
+        axis(ax,f'({chr(100+k)}) '+labels[k],xlabel='Lag in executed trades',ylabel='Pearson ACF')
+    handles,labels=axs[1,0].get_legend_handles_labels()
+    fig.legend(handles,labels,loc='lower center',ncol=2,frameon=False,fontsize=8)
+    fig.suptitle('F5  Event-time paths and correlations from DTRW executions',fontsize=14,y=.995)
+    fig.tight_layout(rect=(0,.065,1,.96));save(fig,folder,'autocorrelations')
+    fig,axs=plt.subplots(2,3,figsize=(11,7.5));lag=corr['ccf_lags']
+    labels=[r'Signs $\rightarrow r_m$',r'Signs $\rightarrow\Delta s$',r'$r_m\rightarrow r_T$',
+            r'$r_m\rightarrow\Delta s$',r'$|r_m|\rightarrow s$',r'$|r_T|\rightarrow s$']
+    for k,ax in enumerate(axs.flat):
+        for group,color,label in groups:
+            values=corr[group+'-ccf'][:,k];mean=values.mean(axis=0);se=values.std(axis=0,ddof=1)/np.sqrt(len(values))
+            ax.plot(lag,mean,color=color,label=label,lw=1.2);ax.fill_between(lag,mean-2*se,mean+2*se,color=color,alpha=.10,lw=0)
+        ax.axhline(0,color=GREY,lw=.6);ax.axvline(0,color=GREY,lw=.6,ls=':');ax.set_xlim(lag[0],lag[-1])
+        axis(ax,f'({chr(97+k)}) '+labels[k],xlabel='Trade lag: positive = first leads',ylabel='Pearson CCF')
+    fig.legend(*axs[0,0].get_legend_handles_labels(),loc='lower center',ncol=3,frameon=False,fontsize=8)
+    fig.suptitle('F6  Signed and magnitude cross-correlations',fontsize=14,y=.995)
+    fig.tight_layout(rect=(0,.07,1,.95));save(fig,folder,'cross-correlations')
+    print('Rendered F4 market-maker controls, F5 ACFs and F6 CCFs.',flush=True)
