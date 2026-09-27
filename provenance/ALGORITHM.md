@@ -1,6 +1,6 @@
-# Numerical algorithm v0.5.1
+# Numerical algorithm v0.5.2
 
-[Compiled supplementary algorithms](supplement-v0.5.1.pdf) ([LaTeX source](supplement-v0.5.1.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
+[Compiled supplementary algorithms](supplement-v0.5.2.pdf) ([LaTeX source](supplement-v0.5.2.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
 
 Rows are bid then ask. The uniform coordinate is log price x; du is operational time per numerical update. Interior density values represent volume per log-price and each carries quadrature weight dx. Endpoint values are fixed reservoirs and are excluded from the interior standing-volume sum.
 
@@ -81,3 +81,11 @@ For each executed event n, let m_n^- and m_n^+ be the pre- and post-consumption 
 `m_n^+ - m_(n-1)^+ = (m_n^+ - m_n^-) + (m_n^- - m_(n-1)^+)`.
 
 The first component measures the execution jump; the second measures the field evolution since the preceding event. Actual fill counts come from recorded removed node volumes. At every field update, the external and completion support intervals are compared with those used on the preceding update. Count the nodes entering or leaving each support, including repeated changes within an event interval; event-level snapshots alone would miss those changes. These diagnostics do not alter the state update. Event-indexed ACFs and CCFs use the same estimator and lags as the benchmark.
+
+## Frozen-operator diagnosis
+
+The v0.5.2 diagnosis is a read-only calculation from verified saved fields and paths. It does not generate an alternate trade tape. For each of six pre-event density fields, subdivide each original interval into 1, 2 or 4 intervals, keeping endpoints and every original piecewise-linear knot. Read the unchanged threshold quotes, then independently execute buy and sell probes of volume 0.002 and 0.05 using the unchanged price-priority cap. Discard each probe state. Record pre/post quotes, fill indices/quantities, fill-weighted log price and mass residual. The base-grid historical requests reproduce saved removals and post-fields exactly. Agreement of pre-quotes tests interpolation on this fixed representation, not convergence of evolving threshold level sets.
+
+Separately, translate common placement quotes across one original cell with 129 equally spaced shifts. On each nested grid compare the nodal external volume with the exact integral of the same lit/latent formula over the retained interior cells. Compare the normalized uniform completion centroid with q_b-w/2 and q_a+w/2. Probe a source-node crossing on either side by epsilon=dx*1e-8. These reference integrals and centroids do not alter the source evaluated by the solver. Completion normalization and source approximation accuracy are distinct checks.
+
+For the recorded long-path increments J_n=m_n^+-m_n^- and F_n=m_n^--m_(n-1)^+, decompose the overlapping-pair Pearson numerator into Cov(J,J'), Cov(J,F'), Cov(F,J'), Cov(F,F'). Divide every term by the same sd(J+F) sd(J'+F'), with slice-specific centring at each lag. The sum is the total midpoint-increment ACF; individual terms may exceed one or be negative. Source-change conditional averages are descriptive only: support changes, order flow and inventory are dependent. No fraction is labelled a causal contribution. The fixed-field and source probes do not establish whole-trajectory convergence or an alternative mathematical model.

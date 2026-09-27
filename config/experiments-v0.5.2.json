@@ -1,5 +1,5 @@
 {
-  "version": "v0.5.1",
+  "version": "v0.5.2",
   "model": {
     "x_min": -12.0125,
     "x_max": 12.0125,
@@ -396,5 +396,28 @@
     "half_width": 12.0,
     "progress_every_events": 512,
     "interpretation": "Paired full tapes and physical child volume; common time step. Existing lmf-fine paths control time at dx=0.025. Both source phases remain in the finite assessment. No correlation convergence tolerance is invented."
+  },
+  "diagnosis": {
+    "subdivisions": [
+      1,
+      2,
+      4
+    ],
+    "volumes": [
+      0.002,
+      0.05
+    ],
+    "source_shift_steps": 128,
+    "source_pending": [
+      0.2,
+      0.2
+    ],
+    "decomposition_lags": [
+      1,
+      8,
+      32,
+      128
+    ],
+    "interpretation": "Read-only operator probes on frozen saved fields and quotes; no newly evolved trajectory and no causal attribution of full-path differences."
   }
 }

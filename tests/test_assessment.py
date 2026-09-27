@@ -4,11 +4,37 @@ import tempfile
 from unittest.mock import patch
 import numpy as np
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from functions.assessment import parent_distribution,order_tape,renewal_reference,grid_model,source_membership,membership_changes,long_run
+from functions.assessment import parent_distribution,order_tape,renewal_reference,grid_model,source_membership,membership_changes,long_run,increment_covariance_parts,frozen_execution_probe,source_quadrature_probe
 from functions.core import external_source,placement_weights
 
 
 class AssessmentTests(unittest.TestCase):
+    def test_frozen_probes_preserve_field_quotes_and_source_normalization(self):
+        m=grid_model({'dx':.1,'du':.001},phase=.5)
+        rho=np.array([1/(1+np.exp(m.x+3)),1/(1+np.exp(-m.x+3))]);original=rho.copy()
+        for subdivision in (1,2,4):
+            probe=frozen_execution_probe(m,rho,subdivision,.002,1)
+            np.testing.assert_array_equal(rho,original)
+            self.assertLess(probe['pre_quote_difference'],2e-14)
+            self.assertAlmostEqual(sum(probe['filled_quantities']),.002,places=14)
+            self.assertLess(abs(probe['mass_residual']),1e-14)
+        for q in ([-6.013,6.007],[-6.,6.]):
+            result=source_quadrature_probe(m,q)
+            self.assertLess(max(abs(np.array(result['completion_norm_error']))),1e-14)
+            self.assertLessEqual(max(abs(np.array(result['external_error']))),m.dx/2+1e-13)
+            self.assertLessEqual(max(abs(np.array(result['completion_centroid_error']))),m.dx/2+1e-13)
+
+    def test_covariance_parts_reconstruct_overlapping_pearson_acf(self):
+        rng=np.random.default_rng(92);jump=rng.normal(size=30);field=.6*jump+np.arange(30)/10
+        rows=increment_covariance_parts(jump,field,[0,1,8])
+        for row in rows:
+            lag=row['lag'];total=jump+field
+            expected=np.corrcoef(total[:len(total)-lag],total[lag:])[0,1]
+            self.assertAlmostEqual(sum(row['contributions']),expected,places=13)
+            self.assertLess(abs(row['sum_residual']),1e-13)
+        with self.assertRaisesRegex(ValueError,'Zero-variance'):
+            increment_covariance_parts(jump,-jump,[1])
+
     def test_diagnostics_and_resume_preserve_the_executed_path(self):
         c={'events':4,'burn_events':2,'beta':1.5,'minimum_parent':2,'parent_cap':32,'event_du':.01,'child_volume':.002}
         job=('short',{'dx':.1,'du':.001},{'phase':.5},c,7,'lmf')

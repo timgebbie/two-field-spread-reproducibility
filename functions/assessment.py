@@ -6,7 +6,7 @@ import json
 import hashlib
 from pathlib import Path
 import numpy as np
-from functions.core import Model,State,advance,stationary,observe,placement
+from functions.core import Model,State,advance,stationary,observe,placement,execute,external_source,placement_weights
 from functions.observables import trade_record,finish_tape,lag_correlation
 
 
@@ -355,4 +355,153 @@ def analyse_resolution(root,c,version):
     report['finite_assessment']=json.loads((out/('assessment-comparisons-'+version+'.json')).read_text())
     np.savez_compressed(out/('resolution-correlations-'+version+'.npz'),lags=np.arange(lag+1),ccf_lags=np.arange(-lag,lag+1),**correlations)
     (out/('resolution-summary-'+version+'.json')).write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    return report
+
+
+def increment_covariance_parts(jump,field,lags):
+    """Exact Pearson ACF decomposition, using the total increment denominator.
+
+    Entries are Cov(J,J'), Cov(J,F'), Cov(F,J'), Cov(F,F') divided by
+    sd(J+F)*sd(J'+F'), with separate means for each overlapping slice.
+    They are signed contributions, not individual correlation coefficients.
+    """
+    jump=np.asarray(jump,dtype=float);field=np.asarray(field,dtype=float)
+    if jump.ndim!=1 or jump.shape!=field.shape or not np.all(np.isfinite(jump+field)):
+        raise ValueError('Invalid aligned increment components')
+    rows=[]
+    for lag in lags:
+        if not isinstance(lag,(int,np.integer)) or not 0<=lag<len(jump)-1:
+            raise ValueError('Invalid decomposition lag')
+        left=np.array([jump[:len(jump)-lag],field[:len(jump)-lag]])
+        right=np.array([jump[lag:],field[lag:]])
+        left=left-left.mean(axis=1,keepdims=True);right=right-right.mean(axis=1,keepdims=True)
+        denominator=left.sum(axis=0).std()*right.sum(axis=0).std()
+        if denominator==0:raise ValueError('Zero-variance total increment')
+        parts=(left@right.T/left.shape[1]/denominator).ravel()
+        total=jump+field;actual=lag_correlation(total,total,[lag])[0][0]
+        rows.append({'lag':int(lag),'contributions':parts.tolist(),'total_acf':float(actual),
+                     'sum_residual':float(parts.sum()-actual)})
+    return rows
+
+
+def frozen_execution_probe(m,rho,subdivision,volume,side):
+    """Resample the same piecewise-linear field; call unchanged core execution.
+
+    Fixed endpoints and nested nodes retain every original knot. This is an
+    operator probe, not a finer DTRW path, new initialization or new trade tape.
+    The return contains only observations; the input field is never mutated.
+    """
+    if not isinstance(subdivision,int) or subdivision<1:raise ValueError('Invalid subdivision')
+    if side not in (0,1) or not np.isfinite(volume) or volume<=0:raise ValueError('Invalid probe request')
+    refined=replace(m,dx=m.dx/subdivision)
+    sampled=np.array([np.interp(refined.x,m.x,y) for y in rho])
+    request=np.zeros(2);request[side]=volume
+    post,removed,actual,unfilled,pre=execute(refined,sampled,request);after=observe(refined,post)
+    quantity=refined.dx*removed[side];ids=np.flatnonzero(quantity>0)
+    price=float(quantity@refined.x/actual[side]) if actual[side]>0 else None
+    baseline=observe(m,rho)
+    keys=('p_b','p_a','midpoint','spread')
+    return {'subdivision':subdivision,'dx':refined.dx,'volume':volume,'side':side,
+        'pre':{k:float(pre[k]) for k in keys},'post':{k:float(after[k]) for k in keys},
+        'pre_quote_difference':max(abs(pre[k]-baseline[k]) for k in ('p_b','p_a')),
+        'fill_nodes':len(ids),'executed':float(actual[side]),'unfilled':float(unfilled[side]),
+        'execution_log_price':price,'filled_indices':ids.tolist(),'filled_quantities':quantity[ids].tolist(),
+        'midpoint_jump':float(after['midpoint']-pre['midpoint']),
+        'spread_jump':float(after['spread']-pre['spread']),
+        'mass_residual':float(refined.dx*(sampled[side]-post[side]).sum()-actual[side])}
+
+
+def source_quadrature_probe(m,q):
+    """Nodal source versus its exact integral over retained interior cells.
+
+    Equal pilot amplitudes/lengths imply a constant outward total, but the
+    antiderivative below also handles unequal exponentials. Completion's
+    reference centroid is that of its unchanged uniform support interval.
+    No reference value is fed into the evolving solver.
+    """
+    q=np.asarray(q);lit,latent=external_source(m,q);g=placement_weights(m,q)
+    edges=np.array([m.x[1]-m.dx/2,m.x[-2]+m.dx/2])
+    distances=np.array([q[0]-edges[0],edges[1]-q[1]])
+    if np.any(distances<=0):raise ValueError('Unresolved exterior source interval')
+    exact=m.lit_amplitude*m.lit_length*(-np.expm1(-distances/m.lit_length))+m.latent_amplitude*(distances-m.latent_length*(-np.expm1(-distances/m.latent_length)))
+    reference=q+np.array([-1,1])*m.placement_width/2
+    return {'external_error':(m.dx*(lit+latent).sum(axis=1)-exact).tolist(),
+        'completion_centroid_error':(m.dx*(g*m.x).sum(axis=1)-reference).tolist(),
+        'completion_norm_error':(m.dx*g.sum(axis=1)-1).tolist(),
+        'completion_nodes':np.count_nonzero(g,axis=1).tolist()}
+
+
+def diagnose_resolution(root,c,version):
+    """Bounded, non-evolving diagnosis of source, quote and execution operators."""
+    out=root/'outputs';settings=c['diagnosis'];m=Model(**c['model'])
+    data=np.load(out/('density-'+version+'.npz'));np.testing.assert_array_equal(data['x'],m.x)
+    replay=[];source=[];paths=[];probes=[]
+    # The six archived pre-event fields retain their original nodal knots.
+    for event,rho in enumerate(data['pre_consumption']):
+        request=c['events'][event];side=1 if request['side']=='buy' else 0
+        post,removed,actual,unfilled,_=execute(m,rho,np.eye(2)[side]*request['volume'])
+        np.testing.assert_array_equal(post,data['post_consumption'][event])
+        np.testing.assert_array_equal(removed,data['removed'][event])
+        replay.append({'event':event,'exact_saved_execution_replay':True})
+        for subdivision in settings['subdivisions']:
+            for volume in settings['volumes']:
+                for side in (0,1):
+                    probes.append(dict(event=event,**frozen_execution_probe(m,rho,subdivision,volume,side)))
+    # Fixed common placement quotes translated across one original mesh cell.
+    # Refinement uses fixed endpoints; no reservoir or source formula moves.
+    q0=placement(m,settings['source_pending']);shift=np.linspace(-m.dx/2,m.dx/2,settings['source_shift_steps']+1)
+    for subdivision in settings['subdivisions']:
+        mm=replace(m,dx=m.dx/subdivision);rows=[source_quadrature_probe(mm,q0+v) for v in shift]
+        source.append({'subdivision':subdivision,'dx':mm.dx,'shifts':shift.tolist(),'rows':rows,
+            'max_abs_external_error':float(np.max(abs(np.array([r['external_error'] for r in rows])))),
+            'max_abs_completion_centroid_error':float(np.max(abs(np.array([r['completion_centroid_error'] for r in rows])))),
+            'max_abs_completion_norm_error':float(np.max(abs(np.array([r['completion_norm_error'] for r in rows]))))})
+    # A one-sided boundary probe measures the jump without time evolution.
+    boundary=[]
+    for subdivision in settings['subdivisions']:
+        mm=replace(m,dx=m.dx/subdivision);qb=mm.x[np.argmin(abs(mm.x-q0[0]))];qa=mm.x[np.argmin(abs(mm.x-q0[1]))]
+        epsilon=mm.dx*1e-8;states=[]
+        for delta in (-epsilon,epsilon):
+            q=np.array([qb,qa])+delta;lit,latent=external_source(mm,q);g=placement_weights(mm,q)
+            states.append((lit+latent,g))
+        boundary.append({'dx':mm.dx,'epsilon':epsilon,
+            'external_volume_jump':(mm.dx*(states[1][0]-states[0][0]).sum(axis=1)).tolist(),
+            'completion_L1_change':(mm.dx*np.abs(states[1][1]-states[0][1]).sum(axis=1)).tolist()})
+    with np.load(out/('resolution-paths-'+version+'.npz')) as a:
+        burn=c['statistics']['burn_events']
+        for j in c['resolution']['replicates']:
+            for dx in c['resolution']['dx']:
+                name=f'resolution-{dx}-{j}';v=a[name+'-values'];post=v[:,2];pre=v[:,4:6].mean(axis=1)
+                jump=(post-pre)[burn:];field=pre[burn:]-post[burn-1:-1];total=np.diff(post[burn-1:])
+                changed=a[name+'-support'][burn:,8]>0
+                conditioned=[]
+                for flag in (False,True):
+                    mask=changed==flag
+                    conditioned.append({'source_changed':flag,'events':int(mask.sum()),
+                        'mean_abs_midpoint_increment':float(np.mean(abs(total[mask]))),
+                        'mean_abs_execution_jump':float(np.mean(abs(jump[mask]))),
+                        'mean_abs_field_increment':float(np.mean(abs(field[mask])))})
+                paths.append({'name':name,'conditional_descriptions':conditioned,
+                    'acf_decomposition':increment_covariance_parts(jump,field,settings['decomposition_lags'])})
+    comparison=[]
+    for volume in settings['volumes']:
+        for left,right in zip(settings['subdivisions'][:-1],settings['subdivisions'][1:]):
+            lp=[p for p in probes if p['volume']==volume and p['subdivision']==left]
+            rp=[p for p in probes if p['volume']==volume and p['subdivision']==right]
+            comparison.append({'volume':volume,'left_subdivision':left,'right_subdivision':right,
+                'max_abs_spread_jump_difference':max(abs(a['spread_jump']-b['spread_jump']) for a,b in zip(lp,rp)),
+                'max_abs_execution_price_difference':max(abs(a['execution_log_price']-b['execution_log_price']) for a,b in zip(lp,rp))})
+    report={'version':version,'scope':settings['interpretation'],'acceptance':'pending',
+        'source_field':'Six pre-event states of the original finite programme; no field relaxation or evolution in these probes.',
+        'nested_grid_note':'Fixed endpoints and subdivisions preserve the same piecewise-linear function; these are not the half-cell full-path grid comparison.',
+        'source_reference_note':'Exact integral over retained interior cell intervals; completion centroid of the original uniform support. Diagnostic only.',
+        'contribution_order':['execution_execution','execution_field','field_execution','field_field'],
+        'causality_note':'Support-change conditioning is descriptive; events, inventory and field evolution are dependent. No causal fraction is inferred.',
+        'replay':replay,'frozen_execution':probes,'frozen_comparison':comparison,'source_sweep':source,
+        'source_boundary':boundary,'path_decomposition':paths,
+        'max_pre_quote_difference':max(p['pre_quote_difference'] for p in probes),
+        'max_mass_residual':max(abs(p['mass_residual']) for p in probes),
+        'max_unfilled':max(p['unfilled'] for p in probes),
+        'max_acf_sum_residual':max(abs(r['sum_residual']) for p in paths for r in p['acf_decomposition'])}
+    (out/('diagnosis-'+version+'.json')).write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
     return report

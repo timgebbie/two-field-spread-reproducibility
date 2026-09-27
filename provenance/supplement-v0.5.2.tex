@@ -5,7 +5,7 @@
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 \usepackage{fancyhdr}
 \pagestyle{fancy}\fancyhf{}
-\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.1}
+\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.2}
 \cfoot{\thepage}\setlength{\headheight}{14pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
 \setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=4pt}
@@ -14,7 +14,7 @@
 \begin{document}
 \begin{center}
 {\Large\bfseries Two Field Spread: numerical algorithms}\par
-{\large v0.5.1 implementation and numerical assessment}\par
+{\large v0.5.2 implementation and numerical assessment}\par
 27 September 2026
 \end{center}
 \textbf{Status.} The Markov solver, execution tape and long-run diagnostic correlations are
@@ -240,31 +240,24 @@ F6 has the six CCFs. Every panel uses retained simulation data or the
 declared sign-input reference. No independent theory gallery is required.
 
 \newpage
-\section{Assessment and limits of v0.5.1}
+\section{Assessment and limits of v0.5.2}
 The 18-case study varies grid, time step, domain, support phase, threshold
-and execution depth while retaining the supplied equations. All 25 focused
+and execution depth while retaining the supplied equations. All 27 focused
 tests pass. Main finite trajectories have field and completion-ledger errors
 below $3.2\times10^{-15}$ and $2.6\times10^{-15}$; this verifies accounting,
 not convergence. The source and execution supports remain nodal and hard.
 
-The node-aligned late spread change at $u=8$ falls from 0.19674 to
-0.02642 as $\dx$ decreases from 0.1 to 0.0125. Between-node source
-placement reduces the fine-grid offset to 0.00496. These are discretization
-and finite-horizon effects, not permanent impact. The finest paired spread
-differences remain 0.02059 on-node and 0.01224 between-node, exceeding
-the registered 0.01 tolerance. Separate domain checks assess the small
-reservoir displacement from half-cell padding. Execution depths 1 and 4
-produce identical paths; source smoothing was not introduced.
+The finest paired spread differences remain 0.02059 on-node and
+0.01224 between-node, exceeding the registered 0.01 tolerance. Initial
+support phase materially changes late offsets; these are not accepted
+permanent impact. Separate domain and execution-depth checks remain saved.
 
-The balanced programme leaves the same total post-event pending stock as
-the directional programme after the sixth child, approximately 0.1379,
-with signed stock approximately 0.0272 in magnitude. Thus balanced flow
-does not empty the market-maker exposure. The balanced centre-only maximum
-midpoint effect is 0, 0.01494 and 0.00737 on successive grids. At the coarse
-grid the moving centre does not change source-node membership. It would be
-incorrect to infer from that zero that centre feedback is absent.
+Balanced and directional programmes have equal total pending stock after
+the sixth child (about 0.1379), but balanced signed stock is about 0.0272.
+The centre-only midpoint effect is 0, 0.01494 and 0.00737 across grids:
+a zero coarse-grid response does not establish an absent mechanism.
 
-The v0.5.1 comparison holds the same two full tapes and physical child
+The inherited v0.5.1 comparison holds the same two full tapes and physical child
 volume fixed. It uses $\dx=0.025,0.0125$ at common $\du=0.0000625$;
 the existing $\dx=0.025,\du=0.00025$ paths provide the time control.
 For pre/post-execution threshold midpoints,
@@ -284,18 +277,33 @@ Space only & 0.10340 & 0.12893 & 0.11826\\
 \bottomrule
 \end{tabular}
 \end{center}
-Every retained child fills one node on the coarser grid and two on the
-finer grid. Source support changes within approximately 11--12\% versus
-24--25\% of event intervals. Execution-jump standard deviation falls from
-about 0.0182 to 0.0152; its cancellation with between-event movement also
-changes. This identifies spatial support/execution resolution as the main
-remaining correlation sensitivity, without assigning a unique cause.
+Every retained child fills one coarse node and two fine nodes. Source
+support changes within about 11--12\% versus 24--25\% of event intervals.
 Time refinement still gives occasional spread differences up to 0.02461;
 small ACF changes do not establish pathwise quote accuracy. Fine-grid
-lag-one midpoint ACF is 0.636--0.651, so whitening is not demonstrated.
-Trade-return ACF changes are below 0.000175 in the spatial pairs. Eight
-benchmark paths and two refinement pairs establish neither universal
-price statistics nor asymptotic long memory. Numerical acceptance remains open.
+lag-one midpoint ACF is 0.636--0.651; whitening is not demonstrated.
+
+\textbf{Frozen-operator diagnosis (v0.5.2).} Subdivide the six saved
+pre-event piecewise-linear fields, retaining their knots and endpoints.
+Pre-trade threshold quotes agree within $2.7\times10^{-15}$. Execute
+independent buy/sell probes, with no field evolution or feedback.
+For volume 0.002, halving $\dx$ from 0.025 to 0.0125 to 0.00625 changes
+the spread jump by at most 0.01178 then 0.00663. All six historical
+executions replay exactly. These are operator probes, not finer paths.
+A fixed-quote phase sweep gives source-volume and completion-centroid
+errors approximately $\dx/2$, while completion normalization is preserved.
+Reference integrals use the original formula over retained interior cells
+and never replace the solver's source.
+
+Writing $\Delta m=J+F$, decompose its lagged covariance into
+$\operatorname{Cov}(J,J')+\operatorname{Cov}(J,F')+
+\operatorname{Cov}(F,J')+\operatorname{Cov}(F,F')$.
+Divide all terms by the same overlapping-slice standard deviations of
+$\Delta m$ and $\Delta m'$. Their signed sum reproduces the ACF within
+$8\times10^{-16}$. Partial cancellation changes with resolution;
+these terms are not causal shares. The diagnosis isolates frozen-operator
+sensitivity, not a unique cause of whole-path differences. Numerical
+acceptance and limiting price-statistic claims remain open.
 
 \textbf{Square-root impact and equilibrium.} A programme of one volume
 supplies no impact exponent. A future spread/meta-order study needs matched

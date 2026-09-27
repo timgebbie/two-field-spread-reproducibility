@@ -8,7 +8,7 @@ import numpy as np
 from functions.core import Model, State, advance, observe, placement, stationary
 from functions.observables import trade_record,finish_tape
 
-VERSION='v0.5.1'
+VERSION='v0.5.2'
 CONFIG='config/experiments-'+VERSION+'.json'
 
 
@@ -42,7 +42,7 @@ def schedule(c, m):
 
 def load_config(root):
     c=json.loads((root/CONFIG).read_text())
-    keys={'version','model','stationarity_tolerance','stationarity_max_u','horizon','sample_du','field_du','events','cases','snapshots','video','checks','assessment','statistics','resolution'}
+    keys={'version','model','stationarity_tolerance','stationarity_max_u','horizon','sample_du','field_du','events','cases','snapshots','video','checks','assessment','statistics','resolution','diagnosis'}
     if set(c)!=keys or c['version']!=VERSION:raise ValueError('Unknown or incomplete experiment configuration')
     if c['cases']!={'moving':{},'immediate':{'completion_time':0.},'fixed':{'chi_s':0.,'chi_m':0.}}:
         raise ValueError('Only the three registered matched controls are in scope')
