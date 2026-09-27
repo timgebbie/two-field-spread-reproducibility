@@ -5,7 +5,7 @@
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 \usepackage{fancyhdr}
 \pagestyle{fancy}\fancyhf{}
-\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.2}
+\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.3}
 \cfoot{\thepage}\setlength{\headheight}{14pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
 \setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=4pt}
@@ -14,7 +14,7 @@
 \begin{document}
 \begin{center}
 {\Large\bfseries Two Field Spread: numerical algorithms}\par
-{\large v0.5.2 implementation and numerical assessment}\par
+{\large v0.5.3 implementation and numerical assessment}\par
 27 September 2026
 \end{center}
 \textbf{Status.} The Markov solver, execution tape and long-run diagnostic correlations are
@@ -240,33 +240,18 @@ F6 has the six CCFs. Every panel uses retained simulation data or the
 declared sign-input reference. No independent theory gallery is required.
 
 \newpage
-\section{Assessment and limits of v0.5.2}
-The 18-case study varies grid, time step, domain, support phase, threshold
-and execution depth while retaining the supplied equations. All 27 focused
-tests pass. Main finite trajectories have field and completion-ledger errors
-below $3.2\times10^{-15}$ and $2.6\times10^{-15}$; this verifies accounting,
-not convergence. The source and execution supports remain nodal and hard.
+\section{Assessment and limits of v0.5.3}
+All 28 focused tests pass. The Markov core, seven numerical archives and
+17 CSV tapes are unchanged. The 18-case finite assessment still fails the
+registered 0.01 spread tolerance: finest differences are 0.02059 on-node
+and 0.01224 between-node. Exact volume accounting does not establish
+convergence. Balanced and directional programmes have equal total pending
+stock but different signed stock; the centre response remains grid-sensitive.
 
-The finest paired spread differences remain 0.02059 on-node and
-0.01224 between-node, exceeding the registered 0.01 tolerance. Initial
-support phase materially changes late offsets; these are not accepted
-permanent impact. Separate domain and execution-depth checks remain saved.
-
-Balanced and directional programmes have equal total pending stock after
-the sixth child (about 0.1379), but balanced signed stock is about 0.0272.
-The centre-only midpoint effect is 0, 0.01494 and 0.00737 across grids:
-a zero coarse-grid response does not establish an absent mechanism.
-
-The inherited v0.5.1 comparison holds the same two full tapes and physical child
-volume fixed. It uses $\dx=0.025,0.0125$ at common $\du=0.0000625$;
-the existing $\dx=0.025,\du=0.00025$ paths provide the time control.
-For pre/post-execution threshold midpoints,
-\[
- \Delta m_n=(m_n^+-m_n^-)+(m_n^--m_{n-1}^+).
-\]
-Actual fill counts and support-membership changes at every field update
-are recorded without feeding back into the recurrence. The maximum
-correlation changes over the two pairs and retained lags are:
+The v0.5.1 comparison uses two complete tapes, fixed child
+volume and $\dx=0.025,0.0125$ at common $\du=0.0000625$. Existing
+$\dx=0.025,\du=0.00025$ paths control time refinement. Maximum differences
+across the two pairs and retained lags are:
 \begin{center}
 \begin{tabular}{lrrr}
 \toprule
@@ -277,40 +262,52 @@ Space only & 0.10340 & 0.12893 & 0.11826\\
 \bottomrule
 \end{tabular}
 \end{center}
-Every retained child fills one coarse node and two fine nodes. Source
-support changes within about 11--12\% versus 24--25\% of event intervals.
-Time refinement still gives occasional spread differences up to 0.02461;
-small ACF changes do not establish pathwise quote accuracy. Fine-grid
-lag-one midpoint ACF is 0.636--0.651; whitening is not demonstrated.
+Fine-grid lag-one midpoint ACF is 0.636--0.651; whitening is not shown.
+Writing $\Delta m_n=(m_n^+-m_n^-)+(m_n^--m_{n-1}^+)=J_n+F_n$
+separates execution from between-event evolution. Four lagged covariance
+terms, with a common total-increment normalization, reproduce the ACF
+within $8\times10^{-16}$. Their cancellation is not causal attribution.
 
-\textbf{Frozen-operator diagnosis (v0.5.2).} Subdivide the six saved
-pre-event piecewise-linear fields, retaining their knots and endpoints.
-Pre-trade threshold quotes agree within $2.7\times10^{-15}$. Execute
-independent buy/sell probes, with no field evolution or feedback.
-For volume 0.002, halving $\dx$ from 0.025 to 0.0125 to 0.00625 changes
-the spread jump by at most 0.01178 then 0.00663. All six historical
-executions replay exactly. These are operator probes, not finer paths.
-A fixed-quote phase sweep gives source-volume and completion-centroid
-errors approximately $\dx/2$, while completion normalization is preserved.
-Reference integrals use the original formula over retained interior cells
-and never replace the solver's source.
+\textbf{Paper-to-code audit.} Long-paper v1.1.9 explicitly gives nodal
+external sources and forbids inward placement nodes. Cell averaging
+assigned to those nodes changes that discrete support. The current core
+therefore remains in place. Its execution cap and interpolated threshold
+quotes agree with the specified discrete rules. The audit establishes no
+need to change an equation.
 
-Writing $\Delta m=J+F$, decompose its lagged covariance into
-$\operatorname{Cov}(J,J')+\operatorname{Cov}(J,F')+
-\operatorname{Cov}(F,J')+\operatorname{Cov}(F,F')$.
-Divide all terms by the same overlapping-slice standard deviations of
-$\Delta m$ and $\Delta m'$. Their signed sum reproduces the ACF within
-$8\times10^{-16}$. Partial cancellation changes with resolution;
-these terms are not causal shares. The diagnosis isolates frozen-operator
-sensitivity, not a unique cause of whole-path differences. Numerical
-acceptance and limiting price-statistic claims remain open.
+For each of six frozen pre-event fields, integrate its piecewise-linear
+profile continuously in price priority from the observed quote. Integrate
+volume and log-price moment exactly, retaining the depth cap. This supplies
+a comparison reference, not a replacement field or trade tape. For volume
+0.002, maximum nodal execution-price errors are 0.01267, 0.00556, 0.00263,
+0.00146 and 0.00074 as $\dx$ halves from 0.025 to 0.0015625. Fixed-field
+refinement does not establish convergence of evolving midpoint or spread.
 
-\textbf{Square-root impact and equilibrium.} A programme of one volume
-supplies no impact exponent. A future spread/meta-order study needs matched
-baselines, volume/duration/participation controls and an applicable limit
-\cite{impact}. The separated two-front model does not automatically inherit
-the single-front limit. Positive $\Sigma_0$ is imposed; source completion
-does not establish a second executed leg or financial equilibrium.
+\textbf{Current letter.} SpreadLetter v1.2.0 is by Christopher Angstmann,
+Derick Diana and Tim Gebbie. It distinguishes reaction price $x_\phi$
+from quoted midpoint. Six saved immediate post-execution fields have three
+imbalance zeros and are marked ambiguous. On uniquely resolved frames,
+$\max|x_\phi-m|=0.31847$; no new zero-selection convention is imposed.
+The threshold bid and ask observations remain unchanged.
+
+The pilot's uniform outward placement has width $w=0.5$ and cancellation
+length $\ell_\nu=1$. In the frozen killed-diffusion reference, its integrated
+response relative to a same-location point is
+\[
+ e^{-d/\ell_\nu}\frac{\ell_\nu}{w}
+ \left(1-e^{-w/\ell_\nu}\right).
+\]
+The distributed-to-edge-point factor is 0.78694. The letter's single-distance
+kernel thus requires a narrow-placement limit not demonstrated here.
+Use the distributed-profile convolution for this pilot. Density response,
+first passage and completion lag are distinct quantities; no instantaneous
+capacity is substituted into the update.
+
+Numerical acceptance remains open. One programme volume supplies no
+square-root-impact exponent; positive $\Sigma_0$ is imposed; completion
+creates neither a second executed leg nor a financial profit equilibrium.
+The next bounded check refines the finite programme while preserving the
+paper's nodal support, fixed thresholds and actual fill accounting.
 
 \newpage
 \section{Future memory and clock compatibility}

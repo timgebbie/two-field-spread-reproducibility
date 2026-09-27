@@ -1,0 +1,4605 @@
+{
+  "version": "v0.5.3",
+  "long_paper_version": "v1.1.9",
+  "letter_version": "v1.2.0",
+  "letter_sha256": "576a690f2a3cf5b5e87c462dbd19cdad8af96c4afa85e7f592311bf278077322",
+  "letter_authors": [
+    "Christopher Angstmann",
+    "Derick Diana",
+    "Tim Gebbie"
+  ],
+  "acceptance": "D2 pending; no production source/execution correction justified by this audit",
+  "core_equation_labels": [
+    "eq:bid",
+    "eq:ask",
+    "eq:litBid",
+    "eq:litAsk",
+    "eq:latentBid",
+    "eq:latentAsk",
+    "eq:placementWeights",
+    "eq:placementSupportQuote",
+    "eq:forcingCap",
+    "eq:discreteBidCrossing"
+  ],
+  "source_counterexample": {
+    "q": [
+      -5.99375,
+      5.99375
+    ],
+    "candidate": "Cell average of the unit pilot source stored at node centres",
+    "inward_nodes_with_candidate_supply": 2,
+    "inward_candidate_rate": 0.012500000000000178,
+    "inward_nodal_rate": 0.0,
+    "decision": "Rejected as a drop-in replacement: violates literal discrete nodal support. A finite-volume interpretation needs an explicit changed contract."
+  },
+  "continuous_execution_reference": [
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.400499160044797,
+      "terminal_price": -4.410367543434527
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.05,
+      "filled_quantity": 0.05000000000000001,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.606957772835346,
+      "terminal_price": -4.796025908643692
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.400499160044797,
+      "terminal_price": 4.410367543434527
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.05,
+      "filled_quantity": 0.05000000000000001,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.606957772835347,
+      "terminal_price": 4.796025908643692
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.400701792178246,
+      "terminal_price": -4.410570210674588
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.05,
+      "filled_quantity": 0.05000000000000002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.607160582098547,
+      "terminal_price": -4.796226537506593
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.5461498674889915,
+      "terminal_price": 4.5560025692536845
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.05,
+      "filled_quantity": 0.05000000000000002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.749447324346106,
+      "terminal_price": 4.9334282802522065
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.399829370637141,
+      "terminal_price": -4.409697368913265
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.05,
+      "filled_quantity": 0.05,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.606209039308043,
+      "terminal_price": -4.79513286626333
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.627963175494983,
+      "terminal_price": 4.637810859684533
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.05,
+      "filled_quantity": 0.05000000000000002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.830178386455933,
+      "terminal_price": 5.012473079940322
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.39520501844752,
+      "terminal_price": -4.405072669286829
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.05,
+      "filled_quantity": 0.05,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.601539273008462,
+      "terminal_price": -4.790404636828043
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.6874294774448755,
+      "terminal_price": 4.69727477433419
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.05,
+      "filled_quantity": 0.05,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.889124527858149,
+      "terminal_price": 5.070592141295701
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.390752226576415,
+      "terminal_price": -4.400620182369488
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.05,
+      "filled_quantity": 0.05,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.597058390106015,
+      "terminal_price": -4.785869109794991
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.732783319256531,
+      "terminal_price": 4.742626467369283
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.05,
+      "filled_quantity": 0.04999999999999999,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.934039613026623,
+      "terminal_price": 5.114817281421712
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.386544232316754,
+      "terminal_price": -4.396412506320856
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.05,
+      "filled_quantity": 0.04999999999999999,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": -4.592859795709726,
+      "terminal_price": -4.781682561629093
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.002,
+      "filled_quantity": 0.002,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.766760838147361,
+      "terminal_price": 4.776601740317295
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.05,
+      "filled_quantity": 0.049999999999999996,
+      "unfilled_quantity": 0.0,
+      "mean_log_price": 4.96769717145849,
+      "terminal_price": 5.147975255810261
+    }
+  ],
+  "nodal_execution_comparison": [
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": -4.4125,
+      "reference_price": -4.400499160044797,
+      "price_error": -0.012000839955202736,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": -4.404613095929575,
+      "reference_price": -4.400499160044797,
+      "price_error": -0.004113935884777931,
+      "fill_nodes": 2,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": -4.400694288728156,
+      "reference_price": -4.400499160044797,
+      "price_error": -0.00019512868335880285,
+      "fill_nodes": 4,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": -4.399066566866706,
+      "reference_price": -4.400499160044797,
+      "price_error": 0.0014325931780909684,
+      "fill_nodes": 7,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": -4.39979787753722,
+      "reference_price": -4.400499160044797,
+      "price_error": 0.0007012825075767282,
+      "fill_nodes": 13,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": -4.614658313709077,
+      "reference_price": -4.606957772835346,
+      "price_error": -0.00770054087373051,
+      "fill_nodes": 17,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": -4.609585158809674,
+      "reference_price": -4.606957772835346,
+      "price_error": -0.002627385974327545,
+      "fill_nodes": 33,
+      "unfilled": 6.938893903907228e-18
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": -4.607010277377469,
+      "reference_price": -4.606957772835346,
+      "price_error": -5.250454212291089e-05,
+      "fill_nodes": 65,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": -4.605739794696713,
+      "reference_price": -4.606957772835346,
+      "price_error": 0.0012179781386336686,
+      "fill_nodes": 130,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": -4.606373250172486,
+      "reference_price": -4.606957772835346,
+      "price_error": 0.000584522662860465,
+      "fill_nodes": 260,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": 4.412499999999998,
+      "reference_price": 4.400499160044797,
+      "price_error": 0.01200083995520096,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": 4.404613095929573,
+      "reference_price": 4.400499160044797,
+      "price_error": 0.004113935884776154,
+      "fill_nodes": 2,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": 4.400694288728156,
+      "reference_price": 4.400499160044797,
+      "price_error": 0.00019512868335880285,
+      "fill_nodes": 4,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": 4.399066566866707,
+      "reference_price": 4.400499160044797,
+      "price_error": -0.0014325931780900802,
+      "fill_nodes": 7,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": 4.399797877537219,
+      "reference_price": 4.400499160044797,
+      "price_error": -0.0007012825075776163,
+      "fill_nodes": 13,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": 4.614658313709076,
+      "reference_price": 4.606957772835347,
+      "price_error": 0.007700540873728734,
+      "fill_nodes": 17,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": 4.609585158809674,
+      "reference_price": 4.606957772835347,
+      "price_error": 0.002627385974326657,
+      "fill_nodes": 33,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": 4.607010277377469,
+      "reference_price": 4.606957772835347,
+      "price_error": 5.250454212202271e-05,
+      "fill_nodes": 65,
+      "unfilled": 2.0816681711721685e-17
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": 4.605739794696713,
+      "reference_price": 4.606957772835347,
+      "price_error": -0.0012179781386345567,
+      "fill_nodes": 130,
+      "unfilled": 0.0
+    },
+    {
+      "event": 0,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": 4.606373250172484,
+      "reference_price": 4.606957772835347,
+      "price_error": -0.0005845226628631295,
+      "fill_nodes": 260,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": -4.4125,
+      "reference_price": -4.400701792178246,
+      "price_error": -0.011798207821753337,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": -4.404614713673554,
+      "reference_price": -4.400701792178246,
+      "price_error": -0.003912921495307309,
+      "fill_nodes": 2,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": -4.400696708622479,
+      "reference_price": -4.400701792178246,
+      "price_error": 5.0835557674489e-06,
+      "fill_nodes": 4,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": -4.402161340870603,
+      "reference_price": -4.400701792178246,
+      "price_error": -0.0014595486923569823,
+      "fill_nodes": 7,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": -4.401347325755764,
+      "reference_price": -4.400701792178246,
+      "price_error": -0.0006455335775177318,
+      "fill_nodes": 13,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": -4.614698481006567,
+      "reference_price": -4.607160582098547,
+      "price_error": -0.007537898908020146,
+      "fill_nodes": 17,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": -4.609623908765061,
+      "reference_price": -4.607160582098547,
+      "price_error": -0.002463326666513943,
+      "fill_nodes": 33,
+      "unfilled": 1.3877787807814457e-17
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": -4.6070483222921395,
+      "reference_price": -4.607160582098547,
+      "price_error": 0.00011225980640716671,
+      "fill_nodes": 65,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": -4.608314713283449,
+      "reference_price": -4.607160582098547,
+      "price_error": -0.001154131184902596,
+      "fill_nodes": 130,
+      "unfilled": 6.938893903907228e-18
+    },
+    {
+      "event": 1,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": -4.607678815649961,
+      "reference_price": -4.607160582098547,
+      "price_error": -0.0005182335514142267,
+      "fill_nodes": 260,
+      "unfilled": 1.3877787807814457e-17
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": 4.537499999999998,
+      "reference_price": 4.5461498674889915,
+      "price_error": -0.008649867488993657,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": 4.542176496256795,
+      "reference_price": 4.5461498674889915,
+      "price_error": -0.003973371232196321,
+      "fill_nodes": 2,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": 4.544459283112255,
+      "reference_price": 4.5461498674889915,
+      "price_error": -0.0016905843767363038,
+      "fill_nodes": 4,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": 4.545920990569768,
+      "reference_price": 4.5461498674889915,
+      "price_error": -0.00022887691922335307,
+      "fill_nodes": 7,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": 4.546653144172108,
+      "reference_price": 4.5461498674889915,
+      "price_error": 0.0005032766831165603,
+      "fill_nodes": 13,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": 4.740547833192844,
+      "reference_price": 4.749447324346106,
+      "price_error": -0.008899491153262495,
+      "fill_nodes": 17,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": 4.74550593242259,
+      "reference_price": 4.749447324346106,
+      "price_error": -0.003941391923516058,
+      "fill_nodes": 32,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": 4.747989950296482,
+      "reference_price": 4.749447324346106,
+      "price_error": -0.001457374049624427,
+      "fill_nodes": 64,
+      "unfilled": 2.0816681711721685e-17
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": 4.749220965506708,
+      "reference_price": 4.749447324346106,
+      "price_error": -0.00022635883939869927,
+      "fill_nodes": 128,
+      "unfilled": 0.0
+    },
+    {
+      "event": 1,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": 4.749840594911348,
+      "reference_price": 4.749447324346106,
+      "price_error": 0.0003932705652411883,
+      "fill_nodes": 255,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": -4.4125,
+      "reference_price": -4.399829370637141,
+      "price_error": -0.012670629362858676,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": -4.4046075768521025,
+      "reference_price": -4.399829370637141,
+      "price_error": -0.0047782062149615,
+      "fill_nodes": 2,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": -4.4006860838525315,
+      "reference_price": -4.399829370637141,
+      "price_error": -0.0008567132153904922,
+      "fill_nodes": 4,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": -4.399059452123547,
+      "reference_price": -4.399829370637141,
+      "price_error": 0.0007699185135940922,
+      "fill_nodes": 7,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": -4.3997912560114445,
+      "reference_price": -4.399829370637141,
+      "price_error": 3.8114625696472615e-05,
+      "fill_nodes": 13,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": -4.614434901606377,
+      "reference_price": -4.606209039308043,
+      "price_error": -0.008225862298334441,
+      "fill_nodes": 17,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": -4.609375339172788,
+      "reference_price": -4.606209039308043,
+      "price_error": -0.003166299864744815,
+      "fill_nodes": 33,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": -4.606807067578694,
+      "reference_price": -4.606209039308043,
+      "price_error": -0.0005980282706508078,
+      "fill_nodes": 65,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": -4.605535712029511,
+      "reference_price": -4.606209039308043,
+      "price_error": 0.0006733272785321986,
+      "fill_nodes": 130,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": -4.6061675018818065,
+      "reference_price": -4.606209039308043,
+      "price_error": 4.153742623635992e-05,
+      "fill_nodes": 260,
+      "unfilled": 2.7755575615628914e-17
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": 4.637499999999999,
+      "reference_price": 4.627963175494983,
+      "price_error": 0.009536824505016028,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": 4.629623753615648,
+      "reference_price": 4.627963175494983,
+      "price_error": 0.0016605781206644465,
+      "fill_nodes": 2,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": 4.625714252137795,
+      "reference_price": 4.627963175494983,
+      "price_error": -0.0022489233571878486,
+      "fill_nodes": 4,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": 4.627174948620554,
+      "reference_price": 4.627963175494983,
+      "price_error": -0.0007882268744294763,
+      "fill_nodes": 7,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": 4.6279066385047924,
+      "reference_price": 4.627963175494983,
+      "price_error": -5.653699019081415e-05,
+      "fill_nodes": 13,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": 4.835847967949056,
+      "reference_price": 4.830178386455933,
+      "price_error": 0.0056695814931231325,
+      "fill_nodes": 16,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": 4.830789313793718,
+      "reference_price": 4.830178386455933,
+      "price_error": 0.0006109273377852276,
+      "fill_nodes": 32,
+      "unfilled": 1.3877787807814457e-17
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": 4.8282827687305545,
+      "reference_price": 4.830178386455933,
+      "price_error": -0.0018956177253786066,
+      "fill_nodes": 64,
+      "unfilled": 0.0
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": 4.829508637746737,
+      "reference_price": 4.830178386455933,
+      "price_error": -0.0006697487091962273,
+      "fill_nodes": 127,
+      "unfilled": 2.0816681711721685e-17
+    },
+    {
+      "event": 2,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": 4.830122978242164,
+      "reference_price": 4.830178386455933,
+      "price_error": -5.540821376914806e-05,
+      "fill_nodes": 253,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": -4.3875,
+      "reference_price": -4.39520501844752,
+      "price_error": 0.007705018447519585,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": -4.392170191680773,
+      "reference_price": -4.39520501844752,
+      "price_error": 0.003034826766747045,
+      "fill_nodes": 2,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": -4.394455510483399,
+      "reference_price": -4.39520501844752,
+      "price_error": 0.0007495079641204327,
+      "fill_nodes": 4,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": -4.395918932945966,
+      "reference_price": -4.39520501844752,
+      "price_error": -0.0007139144984460444,
+      "fill_nodes": 7,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": -4.395104419368319,
+      "reference_price": -4.39520501844752,
+      "price_error": 0.00010059907920112465,
+      "fill_nodes": 13,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": -4.593397473863481,
+      "reference_price": -4.601539273008462,
+      "price_error": 0.008141799144980588,
+      "fill_nodes": 17,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": -4.598331115267526,
+      "reference_price": -4.601539273008462,
+      "price_error": 0.0032081577409357465,
+      "fill_nodes": 33,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": -4.600817294949615,
+      "reference_price": -4.601539273008462,
+      "price_error": 0.0007219780588467728,
+      "fill_nodes": 65,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": -4.60208198530751,
+      "reference_price": -4.601539273008462,
+      "price_error": -0.0005427122990484534,
+      "fill_nodes": 130,
+      "unfilled": 6.938893903907228e-18
+    },
+    {
+      "event": 3,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": -4.601446556250932,
+      "reference_price": -4.601539273008462,
+      "price_error": 9.271675753019792e-05,
+      "fill_nodes": 260,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": 4.6875,
+      "reference_price": 4.6874294774448755,
+      "price_error": 7.052255512451922e-05,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": 4.692095349969298,
+      "reference_price": 4.6874294774448755,
+      "price_error": 0.004665872524422632,
+      "fill_nodes": 2,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": 4.688171410814167,
+      "reference_price": 4.6874294774448755,
+      "price_error": 0.0007419333692917363,
+      "fill_nodes": 4,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": 4.686550361380248,
+      "reference_price": 4.6874294774448755,
+      "price_error": -0.0008791160646275387,
+      "fill_nodes": 7,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": 4.687281946423194,
+      "reference_price": 4.6874294774448755,
+      "price_error": -0.00014753102168185706,
+      "fill_nodes": 13,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": 4.887291181158912,
+      "reference_price": 4.889124527858149,
+      "price_error": -0.0018333466992368486,
+      "fill_nodes": 16,
+      "unfilled": 6.938893903907228e-18
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": 4.892113568695797,
+      "reference_price": 4.889124527858149,
+      "price_error": 0.0029890408376482824,
+      "fill_nodes": 32,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": 4.889615309939384,
+      "reference_price": 4.889124527858149,
+      "price_error": 0.0004907820812354302,
+      "fill_nodes": 63,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": 4.888382756765212,
+      "reference_price": 4.889124527858149,
+      "price_error": -0.0007417710929367161,
+      "fill_nodes": 126,
+      "unfilled": 0.0
+    },
+    {
+      "event": 3,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": 4.888996878634972,
+      "reference_price": 4.889124527858149,
+      "price_error": -0.00012764922317742844,
+      "fill_nodes": 252,
+      "unfilled": 4.163336342344337e-17
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": -4.3875,
+      "reference_price": -4.390752226576415,
+      "price_error": 0.003252226576415218,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": -4.392135315506502,
+      "reference_price": -4.390752226576415,
+      "price_error": -0.0013830889300869842,
+      "fill_nodes": 2,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": -4.388227068799828,
+      "reference_price": -4.390752226576415,
+      "price_error": 0.002525157776587683,
+      "fill_nodes": 4,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": -4.38968789057378,
+      "reference_price": -4.390752226576415,
+      "price_error": 0.0010643360026350024,
+      "fill_nodes": 7,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": -4.390419464973639,
+      "reference_price": -4.390752226576415,
+      "price_error": 0.00033276160277662115,
+      "fill_nodes": 13,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": -4.5924993740195115,
+      "reference_price": -4.597058390106015,
+      "price_error": 0.00455901608650322,
+      "fill_nodes": 17,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": -4.597454860361847,
+      "reference_price": -4.597058390106015,
+      "price_error": -0.0003964702558318933,
+      "fill_nodes": 33,
+      "unfilled": 6.938893903907228e-18
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": -4.594877309449008,
+      "reference_price": -4.597058390106015,
+      "price_error": 0.0021810806570066177,
+      "fill_nodes": 65,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": -4.596144616408945,
+      "reference_price": -4.597058390106015,
+      "price_error": 0.0009137736970696864,
+      "fill_nodes": 130,
+      "unfilled": 1.3877787807814457e-17
+    },
+    {
+      "event": 4,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": -4.596775804638851,
+      "reference_price": -4.597058390106015,
+      "price_error": 0.00028258546716397603,
+      "fill_nodes": 260,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": 4.737500000000001,
+      "reference_price": 4.732783319256531,
+      "price_error": 0.004716680743469759,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": 4.729667377882664,
+      "reference_price": 4.732783319256531,
+      "price_error": -0.0031159413738670594,
+      "fill_nodes": 2,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": 4.731942236684697,
+      "reference_price": 4.732783319256531,
+      "price_error": -0.0008410825718341286,
+      "fill_nodes": 4,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": 4.733405282486958,
+      "reference_price": 4.732783319256531,
+      "price_error": 0.0006219632304267364,
+      "fill_nodes": 7,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": 4.732593664546727,
+      "reference_price": 4.732783319256531,
+      "price_error": -0.0001896547098043655,
+      "fill_nodes": 13,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": 4.935900718871786,
+      "reference_price": 4.934039613026623,
+      "price_error": 0.0018611058451636353,
+      "fill_nodes": 16,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": 4.930868909172908,
+      "reference_price": 4.934039613026623,
+      "price_error": -0.0031707038537147625,
+      "fill_nodes": 32,
+      "unfilled": 6.938893903907228e-18
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": 4.933274051800152,
+      "reference_price": 4.934039613026623,
+      "price_error": -0.0007655612264709788,
+      "fill_nodes": 63,
+      "unfilled": 0.0
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": 4.934493488227437,
+      "reference_price": 4.934039613026623,
+      "price_error": 0.0004538752008143021,
+      "fill_nodes": 126,
+      "unfilled": 6.938893903907228e-18
+    },
+    {
+      "event": 4,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": 4.933878301398645,
+      "reference_price": 4.934039613026623,
+      "price_error": -0.00016131162797794474,
+      "fill_nodes": 251,
+      "unfilled": 2.0816681711721685e-17
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": -4.3875,
+      "reference_price": -4.386544232316754,
+      "price_error": -0.0009557676832461226,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": -4.39210211104365,
+      "reference_price": -4.386544232316754,
+      "price_error": -0.0055578787268961705,
+      "fill_nodes": 2,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": -4.388177358231139,
+      "reference_price": -4.386544232316754,
+      "price_error": -0.0016331259143846921,
+      "fill_nodes": 4,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": -4.386551746516815,
+      "reference_price": -4.386544232316754,
+      "price_error": -7.514200061287113e-06,
+      "fill_nodes": 7,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": -4.387284118609042,
+      "reference_price": -4.386544232316754,
+      "price_error": -0.000739886292287828,
+      "fill_nodes": 13,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": -4.591682217147514,
+      "reference_price": -4.592859795709726,
+      "price_error": 0.0011775785622125667,
+      "fill_nodes": 17,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": -4.596658643199836,
+      "reference_price": -4.592859795709726,
+      "price_error": -0.0037988474901098357,
+      "fill_nodes": 33,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": -4.594096307016828,
+      "reference_price": -4.592859795709726,
+      "price_error": -0.0012365113071020062,
+      "fill_nodes": 65,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": -4.592823907829275,
+      "reference_price": -4.592859795709726,
+      "price_error": 3.5887880451390686e-05,
+      "fill_nodes": 130,
+      "unfilled": 6.938893903907228e-18
+    },
+    {
+      "event": 5,
+      "side": 0,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": -4.593454181430158,
+      "reference_price": -4.592859795709726,
+      "price_error": -0.0005943857204320224,
+      "fill_nodes": 260,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.025,
+      "nodal_price": 4.762499999999999,
+      "reference_price": 4.766760838147361,
+      "price_error": -0.0042608381473616674,
+      "fill_nodes": 1,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0125,
+      "nodal_price": 4.7671342431936266,
+      "reference_price": 4.766760838147361,
+      "price_error": 0.0003734050462655958,
+      "fill_nodes": 2,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.00625,
+      "nodal_price": 4.769390754017497,
+      "reference_price": 4.766760838147361,
+      "price_error": 0.002629915870135946,
+      "fill_nodes": 4,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.003125,
+      "nodal_price": 4.7677743401519,
+      "reference_price": 4.766760838147361,
+      "price_error": 0.0010135020045387577,
+      "fill_nodes": 7,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "nodal_price": 4.766963320158001,
+      "reference_price": 4.766760838147361,
+      "price_error": 0.00020248201064010374,
+      "fill_nodes": 13,
+      "unfilled": 4.336808689942018e-19
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.025,
+      "nodal_price": 4.96249409930856,
+      "reference_price": 4.96769717145849,
+      "price_error": -0.005203072149930321,
+      "fill_nodes": 16,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0125,
+      "nodal_price": 4.96727808851637,
+      "reference_price": 4.96769717145849,
+      "price_error": -0.0004190829421206743,
+      "fill_nodes": 32,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.00625,
+      "nodal_price": 4.969693106296742,
+      "reference_price": 4.96769717145849,
+      "price_error": 0.0019959348382521114,
+      "fill_nodes": 63,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.003125,
+      "nodal_price": 4.968457597636797,
+      "reference_price": 4.96769717145849,
+      "price_error": 0.0007604261783065169,
+      "fill_nodes": 126,
+      "unfilled": 0.0
+    },
+    {
+      "event": 5,
+      "side": 1,
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "nodal_price": 4.96784695210995,
+      "reference_price": 4.96769717145849,
+      "price_error": 0.0001497806514594302,
+      "fill_nodes": 251,
+      "unfilled": 0.0
+    }
+  ],
+  "execution_error_summary": [
+    {
+      "volume": 0.002,
+      "dx": 0.025,
+      "max_abs_price_error": 0.012670629362858676,
+      "rms_price_error": 0.008489300501039961
+    },
+    {
+      "volume": 0.002,
+      "dx": 0.0125,
+      "max_abs_price_error": 0.0055578787268961705,
+      "rms_price_error": 0.003698742552731217
+    },
+    {
+      "volume": 0.002,
+      "dx": 0.00625,
+      "max_abs_price_error": 0.002629915870135946,
+      "rms_price_error": 0.0014862001974205123
+    },
+    {
+      "volume": 0.002,
+      "dx": 0.003125,
+      "max_abs_price_error": 0.0014595486923569823,
+      "rms_price_error": 0.0009717167243928483
+    },
+    {
+      "volume": 0.002,
+      "dx": 0.0015625,
+      "max_abs_price_error": 0.000739886292287828,
+      "rms_price_error": 0.00044956089194227985
+    },
+    {
+      "volume": 0.05,
+      "dx": 0.025,
+      "max_abs_price_error": 0.008899491153262495,
+      "rms_price_error": 0.006303329373150643
+    },
+    {
+      "volume": 0.05,
+      "dx": 0.0125,
+      "max_abs_price_error": 0.003941391923516058,
+      "rms_price_error": 0.0027363542548967824
+    },
+    {
+      "volume": 0.05,
+      "dx": 0.00625,
+      "max_abs_price_error": 0.0021810806570066177,
+      "rms_price_error": 0.0012148762452581028
+    },
+    {
+      "volume": 0.05,
+      "dx": 0.003125,
+      "max_abs_price_error": 0.0012179781386345567,
+      "rms_price_error": 0.0008019462544256621
+    },
+    {
+      "volume": 0.05,
+      "dx": 0.0015625,
+      "max_abs_price_error": 0.0005943857204320224,
+      "rms_price_error": 0.000367179792825105
+    }
+  ],
+  "reaction_price_samples": [
+    {
+      "frame": 0,
+      "u": 0.0,
+      "phase": "initial",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 1,
+      "u": 0.025,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 2,
+      "u": 0.05,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 3,
+      "u": 0.075,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 4,
+      "u": 0.1,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 5,
+      "u": 0.125,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 6,
+      "u": 0.15,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 7,
+      "u": 0.17500000000000002,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 8,
+      "u": 0.2,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 9,
+      "u": 0.225,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 10,
+      "u": 0.25,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 11,
+      "u": 0.275,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 12,
+      "u": 0.3,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 13,
+      "u": 0.325,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 14,
+      "u": 0.35000000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 15,
+      "u": 0.375,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 16,
+      "u": 0.4,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 17,
+      "u": 0.425,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 18,
+      "u": 0.45,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 19,
+      "u": 0.47500000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 20,
+      "u": 0.5,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 21,
+      "u": 0.525,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 22,
+      "u": 0.55,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 23,
+      "u": 0.5750000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 24,
+      "u": 0.6,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 25,
+      "u": 0.625,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 26,
+      "u": 0.65,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 27,
+      "u": 0.675,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 28,
+      "u": 0.7000000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 29,
+      "u": 0.725,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 30,
+      "u": 0.75,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 31,
+      "u": 0.775,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 32,
+      "u": 0.8,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 33,
+      "u": 0.8250000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 34,
+      "u": 0.85,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 35,
+      "u": 0.875,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 36,
+      "u": 0.9,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 37,
+      "u": 0.925,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 38,
+      "u": 0.9500000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 39,
+      "u": 0.975,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": -4.440892098500626e-16,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -4.440892098500626e-16
+    },
+    {
+      "frame": 40,
+      "u": 1.0,
+      "phase": "pre",
+      "root_count": 1,
+      "quoted_midpoint": 0.0,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -8.881784197001252e-16
+    },
+    {
+      "frame": 41,
+      "u": 1.0,
+      "phase": "post",
+      "root_count": 3,
+      "quoted_midpoint": 0.20750532563999613,
+      "reaction_price": null,
+      "difference": null
+    },
+    {
+      "frame": 42,
+      "u": 1.025,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.21797746194151513,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -0.21797746194151602
+    },
+    {
+      "frame": 43,
+      "u": 1.05,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.19994084559226355,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -0.19994084559226444
+    },
+    {
+      "frame": 44,
+      "u": 1.075,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.17966400032516328,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -0.17966400032516416
+    },
+    {
+      "frame": 45,
+      "u": 1.1,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.16163773153895233,
+      "reaction_price": -8.881784197001252e-16,
+      "difference": -0.16163773153895322
+    },
+    {
+      "frame": 46,
+      "u": 1.125,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.14632591401720818,
+      "reaction_price": -7.129713486264677e-16,
+      "difference": -0.1463259140172089
+    },
+    {
+      "frame": 47,
+      "u": 1.1500000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.13355183222690936,
+      "reaction_price": 9.870576578308032e-15,
+      "difference": -0.13355183222689948
+    },
+    {
+      "frame": 48,
+      "u": 1.175,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.12286072022270877,
+      "reaction_price": 1.3985375357794538e-12,
+      "difference": -0.12286072022131024
+    },
+    {
+      "frame": 49,
+      "u": 1.2,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.11374930817837337,
+      "reaction_price": 5.150663055786264e-11,
+      "difference": -0.11374930812686673
+    },
+    {
+      "frame": 50,
+      "u": 1.225,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.10596579145772633,
+      "reaction_price": 8.340950968105387e-10,
+      "difference": -0.10596579062363123
+    },
+    {
+      "frame": 51,
+      "u": 1.25,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.09928998788837129,
+      "reaction_price": 7.643593029349471e-09,
+      "difference": -0.09928998024477825
+    },
+    {
+      "frame": 52,
+      "u": 1.2750000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.09340439484609497,
+      "reaction_price": 4.640780860813709e-08,
+      "difference": -0.09340434843828636
+    },
+    {
+      "frame": 53,
+      "u": 1.3,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.08827911335638694,
+      "reaction_price": 2.0715124448081323e-07,
+      "difference": -0.08827890620514246
+    },
+    {
+      "frame": 54,
+      "u": 1.325,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0837262439671167,
+      "reaction_price": 7.302362101096332e-07,
+      "difference": -0.08372551373090659
+    },
+    {
+      "frame": 55,
+      "u": 1.35,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.07964045624062077,
+      "reaction_price": 2.1390243601388664e-06,
+      "difference": -0.07963831721626063
+    },
+    {
+      "frame": 56,
+      "u": 1.375,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.07600442340269442,
+      "reaction_price": 5.403813588312351e-06,
+      "difference": -0.07599901958910611
+    },
+    {
+      "frame": 57,
+      "u": 1.4000000000000001,
+      "phase": "pre",
+      "root_count": 1,
+      "quoted_midpoint": 0.0727279409352275,
+      "reaction_price": 1.2106263464151112e-05,
+      "difference": -0.07271583467176335
+    },
+    {
+      "frame": 58,
+      "u": 1.4000000000000001,
+      "phase": "post",
+      "root_count": 3,
+      "quoted_midpoint": 0.2692779310107616,
+      "reaction_price": null,
+      "difference": null
+    },
+    {
+      "frame": 59,
+      "u": 1.425,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.27394112822663486,
+      "reaction_price": 2.4568641327054816e-05,
+      "difference": -0.2739165595853078
+    },
+    {
+      "frame": 60,
+      "u": 1.45,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.25303939051213087,
+      "reaction_price": 4.591896308336896e-05,
+      "difference": -0.2529934715490475
+    },
+    {
+      "frame": 61,
+      "u": 1.475,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.23114051081721376,
+      "reaction_price": 8.007712243053404e-05,
+      "difference": -0.23106043369478324
+    },
+    {
+      "frame": 62,
+      "u": 1.5,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2120047175327775,
+      "reaction_price": 0.00013166258691831717,
+      "difference": -0.21187305494585917
+    },
+    {
+      "frame": 63,
+      "u": 1.5250000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.19583297283408774,
+      "reaction_price": 0.00020583673790399402,
+      "difference": -0.19562713609618373
+    },
+    {
+      "frame": 64,
+      "u": 1.55,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.18226705212503758,
+      "reaction_price": 0.0003081003583090165,
+      "difference": -0.18195895176672855
+    },
+    {
+      "frame": 65,
+      "u": 1.575,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.1707926610609869,
+      "reaction_price": 0.00044406908382027023,
+      "difference": -0.17034859197716662
+    },
+    {
+      "frame": 66,
+      "u": 1.6,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.16097976950267556,
+      "reaction_price": 0.0006192479955586232,
+      "difference": -0.16036052150711694
+    },
+    {
+      "frame": 67,
+      "u": 1.625,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.15238172390751537,
+      "reaction_price": 0.0008388226214638955,
+      "difference": -0.15154290128605147
+    },
+    {
+      "frame": 68,
+      "u": 1.6500000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.144888692677688,
+      "reaction_price": 0.001107479472390191,
+      "difference": -0.1437812132052978
+    },
+    {
+      "frame": 69,
+      "u": 1.675,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.13826888510348168,
+      "reaction_price": 0.0014292671057707911,
+      "difference": -0.13683961799771088
+    },
+    {
+      "frame": 70,
+      "u": 1.7,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.132352426783386,
+      "reaction_price": 0.0018075091163453506,
+      "difference": -0.13054491766704063
+    },
+    {
+      "frame": 71,
+      "u": 1.725,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.12706092614063724,
+      "reaction_price": 0.0022447801958360974,
+      "difference": -0.12481614594480114
+    },
+    {
+      "frame": 72,
+      "u": 1.75,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.12231600388965091,
+      "reaction_price": 0.0027429509662896603,
+      "difference": -0.11957305292336126
+    },
+    {
+      "frame": 73,
+      "u": 1.7750000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.11797468086538121,
+      "reaction_price": 0.0033032959439245717,
+      "difference": -0.11467138492145663
+    },
+    {
+      "frame": 74,
+      "u": 1.8,
+      "phase": "pre",
+      "root_count": 1,
+      "quoted_midpoint": 0.11407206241888845,
+      "reaction_price": 0.003926646018680261,
+      "difference": -0.1101454164002082
+    },
+    {
+      "frame": 75,
+      "u": 1.8,
+      "phase": "post",
+      "root_count": 3,
+      "quoted_midpoint": 0.3167828630200864,
+      "reaction_price": null,
+      "difference": null
+    },
+    {
+      "frame": 76,
+      "u": 1.825,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.3149769478318043,
+      "reaction_price": 0.004613557960786718,
+      "difference": -0.3103633898710176
+    },
+    {
+      "frame": 77,
+      "u": 1.85,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2914084701963495,
+      "reaction_price": 0.005364471916157711,
+      "difference": -0.28604399828019184
+    },
+    {
+      "frame": 78,
+      "u": 1.875,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2678197939120177,
+      "reaction_price": 0.0061798332157064415,
+      "difference": -0.2616399606963113
+    },
+    {
+      "frame": 79,
+      "u": 1.9000000000000001,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.24771806084209924,
+      "reaction_price": 0.007060164309751642,
+      "difference": -0.2406578965323476
+    },
+    {
+      "frame": 80,
+      "u": 1.925,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2309688806231769,
+      "reaction_price": 0.008006082963739333,
+      "difference": -0.22296279765943755
+    },
+    {
+      "frame": 81,
+      "u": 1.95,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.21705322015417794,
+      "reaction_price": 0.00901827153247636,
+      "difference": -0.20803494862170158
+    },
+    {
+      "frame": 82,
+      "u": 1.975,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2052913961988292,
+      "reaction_price": 0.01009740792171971,
+      "difference": -0.1951939882771095
+    },
+    {
+      "frame": 83,
+      "u": 2.0,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.19520990438780128,
+      "reaction_price": 0.011244071585003294,
+      "difference": -0.183965832802798
+    },
+    {
+      "frame": 84,
+      "u": 2.025,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.18648150644813688,
+      "reaction_price": 0.012458638155930662,
+      "difference": -0.17402286829220623
+    },
+    {
+      "frame": 85,
+      "u": 2.05,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.17874417443004864,
+      "reaction_price": 0.01374284670148903,
+      "difference": -0.1650013277285596
+    },
+    {
+      "frame": 86,
+      "u": 2.075,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.171882699478199,
+      "reaction_price": 0.015095094661342701,
+      "difference": -0.1567876048168563
+    },
+    {
+      "frame": 87,
+      "u": 2.1,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.16572911910383947,
+      "reaction_price": 0.016514552899333658,
+      "difference": -0.14921456620450582
+    },
+    {
+      "frame": 88,
+      "u": 2.125,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.16014934247694468,
+      "reaction_price": 0.017999946845022236,
+      "difference": -0.14214939563192244
+    },
+    {
+      "frame": 89,
+      "u": 2.15,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.15506151443029825,
+      "reaction_price": 0.019549526005946234,
+      "difference": -0.13551198842435203
+    },
+    {
+      "frame": 90,
+      "u": 2.1750000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.15044087995629285,
+      "reaction_price": 0.02116113798517409,
+      "difference": -0.12927974197111874
+    },
+    {
+      "frame": 91,
+      "u": 2.2,
+      "phase": "pre",
+      "root_count": 1,
+      "quoted_midpoint": 0.14611780616535253,
+      "reaction_price": 0.02283234723787312,
+      "difference": -0.12328545892747941
+    },
+    {
+      "frame": 92,
+      "u": 2.2,
+      "phase": "post",
+      "root_count": 3,
+      "quoted_midpoint": 0.3448819811630117,
+      "reaction_price": null,
+      "difference": null
+    },
+    {
+      "frame": 93,
+      "u": 2.225,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.34302768483172175,
+      "reaction_price": 0.024560580238768538,
+      "difference": -0.3184671045929532
+    },
+    {
+      "frame": 94,
+      "u": 2.25,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.31938787410578806,
+      "reaction_price": 0.02634327335731701,
+      "difference": -0.29304460074847105
+    },
+    {
+      "frame": 95,
+      "u": 2.275,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2957385637130021,
+      "reaction_price": 0.028178000509782856,
+      "difference": -0.26756056320321925
+    },
+    {
+      "frame": 96,
+      "u": 2.3000000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.27553396276952613,
+      "reaction_price": 0.03006256336425668,
+      "difference": -0.24547139940526946
+    },
+    {
+      "frame": 97,
+      "u": 2.325,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2586081227095085,
+      "reaction_price": 0.03199503505883754,
+      "difference": -0.22661308765067095
+    },
+    {
+      "frame": 98,
+      "u": 2.35,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.244490956187581,
+      "reaction_price": 0.03397375662239763,
+      "difference": -0.21051719956518336
+    },
+    {
+      "frame": 99,
+      "u": 2.375,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.23250974210736253,
+      "reaction_price": 0.03599729188384025,
+      "difference": -0.19651245022352226
+    },
+    {
+      "frame": 100,
+      "u": 2.4,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2221916099397072,
+      "reaction_price": 0.03806553910816656,
+      "difference": -0.18412607083154064
+    },
+    {
+      "frame": 101,
+      "u": 2.4250000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.21320404614602495,
+      "reaction_price": 0.04017956036946052,
+      "difference": -0.17302448577656443
+    },
+    {
+      "frame": 102,
+      "u": 2.45,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.20521188597679307,
+      "reaction_price": 0.04233503736940124,
+      "difference": -0.16287684860739182
+    },
+    {
+      "frame": 103,
+      "u": 2.475,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.1980716442140169,
+      "reaction_price": 0.04453052639126806,
+      "difference": -0.15354111782274885
+    },
+    {
+      "frame": 104,
+      "u": 2.5,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.19167005203438947,
+      "reaction_price": 0.04676434634393649,
+      "difference": -0.14490570569045297
+    },
+    {
+      "frame": 105,
+      "u": 2.525,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.18580797989770037,
+      "reaction_price": 0.049034530255319855,
+      "difference": -0.13677344964238053
+    },
+    {
+      "frame": 106,
+      "u": 2.5500000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.18048748882185484,
+      "reaction_price": 0.05133882333883032,
+      "difference": -0.1291486654830245
+    },
+    {
+      "frame": 107,
+      "u": 2.575,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.17557968850225736,
+      "reaction_price": 0.05367473341181883,
+      "difference": -0.12190495509043853
+    },
+    {
+      "frame": 108,
+      "u": 2.6,
+      "phase": "pre",
+      "root_count": 1,
+      "quoted_midpoint": 0.17102194603088572,
+      "reaction_price": 0.056039628024189325,
+      "difference": -0.1149823180066964
+    },
+    {
+      "frame": 109,
+      "u": 2.6,
+      "phase": "post",
+      "root_count": 3,
+      "quoted_midpoint": 0.37090313727248647,
+      "reaction_price": null,
+      "difference": null
+    },
+    {
+      "frame": 110,
+      "u": 2.625,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.3671493331182263,
+      "reaction_price": 0.058430861586421495,
+      "difference": -0.30871847153180476
+    },
+    {
+      "frame": 111,
+      "u": 2.65,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.34250962628291015,
+      "reaction_price": 0.06084590924608574,
+      "difference": -0.2816637170368244
+    },
+    {
+      "frame": 112,
+      "u": 2.6750000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.3182081739984075,
+      "reaction_price": 0.06328441682701248,
+      "difference": -0.25492375717139504
+    },
+    {
+      "frame": 113,
+      "u": 2.7,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2975144354947741,
+      "reaction_price": 0.06574685691063234,
+      "difference": -0.23176757858414174
+    },
+    {
+      "frame": 114,
+      "u": 2.725,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.28041979557600616,
+      "reaction_price": 0.06822764894101302,
+      "difference": -0.21219214663499314
+    },
+    {
+      "frame": 115,
+      "u": 2.75,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.26607803243904593,
+      "reaction_price": 0.07072552191957059,
+      "difference": -0.19535251051947533
+    },
+    {
+      "frame": 116,
+      "u": 2.775,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2538640497673339,
+      "reaction_price": 0.07323949780983934,
+      "difference": -0.18062455195749455
+    },
+    {
+      "frame": 117,
+      "u": 2.8000000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2432825082019967,
+      "reaction_price": 0.07576880370422226,
+      "difference": -0.16751370449777445
+    },
+    {
+      "frame": 118,
+      "u": 2.825,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.23398617638841124,
+      "reaction_price": 0.07831276309212289,
+      "difference": -0.15567341329628837
+    },
+    {
+      "frame": 119,
+      "u": 2.85,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.22576905272846748,
+      "reaction_price": 0.08087067902475352,
+      "difference": -0.14489837370371395
+    },
+    {
+      "frame": 120,
+      "u": 2.875,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2184269307059168,
+      "reaction_price": 0.08344172215850826,
+      "difference": -0.13498520854740853
+    },
+    {
+      "frame": 121,
+      "u": 2.9,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.21172618977568103,
+      "reaction_price": 0.08602483786069196,
+      "difference": -0.12570135191498907
+    },
+    {
+      "frame": 122,
+      "u": 2.9250000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.20568357993764064,
+      "reaction_price": 0.08862163072260737,
+      "difference": -0.11706194921503327
+    },
+    {
+      "frame": 123,
+      "u": 2.95,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.20005891543579635,
+      "reaction_price": 0.09123167949860454,
+      "difference": -0.1088272359371918
+    },
+    {
+      "frame": 124,
+      "u": 2.975,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.1949154940972866,
+      "reaction_price": 0.09384930809105713,
+      "difference": -0.10106618600622946
+    },
+    {
+      "frame": 125,
+      "u": 3.0,
+      "phase": "pre",
+      "root_count": 1,
+      "quoted_midpoint": 0.1901151373990868,
+      "reaction_price": 0.0964724634999059,
+      "difference": -0.0936426738991809
+    },
+    {
+      "frame": 126,
+      "u": 3.0,
+      "phase": "post",
+      "root_count": 3,
+      "quoted_midpoint": 0.3865477051304045,
+      "reaction_price": null,
+      "difference": null
+    },
+    {
+      "frame": 127,
+      "u": 3.025,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.3832515069954887,
+      "reaction_price": 0.09909906501001838,
+      "difference": -0.28415244198547035
+    },
+    {
+      "frame": 128,
+      "u": 3.0500000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.3588764224794576,
+      "reaction_price": 0.10172714220320078,
+      "difference": -0.25714928027625683
+    },
+    {
+      "frame": 129,
+      "u": 3.075,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.3347569317750123,
+      "reaction_price": 0.10435495704794372,
+      "difference": -0.23040197472706858
+    },
+    {
+      "frame": 130,
+      "u": 3.1,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.31416034646180035,
+      "reaction_price": 0.10698109025846114,
+      "difference": -0.2071792562033392
+    },
+    {
+      "frame": 131,
+      "u": 3.125,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.29700319507563666,
+      "reaction_price": 0.10960448049260779,
+      "difference": -0.18739871458302887
+    },
+    {
+      "frame": 132,
+      "u": 3.15,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.28260463852023543,
+      "reaction_price": 0.11222441392038221,
+      "difference": -0.17038022459985322
+    },
+    {
+      "frame": 133,
+      "u": 3.1750000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2702830896083501,
+      "reaction_price": 0.1148467278734391,
+      "difference": -0.15543636173491104
+    },
+    {
+      "frame": 134,
+      "u": 3.2,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.25956422700905524,
+      "reaction_price": 0.11746594603134403,
+      "difference": -0.1420982809777112
+    },
+    {
+      "frame": 135,
+      "u": 3.225,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.25012273417987174,
+      "reaction_price": 0.12008121877654536,
+      "difference": -0.13004151540332637
+    },
+    {
+      "frame": 136,
+      "u": 3.25,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.24173471792768542,
+      "reaction_price": 0.1226923892636955,
+      "difference": -0.11904232866398992
+    },
+    {
+      "frame": 137,
+      "u": 3.275,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2341612135280946,
+      "reaction_price": 0.12529915568162936,
+      "difference": -0.10886205784646524
+    },
+    {
+      "frame": 138,
+      "u": 3.3000000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.227267958530863,
+      "reaction_price": 0.1279009760360673,
+      "difference": -0.09936698249479572
+    },
+    {
+      "frame": 139,
+      "u": 3.325,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.22100434261246882,
+      "reaction_price": 0.13049701084982784,
+      "difference": -0.09050733176264097
+    },
+    {
+      "frame": 140,
+      "u": 3.35,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.21518777477762008,
+      "reaction_price": 0.13308611851091004,
+      "difference": -0.08210165626671004
+    },
+    {
+      "frame": 141,
+      "u": 3.375,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.20982977148050708,
+      "reaction_price": 0.135666909360933,
+      "difference": -0.07416286211957407
+    },
+    {
+      "frame": 142,
+      "u": 3.4,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.20482448385632068,
+      "reaction_price": 0.1382397617843806,
+      "difference": -0.06658472207194008
+    },
+    {
+      "frame": 143,
+      "u": 3.4250000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.2001208073820706,
+      "reaction_price": 0.1408061001814282,
+      "difference": -0.059314707200642414
+    },
+    {
+      "frame": 144,
+      "u": 3.45,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.19574936450884062,
+      "reaction_price": 0.14335985509444793,
+      "difference": -0.05238950941439269
+    },
+    {
+      "frame": 145,
+      "u": 3.475,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.19156251646841804,
+      "reaction_price": 0.1458998806446136,
+      "difference": -0.04566263582380445
+    },
+    {
+      "frame": 146,
+      "u": 3.5,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.18762004375391417,
+      "reaction_price": 0.14842538103862096,
+      "difference": -0.039194662715293205
+    },
+    {
+      "frame": 147,
+      "u": 3.525,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.18390351252814963,
+      "reaction_price": 0.1509359417385344,
+      "difference": -0.032967570789615236
+    },
+    {
+      "frame": 148,
+      "u": 3.5500000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.18030189283209275,
+      "reaction_price": 0.15343150696073662,
+      "difference": -0.026870385871356123
+    },
+    {
+      "frame": 149,
+      "u": 3.575,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.17685216031253548,
+      "reaction_price": 0.1559123103015137,
+      "difference": -0.020939850011021777
+    },
+    {
+      "frame": 150,
+      "u": 3.6,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.17356097700495265,
+      "reaction_price": 0.15837877040483567,
+      "difference": -0.015182206600116988
+    },
+    {
+      "frame": 151,
+      "u": 3.625,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.17039733765003362,
+      "reaction_price": 0.16083136578868534,
+      "difference": -0.009565971861348277
+    },
+    {
+      "frame": 152,
+      "u": 3.65,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.1672939331182044,
+      "reaction_price": 0.16327239529208448,
+      "difference": -0.004021537826119914
+    },
+    {
+      "frame": 153,
+      "u": 3.6750000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.16431656719860888,
+      "reaction_price": 0.16570437760405993,
+      "difference": 0.001387810405451051
+    },
+    {
+      "frame": 154,
+      "u": 3.7,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.16145315615045863,
+      "reaction_price": 0.16812317718666905,
+      "difference": 0.006670021036210422
+    },
+    {
+      "frame": 155,
+      "u": 3.725,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.1586881054128697,
+      "reaction_price": 0.17052827683262287,
+      "difference": 0.01184017141975316
+    },
+    {
+      "frame": 156,
+      "u": 3.75,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.15594166618426053,
+      "reaction_price": 0.1729186836569236,
+      "difference": 0.01697701747266306
+    },
+    {
+      "frame": 157,
+      "u": 3.775,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.15328483783999003,
+      "reaction_price": 0.1752928875010783,
+      "difference": 0.02200804966108827
+    },
+    {
+      "frame": 158,
+      "u": 3.8000000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.15071476774632275,
+      "reaction_price": 0.1776488447422016,
+      "difference": 0.026934076995878853
+    },
+    {
+      "frame": 159,
+      "u": 3.825,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.1482294786537759,
+      "reaction_price": 0.1799839853952711,
+      "difference": 0.031754506741495214
+    },
+    {
+      "frame": 160,
+      "u": 3.85,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.14580616625226162,
+      "reaction_price": 0.1822952404983288,
+      "difference": 0.03648907424606718
+    },
+    {
+      "frame": 161,
+      "u": 3.875,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.14341833306108098,
+      "reaction_price": 0.1845790862787318,
+      "difference": 0.04116075321765081
+    },
+    {
+      "frame": 162,
+      "u": 3.9,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.14111059006668514,
+      "reaction_price": 0.18683160142589972,
+      "difference": 0.04572101135921458
+    },
+    {
+      "frame": 163,
+      "u": 3.9250000000000003,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.13887961654385528,
+      "reaction_price": 0.18905200110492879,
+      "difference": 0.05017238456107351
+    },
+    {
+      "frame": 164,
+      "u": 3.95,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.13671939008131595,
+      "reaction_price": 0.19123375008160373,
+      "difference": 0.05451436000028778
+    },
+    {
+      "frame": 165,
+      "u": 3.975,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.13461984264795346,
+      "reaction_price": 0.19337062283869635,
+      "difference": 0.058750780190742896
+    },
+    {
+      "frame": 166,
+      "u": 4.0,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.13251687385588173,
+      "reaction_price": 0.19545777477752366,
+      "difference": 0.06294090092164192
+    },
+    {
+      "frame": 167,
+      "u": 4.025,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.13045408010132897,
+      "reaction_price": 0.19749033110642222,
+      "difference": 0.06703625100509325
+    },
+    {
+      "frame": 168,
+      "u": 4.05,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.12843099340641162,
+      "reaction_price": 0.19946345881105182,
+      "difference": 0.0710324654046402
+    },
+    {
+      "frame": 169,
+      "u": 4.075,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.12644534252669848,
+      "reaction_price": 0.20137243344475758,
+      "difference": 0.0749270909180591
+    },
+    {
+      "frame": 170,
+      "u": 4.1,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.12449622407758865,
+      "reaction_price": 0.2032126996623357,
+      "difference": 0.07871647558474706
+    },
+    {
+      "frame": 171,
+      "u": 4.125,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.12258343637590396,
+      "reaction_price": 0.2049799247609499,
+      "difference": 0.08239648838504593
+    },
+    {
+      "frame": 172,
+      "u": 4.15,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.12066123213535018,
+      "reaction_price": 0.20667004479327455,
+      "difference": 0.08600881265792437
+    },
+    {
+      "frame": 173,
+      "u": 4.175,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.1187709697526862,
+      "reaction_price": 0.2082793030794209,
+      "difference": 0.08950833332673472
+    },
+    {
+      "frame": 174,
+      "u": 4.2,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.11691876022444925,
+      "reaction_price": 0.2098042811659934,
+      "difference": 0.09288552094154415
+    },
+    {
+      "frame": 175,
+      "u": 4.225,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.11510457688999587,
+      "reaction_price": 0.21124192246332804,
+      "difference": 0.09613734557333217
+    },
+    {
+      "frame": 176,
+      "u": 4.25,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.11332823289863159,
+      "reaction_price": 0.2125896658275791,
+      "difference": 0.09926143292894751
+    },
+    {
+      "frame": 177,
+      "u": 4.275,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.11158854199671886,
+      "reaction_price": 0.21384654404727416,
+      "difference": 0.1022580020505553
+    },
+    {
+      "frame": 178,
+      "u": 4.3,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.1098786713062263,
+      "reaction_price": 0.21500894666593143,
+      "difference": 0.10513027535970512
+    },
+    {
+      "frame": 179,
+      "u": 4.325,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.10815077485178382,
+      "reaction_price": 0.21607537439722221,
+      "difference": 0.1079245995454384
+    },
+    {
+      "frame": 180,
+      "u": 4.3500000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.10644152903637316,
+      "reaction_price": 0.21704471856906987,
+      "difference": 0.11060318953269671
+    },
+    {
+      "frame": 181,
+      "u": 4.375,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.10474702741000197,
+      "reaction_price": 0.21791625097015807,
+      "difference": 0.1131692235601561
+    },
+    {
+      "frame": 182,
+      "u": 4.4,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.1030658983071393,
+      "reaction_price": 0.21868961019287114,
+      "difference": 0.11562371188573184
+    },
+    {
+      "frame": 183,
+      "u": 4.425,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.10139846875469694,
+      "reaction_price": 0.21936478506782667,
+      "difference": 0.11796631631312973
+    },
+    {
+      "frame": 184,
+      "u": 4.45,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0997460055866295,
+      "reaction_price": 0.2199420957554539,
+      "difference": 0.1201960901688244
+    },
+    {
+      "frame": 185,
+      "u": 4.4750000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.09811018528632642,
+      "reaction_price": 0.2204221730264524,
+      "difference": 0.12231198774012597
+    },
+    {
+      "frame": 186,
+      "u": 4.5,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.09647942392748377,
+      "reaction_price": 0.22080593622612515,
+      "difference": 0.12432651229864139
+    },
+    {
+      "frame": 187,
+      "u": 4.525,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.09484211948249,
+      "reaction_price": 0.2210945703776549,
+      "difference": 0.1262524508951649
+    },
+    {
+      "frame": 188,
+      "u": 4.55,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.09322722853938004,
+      "reaction_price": 0.22128950283635718,
+      "difference": 0.12806227429697714
+    },
+    {
+      "frame": 189,
+      "u": 4.575,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0916360286833533,
+      "reaction_price": 0.22139237986072324,
+      "difference": 0.12975635117736994
+    },
+    {
+      "frame": 190,
+      "u": 4.6000000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.09006955833855068,
+      "reaction_price": 0.22140504341679085,
+      "difference": 0.13133548507824017
+    },
+    {
+      "frame": 191,
+      "u": 4.625,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.08852863003593159,
+      "reaction_price": 0.22132950848070823,
+      "difference": 0.13280087844477664
+    },
+    {
+      "frame": 192,
+      "u": 4.65,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.08701385182111698,
+      "reaction_price": 0.22116794105189003,
+      "difference": 0.13415408923077304
+    },
+    {
+      "frame": 193,
+      "u": 4.675,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.08552565156204617,
+      "reaction_price": 0.22092263703849604,
+      "difference": 0.13539698547644988
+    },
+    {
+      "frame": 194,
+      "u": 4.7,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.08406430126342679,
+      "reaction_price": 0.22059600213115288,
+      "difference": 0.1365317008677261
+    },
+    {
+      "frame": 195,
+      "u": 4.7250000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.08261109480740769,
+      "reaction_price": 0.22019053274241762,
+      "difference": 0.13757943793500993
+    },
+    {
+      "frame": 196,
+      "u": 4.75,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0811708933863744,
+      "reaction_price": 0.21970879805991922,
+      "difference": 0.13853790467354482
+    },
+    {
+      "frame": 197,
+      "u": 4.775,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.07975844061125414,
+      "reaction_price": 0.21915342324026713,
+      "difference": 0.13939498262901298
+    },
+    {
+      "frame": 198,
+      "u": 4.8,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.07837221306341036,
+      "reaction_price": 0.21852707375731925,
+      "difference": 0.1401548606939089
+    },
+    {
+      "frame": 199,
+      "u": 4.825,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.07700930244747184,
+      "reaction_price": 0.2178324409100878,
+      "difference": 0.14082313846261596
+    },
+    {
+      "frame": 200,
+      "u": 4.8500000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0756677243210051,
+      "reaction_price": 0.21707222849016358,
+      "difference": 0.14140450416915848
+    },
+    {
+      "frame": 201,
+      "u": 4.875,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.07434732705981295,
+      "reaction_price": 0.21624914060401698,
+      "difference": 0.14190181354420403
+    },
+    {
+      "frame": 202,
+      "u": 4.9,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.07304915222619357,
+      "reaction_price": 0.21536587064060742,
+      "difference": 0.14231671841441385
+    },
+    {
+      "frame": 203,
+      "u": 4.925,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.07177462456401562,
+      "reaction_price": 0.21442509136861634,
+      "difference": 0.14265046680460072
+    },
+    {
+      "frame": 204,
+      "u": 4.95,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.07052505546121468,
+      "reaction_price": 0.21342944614026613,
+      "difference": 0.14290439067905145
+    },
+    {
+      "frame": 205,
+      "u": 4.9750000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.06929975892730855,
+      "reaction_price": 0.21238141348602715,
+      "difference": 0.1430816545587186
+    },
+    {
+      "frame": 206,
+      "u": 5.0,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.06807337613739017,
+      "reaction_price": 0.2112825321629848,
+      "difference": 0.14320915602559461
+    },
+    {
+      "frame": 207,
+      "u": 5.025,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.06687421719450004,
+      "reaction_price": 0.21013623762063594,
+      "difference": 0.1432620204261359
+    },
+    {
+      "frame": 208,
+      "u": 5.05,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.06570234658881668,
+      "reaction_price": 0.20894498468077227,
+      "difference": 0.1432426380919556
+    },
+    {
+      "frame": 209,
+      "u": 5.075,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.06455761082004363,
+      "reaction_price": 0.20771117103318554,
+      "difference": 0.1431535602131419
+    },
+    {
+      "frame": 210,
+      "u": 5.1000000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.06343969281989592,
+      "reaction_price": 0.2064371340559285,
+      "difference": 0.14299744123603259
+    },
+    {
+      "frame": 211,
+      "u": 5.125,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.062348157279719096,
+      "reaction_price": 0.20512514835776952,
+      "difference": 0.14277699107805042
+    },
+    {
+      "frame": 212,
+      "u": 5.15,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.06128248665114633,
+      "reaction_price": 0.20377742396257215,
+      "difference": 0.14249493731142582
+    },
+    {
+      "frame": 213,
+      "u": 5.175,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.06024210890697512,
+      "reaction_price": 0.20239610505182232,
+      "difference": 0.1421539961448472
+    },
+    {
+      "frame": 214,
+      "u": 5.2,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.05922641851650878,
+      "reaction_price": 0.20098326918135215,
+      "difference": 0.14175685066484336
+    },
+    {
+      "frame": 215,
+      "u": 5.2250000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.05823479204569981,
+      "reaction_price": 0.19954092689257807,
+      "difference": 0.14130613484687826
+    },
+    {
+      "frame": 216,
+      "u": 5.25,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.057266599597949774,
+      "reaction_price": 0.1980710216474793,
+      "difference": 0.14080442204952953
+    },
+    {
+      "frame": 217,
+      "u": 5.275,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.05631788920094527,
+      "reaction_price": 0.1965754300291505,
+      "difference": 0.14025754082820524
+    },
+    {
+      "frame": 218,
+      "u": 5.3,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.05537087264726681,
+      "reaction_price": 0.1950559621642835,
+      "difference": 0.1396850895170167
+    },
+    {
+      "frame": 219,
+      "u": 5.325,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.05444604167299083,
+      "reaction_price": 0.19351436233823935,
+      "difference": 0.13906832066524852
+    },
+    {
+      "frame": 220,
+      "u": 5.3500000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.05354279648986937,
+      "reaction_price": 0.19195230978558475,
+      "difference": 0.13840951329571538
+    },
+    {
+      "frame": 221,
+      "u": 5.375,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.05266055187345309,
+      "reaction_price": 0.19037141964785803,
+      "difference": 0.13771086777440494
+    },
+    {
+      "frame": 222,
+      "u": 5.4,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.051798738555686175,
+      "reaction_price": 0.1887732440953504,
+      "difference": 0.13697450553966423
+    },
+    {
+      "frame": 223,
+      "u": 5.425,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.05095680403489178,
+      "reaction_price": 0.18715871703215034,
+      "difference": 0.13620191299725856
+    },
+    {
+      "frame": 224,
+      "u": 5.45,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.05013421295724907,
+      "reaction_price": 0.18552760680153654,
+      "difference": 0.13539339384428747
+    },
+    {
+      "frame": 225,
+      "u": 5.4750000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.049330447185992554,
+      "reaction_price": 0.1838832940382224,
+      "difference": 0.13455284685222985
+    },
+    {
+      "frame": 226,
+      "u": 5.5,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04854500564583297,
+      "reaction_price": 0.18222709861888037,
+      "difference": 0.1336820929730474
+    },
+    {
+      "frame": 227,
+      "u": 5.525,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04777740400835695,
+      "reaction_price": 0.1805602855283585,
+      "difference": 0.13278288152000156
+    },
+    {
+      "frame": 228,
+      "u": 5.55,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04702717426772285,
+      "reaction_price": 0.178884066791854,
+      "difference": 0.13185689252413116
+    },
+    {
+      "frame": 229,
+      "u": 5.575,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04629386424349713,
+      "reaction_price": 0.177199603488262,
+      "difference": 0.13090573924476487
+    },
+    {
+      "frame": 230,
+      "u": 5.6000000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.045577037038084356,
+      "reaction_price": 0.17550800781814008,
+      "difference": 0.12993097078005572
+    },
+    {
+      "frame": 231,
+      "u": 5.625,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04487627046906306,
+      "reaction_price": 0.17381034519898914,
+      "difference": 0.12893407472992607
+    },
+    {
+      "frame": 232,
+      "u": 5.65,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04419115649137151,
+      "reaction_price": 0.1721076363611011,
+      "difference": 0.1279164798697296
+    },
+    {
+      "frame": 233,
+      "u": 5.675,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04351884551498619,
+      "reaction_price": 0.17040085941884356,
+      "difference": 0.12688201390385737
+    },
+    {
+      "frame": 234,
+      "u": 5.7,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04284798234095755,
+      "reaction_price": 0.1686909518947454,
+      "difference": 0.12584296955378785
+    },
+    {
+      "frame": 235,
+      "u": 5.7250000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04219207619230003,
+      "reaction_price": 0.1669788126768094,
+      "difference": 0.12478673648450936
+    },
+    {
+      "frame": 236,
+      "u": 5.75,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04155075758475668,
+      "reaction_price": 0.16526530389293317,
+      "difference": 0.12371454630817649
+    },
+    {
+      "frame": 237,
+      "u": 5.775,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04092366864038244,
+      "reaction_price": 0.16355125268987902,
+      "difference": 0.12262758404949659
+    },
+    {
+      "frame": 238,
+      "u": 5.8,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.04031046260854021,
+      "reaction_price": 0.1618363038027793,
+      "difference": 0.12152584119423909
+    },
+    {
+      "frame": 239,
+      "u": 5.825,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03971080340504329,
+      "reaction_price": 0.16012043991281089,
+      "difference": 0.12040963650776759
+    },
+    {
+      "frame": 240,
+      "u": 5.8500000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.039124364871124584,
+      "reaction_price": 0.15840617364703088,
+      "difference": 0.1192818087759063
+    },
+    {
+      "frame": 241,
+      "u": 5.875,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03855072203332943,
+      "reaction_price": 0.15669421367523392,
+      "difference": 0.11814349164190449
+    },
+    {
+      "frame": 242,
+      "u": 5.9,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.037988086347812366,
+      "reaction_price": 0.15498524094029587,
+      "difference": 0.1169971545924835
+    },
+    {
+      "frame": 243,
+      "u": 5.925,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.037431639630044256,
+      "reaction_price": 0.15327990977275296,
+      "difference": 0.11584827014270871
+    },
+    {
+      "frame": 244,
+      "u": 5.95,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03687507094128595,
+      "reaction_price": 0.15157884890486392,
+      "difference": 0.11470377796357797
+    },
+    {
+      "frame": 245,
+      "u": 5.9750000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0363130976771906,
+      "reaction_price": 0.149882662390896,
+      "difference": 0.11356956471370541
+    },
+    {
+      "frame": 246,
+      "u": 6.0,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.035742520759333374,
+      "reaction_price": 0.1481919304411426,
+      "difference": 0.11244940968180922
+    },
+    {
+      "frame": 247,
+      "u": 6.025,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03516211390090129,
+      "reaction_price": 0.1465072101776517,
+      "difference": 0.1113450962767504
+    },
+    {
+      "frame": 248,
+      "u": 6.05,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03457210207418626,
+      "reaction_price": 0.14482903631983737,
+      "difference": 0.11025693424565111
+    },
+    {
+      "frame": 249,
+      "u": 6.075,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03397362870853149,
+      "reaction_price": 0.14315792180812675,
+      "difference": 0.10918429309959526
+    },
+    {
+      "frame": 250,
+      "u": 6.1000000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03336834031475089,
+      "reaction_price": 0.14149435837358215,
+      "difference": 0.10812601805883126
+    },
+    {
+      "frame": 251,
+      "u": 6.125,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03275809974840138,
+      "reaction_price": 0.13983881706105486,
+      "difference": 0.10708071731265348
+    },
+    {
+      "frame": 252,
+      "u": 6.15,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.032144802978187226,
+      "reaction_price": 0.13819174871283277,
+      "difference": 0.10604694573464554
+    },
+    {
+      "frame": 253,
+      "u": 6.175,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03153026973478745,
+      "reaction_price": 0.13655201189635816,
+      "difference": 0.1050217421615707
+    },
+    {
+      "frame": 254,
+      "u": 6.2,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.03091618363285642,
+      "reaction_price": 0.13492036946188427,
+      "difference": 0.10400418582902785
+    },
+    {
+      "frame": 255,
+      "u": 6.2250000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.030304064030100886,
+      "reaction_price": 0.13329834471733018,
+      "difference": 0.1029942806872293
+    },
+    {
+      "frame": 256,
+      "u": 6.25,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.029692501266482374,
+      "reaction_price": 0.13168631694253516,
+      "difference": 0.10199381567605278
+    },
+    {
+      "frame": 257,
+      "u": 6.275,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.029074403856155673,
+      "reaction_price": 0.1300846470718512,
+      "difference": 0.10101024321569552
+    },
+    {
+      "frame": 258,
+      "u": 6.3,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.028461975919854332,
+      "reaction_price": 0.12849367795753153,
+      "difference": 0.1000317020376772
+    },
+    {
+      "frame": 259,
+      "u": 6.325,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.027856109343558533,
+      "reaction_price": 0.12691373456765628,
+      "difference": 0.09905762522409775
+    },
+    {
+      "frame": 260,
+      "u": 6.3500000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.02725755887015202,
+      "reaction_price": 0.12534512410563736,
+      "difference": 0.09808756523548534
+    },
+    {
+      "frame": 261,
+      "u": 6.375,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.026666956701006495,
+      "reaction_price": 0.12378813604260012,
+      "difference": 0.09712117934159363
+    },
+    {
+      "frame": 262,
+      "u": 6.4,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.026084826464523925,
+      "reaction_price": 0.12224304206082813,
+      "difference": 0.0961582155963042
+    },
+    {
+      "frame": 263,
+      "u": 6.425,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.025511596186994723,
+      "reaction_price": 0.12071009591484255,
+      "difference": 0.09519849972784783
+    },
+    {
+      "frame": 264,
+      "u": 6.45,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.024947610105642504,
+      "reaction_price": 0.11918953322520176,
+      "difference": 0.09424192311955926
+    },
+    {
+      "frame": 265,
+      "u": 6.4750000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.02439313928683351,
+      "reaction_price": 0.1176815712274659,
+      "difference": 0.0932884319406324
+    },
+    {
+      "frame": 266,
+      "u": 6.5,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.023848391083747256,
+      "reaction_price": 0.11618640850407863,
+      "difference": 0.09233801742033138
+    },
+    {
+      "frame": 267,
+      "u": 6.525,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.02331351750657218,
+      "reaction_price": 0.11470422472966368,
+      "difference": 0.0913907072230915
+    },
+    {
+      "frame": 268,
+      "u": 6.55,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.022788622596770836,
+      "reaction_price": 0.11323518046034338,
+      "difference": 0.09044655786357254
+    },
+    {
+      "frame": 269,
+      "u": 6.575,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.022273768903172453,
+      "reaction_price": 0.11177835763303522,
+      "difference": 0.08950458872986276
+    },
+    {
+      "frame": 270,
+      "u": 6.6000000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.021768983156542188,
+      "reaction_price": 0.11033382347184399,
+      "difference": 0.0885648403153018
+    },
+    {
+      "frame": 271,
+      "u": 6.625,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.021274261234186742,
+      "reaction_price": 0.10890274651065374,
+      "difference": 0.087628485276467
+    },
+    {
+      "frame": 272,
+      "u": 6.65,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.02078957249892799,
+      "reaction_price": 0.10748521367819183,
+      "difference": 0.08669564117926384
+    },
+    {
+      "frame": 273,
+      "u": 6.675,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.020314863588774656,
+      "reaction_price": 0.10608129305022602,
+      "difference": 0.08576642946145137
+    },
+    {
+      "frame": 274,
+      "u": 6.7,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.01985006172553172,
+      "reaction_price": 0.104691034322422,
+      "difference": 0.08484097259689027
+    },
+    {
+      "frame": 275,
+      "u": 6.7250000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.019395077602773814,
+      "reaction_price": 0.10331446941559722,
+      "difference": 0.0839193918128234
+    },
+    {
+      "frame": 276,
+      "u": 6.75,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.018949807906448957,
+      "reaction_price": 0.10195161320405012,
+      "difference": 0.08300180529760116
+    },
+    {
+      "frame": 277,
+      "u": 6.775,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.01851413751477926,
+      "reaction_price": 0.10060246435408612,
+      "difference": 0.08208832683930686
+    },
+    {
+      "frame": 278,
+      "u": 6.8,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.018087941418268638,
+      "reaction_price": 0.09926700625723787,
+      "difference": 0.08117906483896924
+    },
+    {
+      "frame": 279,
+      "u": 6.825,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.017671086395426805,
+      "reaction_price": 0.09794520804104057,
+      "difference": 0.08027412164561376
+    },
+    {
+      "frame": 280,
+      "u": 6.8500000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.017263432475221663,
+      "reaction_price": 0.09663702563939205,
+      "difference": 0.07937359316417039
+    },
+    {
+      "frame": 281,
+      "u": 6.875,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.01686483421326157,
+      "reaction_price": 0.09534240290447106,
+      "difference": 0.07847756869120949
+    },
+    {
+      "frame": 282,
+      "u": 6.9,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.01647514180521137,
+      "reaction_price": 0.09406127274269445,
+      "difference": 0.07758613093748308
+    },
+    {
+      "frame": 283,
+      "u": 6.925,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.01609420205788581,
+      "reaction_price": 0.0927935582582197,
+      "difference": 0.07669935620033388
+    },
+    {
+      "frame": 284,
+      "u": 6.95,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.01572185923581948,
+      "reaction_price": 0.09153917388884586,
+      "difference": 0.07581731465302638
+    },
+    {
+      "frame": 285,
+      "u": 6.9750000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.015357955798812828,
+      "reaction_price": 0.0902980265207669,
+      "difference": 0.07494007072195408
+    },
+    {
+      "frame": 286,
+      "u": 7.0,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.01499782444307396,
+      "reaction_price": 0.08907001657037271,
+      "difference": 0.07407219212729875
+    },
+    {
+      "frame": 287,
+      "u": 7.025,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.014643133128718677,
+      "reaction_price": 0.08785503902308633,
+      "difference": 0.07321190589436766
+    },
+    {
+      "frame": 288,
+      "u": 7.05,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.014296595994974126,
+      "reaction_price": 0.08665195187016675,
+      "difference": 0.07235535587519262
+    },
+    {
+      "frame": 289,
+      "u": 7.075,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.013958049184170207,
+      "reaction_price": 0.08546122058305017,
+      "difference": 0.07150317139887996
+    },
+    {
+      "frame": 290,
+      "u": 7.1000000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.013627329566071822,
+      "reaction_price": 0.08428315725823296,
+      "difference": 0.07065582769216114
+    },
+    {
+      "frame": 291,
+      "u": 7.125,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.013304275058090731,
+      "reaction_price": 0.08311764580770782,
+      "difference": 0.06981337074961709
+    },
+    {
+      "frame": 292,
+      "u": 7.15,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.012988724900532933,
+      "reaction_price": 0.08196456898157832,
+      "difference": 0.06897584408104539
+    },
+    {
+      "frame": 293,
+      "u": 7.175,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.012680519892329212,
+      "reaction_price": 0.08082380903871171,
+      "difference": 0.0681432891463825
+    },
+    {
+      "frame": 294,
+      "u": 7.2,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.012379502591985059,
+      "reaction_price": 0.07969524834841216,
+      "difference": 0.0673157457564271
+    },
+    {
+      "frame": 295,
+      "u": 7.2250000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.012085517487942177,
+      "reaction_price": 0.07857876992425802,
+      "difference": 0.06649325243631585
+    },
+    {
+      "frame": 296,
+      "u": 7.25,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.011798411142019294,
+      "reaction_price": 0.07747425789200447,
+      "difference": 0.06567584674998518
+    },
+    {
+      "frame": 297,
+      "u": 7.275,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.011518032309152826,
+      "reaction_price": 0.07638159789407266,
+      "difference": 0.06486356558491983
+    },
+    {
+      "frame": 298,
+      "u": 7.3,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.011244232036286217,
+      "reaction_price": 0.0753006774336226,
+      "difference": 0.06405644539733639
+    },
+    {
+      "frame": 299,
+      "u": 7.325,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.010976863742908183,
+      "reaction_price": 0.07423138616159193,
+      "difference": 0.06325452241868375
+    },
+    {
+      "frame": 300,
+      "u": 7.3500000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.010715783285452751,
+      "reaction_price": 0.07317361611033714,
+      "difference": 0.06245783282488439
+    },
+    {
+      "frame": 301,
+      "u": 7.375,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.010460849007495998,
+      "reaction_price": 0.07212726187769257,
+      "difference": 0.06166641287019657
+    },
+    {
+      "frame": 302,
+      "u": 7.4,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.010211921777483646,
+      "reaction_price": 0.07109222076535442,
+      "difference": 0.06088029898787077
+    },
+    {
+      "frame": 303,
+      "u": 7.425,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.009968865015502981,
+      "reaction_price": 0.07006839287551997,
+      "difference": 0.06009952786001699
+    },
+    {
+      "frame": 304,
+      "u": 7.45,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.00973154471044202,
+      "reaction_price": 0.06905568116968898,
+      "difference": 0.05932413645924696
+    },
+    {
+      "frame": 305,
+      "u": 7.4750000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.009499829428726958,
+      "reaction_price": 0.06805399149344316,
+      "difference": 0.0585541620647162
+    },
+    {
+      "frame": 306,
+      "u": 7.5,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.009273590315693081,
+      "reaction_price": 0.06706323257091118,
+      "difference": 0.0577896422552181
+    },
+    {
+      "frame": 307,
+      "u": 7.525,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.009052701090515036,
+      "reaction_price": 0.06608331597247336,
+      "difference": 0.05703061488195832
+    },
+    {
+      "frame": 308,
+      "u": 7.55,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.008837038035533151,
+      "reaction_price": 0.0651141560590915,
+      "difference": 0.05627711802355835
+    },
+    {
+      "frame": 309,
+      "u": 7.575,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.00862647998069388,
+      "reaction_price": 0.06415566990646047,
+      "difference": 0.055529189925766595
+    },
+    {
+      "frame": 310,
+      "u": 7.6000000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.008420908283770512,
+      "reaction_price": 0.0632077772119811,
+      "difference": 0.054786868928210594
+    },
+    {
+      "frame": 311,
+      "u": 7.625,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.008220206806927255,
+      "reaction_price": 0.06227018462297854,
+      "difference": 0.05404997781605129
+    },
+    {
+      "frame": 312,
+      "u": 7.65,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.008024261890140938,
+      "reaction_price": 0.061342362113124355,
+      "difference": 0.05331810022298342
+    },
+    {
+      "frame": 313,
+      "u": 7.675,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.007832962321941306,
+      "reaction_price": 0.06042489237848733,
+      "difference": 0.05259193005654603
+    },
+    {
+      "frame": 314,
+      "u": 7.7,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.007646199307862922,
+      "reaction_price": 0.05951770534861503,
+      "difference": 0.05187150604075211
+    },
+    {
+      "frame": 315,
+      "u": 7.7250000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.007463866436965283,
+      "reaction_price": 0.05862073292597138,
+      "difference": 0.051156866489006095
+    },
+    {
+      "frame": 316,
+      "u": 7.75,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.007285859646746218,
+      "reaction_price": 0.05773390884096824,
+      "difference": 0.05044804919422202
+    },
+    {
+      "frame": 317,
+      "u": 7.775,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0071120771867239085,
+      "reaction_price": 0.05685716850502624,
+      "difference": 0.049745091318302334
+    },
+    {
+      "frame": 318,
+      "u": 7.8,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0069424195809384415,
+      "reaction_price": 0.0559904488630896,
+      "difference": 0.04904802928215116
+    },
+    {
+      "frame": 319,
+      "u": 7.825,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.006776789589582055,
+      "reaction_price": 0.05513368824685652,
+      "difference": 0.048356898657274466
+    },
+    {
+      "frame": 320,
+      "u": 7.8500000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.0066150921699765775,
+      "reaction_price": 0.05428682622982618,
+      "difference": 0.047671734059849605
+    },
+    {
+      "frame": 321,
+      "u": 7.875,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.006457234437049042,
+      "reaction_price": 0.05344980348512214,
+      "difference": 0.0469925690480731
+    },
+    {
+      "frame": 322,
+      "u": 7.9,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.006303125623466688,
+      "reaction_price": 0.05262256164690367,
+      "difference": 0.04631943602343698
+    },
+    {
+      "frame": 323,
+      "u": 7.925,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.006152677039567678,
+      "reaction_price": 0.0518050431760738,
+      "difference": 0.045652366136506126
+    },
+    {
+      "frame": 324,
+      "u": 7.95,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.006005802033202112,
+      "reaction_price": 0.050997191230852,
+      "difference": 0.04499138919764989
+    },
+    {
+      "frame": 325,
+      "u": 7.9750000000000005,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.005862415949591249,
+      "reaction_price": 0.05019894954269452,
+      "difference": 0.04433653359310327
+    },
+    {
+      "frame": 326,
+      "u": 8.0,
+      "phase": "post",
+      "root_count": 1,
+      "quoted_midpoint": 0.005722436091294636,
+      "reaction_price": 0.049410262297940946,
+      "difference": 0.04368782620664631
+    }
+  ],
+  "reaction_price_max_abs_midpoint_difference": 0.3184671045929532,
+  "ambiguous_reaction_price_frames": 6,
+  "distributed_replenishment_reference": {
+    "scope": "Frozen whole-line killed-diffusion reference only; no fit or validation of the nonlinear DTRW response.",
+    "placement_width": 0.5,
+    "cancellation_length": 1.0,
+    "width_over_length": 0.5,
+    "initial_penetration_depth": [
+      1.6094344828161233,
+      1.6094344828161242
+    ],
+    "edge_point_attenuation": [
+      0.20000068592477163,
+      0.20000068592477147
+    ],
+    "uniform_placement_attenuation": [
+      0.15738827589568138,
+      0.15738827589568127
+    ],
+    "uniform_to_edge_point_ratio": 0.7869386805747332,
+    "decision": "Use the distributed-profile convolution for this pilot. This width is not a demonstrated narrow-placement limit."
+  },
+  "scope": "Saved fields and fixed source geometry only. No new path, trade tape, source, equation or figure."
+}

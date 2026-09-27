@@ -1,5 +1,8 @@
 """Focused numerical figures and a video, all from stored trajectories."""
 import csv
+import io
+import tempfile
+from pathlib import Path
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
@@ -42,12 +45,16 @@ def event_band(ax,c):
 def save(fig,folder,name):
     stem=folder/(name+'-'+VERSION)
     fig.savefig(str(stem)+'.png',dpi=160)
-    target=folder/(name+'-'+VERSION+'.pdf');temporary=target.with_suffix('.pdf.tmp')
-    fig.savefig(temporary,format='pdf',metadata={'CreationDate':None,'ModDate':None});plt.close(fig)
-    content=temporary.read_bytes()
+    target=folder/(name+'-'+VERSION+'.pdf');buffer=io.BytesIO()
+    try:fig.savefig(buffer,format='pdf',metadata={'CreationDate':None,'ModDate':None})
+    finally:plt.close(fig)
+    content=buffer.getvalue()
     if not content.startswith(b'%PDF-') or not content.rstrip().endswith(b'%%EOF'):
         raise ValueError('Incomplete PDF export: '+str(target))
-    temporary.replace(target)
+    # Stage complete bytes on the same filesystem; clean up on every exit.
+    with tempfile.TemporaryDirectory(prefix='pdf-stage-',dir=folder) as directory:
+        temporary=Path(directory)/'export'
+        temporary.write_bytes(content);temporary.replace(target)
 
 
 def draw_density(ax,x,rho,initial,row,m):

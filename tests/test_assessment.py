@@ -6,9 +6,27 @@ import numpy as np
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from functions.assessment import parent_distribution,order_tape,renewal_reference,grid_model,source_membership,membership_changes,long_run,increment_covariance_parts,frozen_execution_probe,source_quadrature_probe
 from functions.core import external_source,placement_weights
+from functions.assessment import continuous_fill_reference
 
 
 class AssessmentTests(unittest.TestCase):
+    def test_continuous_reference_exact_moments_reflection_and_capacity(self):
+        x=np.linspace(-2,2,9);y=x+3;quote=.2;volume=.7
+        front=np.sqrt((quote+3)**2+2*volume)-3
+        moment=lambda z:z**3/3+1.5*z**2
+        expected=(moment(front)-moment(quote))/volume
+        result=continuous_fill_reference(x,y,quote,1.,volume,1)
+        self.assertAlmostEqual(result['terminal_price'],front,places=13)
+        self.assertAlmostEqual(result['mean_log_price'],expected,places=13)
+        mirrored=continuous_fill_reference(x,y[::-1],-quote,1.,volume,-1)
+        self.assertAlmostEqual(mirrored['mean_log_price'],-expected,places=13)
+        refined=np.linspace(-2,2,65)
+        finer=continuous_fill_reference(refined,np.interp(refined,x,y),quote,1.,volume,1)
+        self.assertAlmostEqual(finer['mean_log_price'],expected,places=13)
+        short=continuous_fill_reference(x,y,quote,1.,100.,1)
+        self.assertAlmostEqual(short['filled_quantity'],3.7,places=13)
+        self.assertAlmostEqual(short['unfilled_quantity'],96.3,places=13)
+
     def test_frozen_probes_preserve_field_quotes_and_source_normalization(self):
         m=grid_model({'dx':.1,'du':.001},phase=.5)
         rho=np.array([1/(1+np.exp(m.x+3)),1/(1+np.exp(-m.x+3))]);original=rho.copy()

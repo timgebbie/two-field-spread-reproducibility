@@ -12,7 +12,7 @@ import matplotlib
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from functions.experiments import VERSION,load_config,run_experiments,dump,save_manifest,verify_manifest
-from functions.assessment import assess,market_maker_runs,statistical_runs,comparison_report,analyse_statistics,resolution_runs,analyse_resolution,diagnose_resolution
+from functions.assessment import assess,market_maker_runs,statistical_runs,comparison_report,analyse_statistics,resolution_runs,analyse_resolution,diagnose_resolution,audit_discretization
 
 
 def main():
@@ -28,6 +28,7 @@ def main():
         if args.render_only:raise SystemExit('Select one saved-data route')
         verify_manifest(ROOT)
         diagnose_resolution(ROOT,c,VERSION)
+        audit_discretization(ROOT,c,VERSION)
         verify_manifest(ROOT)
         print(VERSION+' frozen-state diagnosis reproduced; no new path evolved.')
         return
@@ -45,6 +46,7 @@ def main():
         analyse_resolution(ROOT,c,VERSION)
         report=run_experiments(ROOT,c,m,result.testsRun)
         diagnose_resolution(ROOT,c,VERSION)
+        audit_discretization(ROOT,c,VERSION)
         dump(ROOT/'outputs'/('environment-'+VERSION+'.json'),{'python':platform.python_version(),'numpy':np.__version__,
             'matplotlib':matplotlib.__version__,'platform':platform.system(),
             'ffmpeg':subprocess.check_output(['ffmpeg','-version'],text=True).splitlines()[0]})

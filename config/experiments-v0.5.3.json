@@ -1,5 +1,5 @@
 {
-  "version": "v0.5.2",
+  "version": "v0.5.3",
   "model": {
     "x_min": -12.0125,
     "x_max": 12.0125,
@@ -419,5 +419,17 @@
       128
     ],
     "interpretation": "Read-only operator probes on frozen saved fields and quotes; no newly evolved trajectory and no causal attribution of full-path differences."
+  },
+  "audit": {
+    "execution_subdivisions": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "letter_version": "v1.2.0",
+    "letter_sha256": "576a690f2a3cf5b5e87c462dbd19cdad8af96c4afa85e7f592311bf278077322",
+    "interpretation": "Pinned long-paper nodal specification retained. Continuous piecewise-linear execution is a non-evolving comparison reference, not an alternative solver."
   }
 }

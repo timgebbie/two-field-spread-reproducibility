@@ -1,8 +1,9 @@
-# Source provenance v0.5.2
+# Source provenance v0.5.3
 
 - Accepted scaffold: `two-field-spread-reproducibility` v0.0.0, commit `53d85bfe2fbd6812ceb9195adac3b7b9e504d402`.
 - Long paper: `TwoFieldSpread-v1.1.9`, original uploaded ZIP SHA-256 `9953b97aaf8b69f2539daa117051a1875042c8f6df7fd0da32578eda8fb2f893`.
-- Pinned letter: `SpreadLetter-v0.2.0`, original uploaded ZIP SHA-256 `a4fc11512b9b537f2de26e4027016edbe2d308a4c54843a935b6c63c42737e34`.
+- Historical letter: `SpreadLetter-v0.2.0`, original uploaded ZIP SHA-256 `a4fc11512b9b537f2de26e4027016edbe2d308a4c54843a935b6c63c42737e34`.
+- Current letter: `SpreadLetter-v1.2.0`, supplied 27 September 2026; Christopher Angstmann, Derick Diana and Tim Gebbie, in that order. Original ZIP SHA-256 `576a690f2a3cf5b5e87c462dbd19cdad8af96c4afa85e7f592311bf278077322`. Both the supplied TeX and five-page PDF carry these authors.
 - Accepted implementation-design specification: v0.1.0; source-shape, slope/capacity and threshold-branch qualifications are carried into this version.
 - Numerical/presentation prototype: [correlation-emergence v2.2.0](https://github.com/timgebbie/correlation-emergence-reproducibility/releases/tag/v2.2.0), commit `70e88f7157a4a18e63a4e407be9eae05f8667f9c`.
 - Algorithm/measurement antecedent: [correlation-emergence v2.0.0](https://github.com/timgebbie/correlation-emergence-reproducibility/releases/tag/v2.0.0), commit `3107bacecb407f2b90c13c5f9f1c52136aa0184c`.
@@ -28,7 +29,7 @@ The following exact v2.0.0 components were inspected at the commit above. SHA-25
 
 The v2.2.0 tape, path-diagnostic and refresh-sampling files are byte-identical to those v2.0.0 components. Its numerical algorithms, renewal clocks and Pareto-run configuration were also inspected. The earlier finite-persistence sign fixture is not relabelled as LMF. The new observable implementation was written independently to the documented measurement convention and compared against the executable estimator. No prototype production module is shipped as a runtime dependency.
 
-The matched reaction-free, cancellation-free interior operator agrees within 2.3e-16; positive-cancellation differences equal the derived survivor difference within 3.4e-16. The new ACF agrees with the prior executable ACF within 1.2e-16 on the registered nondegenerate comparison. These checks do not establish whole-model equivalence or fractional two-side correctness. That v0.4.1 audit left the core and numerical trajectories unchanged from v0.4.0. In v0.5.2, `core.py` is still byte-identical (SHA-256 `b8c4a1349b51d730fb44f0afbdf73f5e776e0376315f0d29bc5bb12a4f853315`); new grids and registered inputs produce new trajectories. The compatibility JSON is retained as a historical component audit, not a v0.5.2 convergence certificate.
+The matched reaction-free, cancellation-free interior operator agrees within 2.3e-16; positive-cancellation differences equal the derived survivor difference within 3.4e-16. The new ACF agrees with the prior executable ACF within 1.2e-16 on the registered nondegenerate comparison. These checks do not establish whole-model equivalence or fractional two-side correctness. That v0.4.1 audit left the core and numerical trajectories unchanged from v0.4.0. In v0.5.3, `core.py` is still byte-identical (SHA-256 `b8c4a1349b51d730fb44f0afbdf73f5e776e0376315f0d29bc5bb12a4f853315`); no v0.5.3 field trajectory is newly evolved. The compatibility JSON is retained as a historical component audit, not a v0.5.3 convergence certificate.
 
 ## Literature crosswalk
 
@@ -40,12 +41,14 @@ The matched reaction-free, cancellation-free interior operator agrees within 2.3
 
 The uploaded long-paper bibliography has mixed CAM title/year/volume metadata; this supplement uses the publisher DOI metadata above. The uploaded manuscripts remain byte-for-byte unchanged. The new draft is an algorithm specification and experiment design, not scientific acceptance of numerical agreement with their limiting analysis.
 
-## v0.5.2 scope
+## Retained numerical lineage and current audit
 
-This patch retains the v0.5.0 numerical assessment and adds four full paired paths at a common operational time step. Field updates, physical child volume, sign tapes and measurement definitions are unchanged. The added source-support measurements do not feed back into the solver. Two focused tests check support masks and invariant paths under measurement/restart. The archived v0.5.0 F5 PDF was incomplete; this version regenerates it and checks that PDF export has completed before replacement.
+v0.5.1 added four full common-step paths to the v0.5.0 numerical assessment and repaired the incomplete F5 PDF. v0.5.2 added the frozen-operator and covariance diagnostics. These stages are not relabelled as newly computed v0.5.3 trajectories. Their seven NPZ archives and 17 CSV tapes remain byte-identical under the active versioned names. Prior full numerical recovery evidence applies to those unchanged arrays.
 
-The 18 finite assessment cases, 23 market-maker comparisons, 26 statistical benchmark paths and four primary trajectories are carried from v0.5.0 commit `a18779fb78fadcb0f6c8fe54c7ce8b08d3916bbe`, whose numerical recovery was checked. Their numeric arrays and tapes are preserved; current version identifiers and the test-count record are updated. The complete reproduction command can regenerate every case. Four new resolution paths and their diagnostic summaries are computed in this patch.
+v0.5.3 checks the literal nodal source support, normalization, forcing cap and threshold interpolation against long-paper v1.1.9. The production core remains unchanged. A cell-average source assigned to node centres is rejected as an unchanged implementation of the discrete equations. Continuous integration is used only as a frozen execution-price reference. The added paper-audit JSON records reference errors, source-support counterexample, reaction-zero multiplicity and the distributed-placement response benchmark.
 
-No prototype production module, new strategic agent, field equation, source smoothing, transport memory or observation clock is introduced. All F2–F6/V1 content comes from retained numerical trajectories or the declared input reference. The original manuscript ZIPs remain pinned and unchanged. Numerical acceptance remains open until the evidence supports it.
+The current letter clarifies one-field threshold width versus an independent placement scale; branch-specific supply withholding; reaction price versus quoted midpoint; distributed versus narrow placement; density-response versus first-passage kernels; and finite-window capacity. Its new figure's dotted latent-book reference is not an additive density or an external source. These distinctions inform the implementation and supplement; the schematic is not added to the simulation figure inventory.
 
-The v0.5.2 patch adds only frozen-operator and saved-path diagnostics. Its seven inherited NPZ archives and 17 CSV tapes retain their v0.5.1 bytes under the new versioned names. The core recurrence, execution, source and quote definitions are unchanged. The v0.5.1 full paired numerical repeats remain the evidence for those inherited paths; v0.5.2 does not claim a new full ensemble.
+The current letter's sentence immediately after the field decomposition should distinguish two facts: symmetric reaction cancels algebraically from the imbalance equation even with unequal D or nu; equal coefficients remove the transport/cancellation coupling to total density. This is a wording issue, not a reason to alter the implemented equal-coefficient recurrence. The supplied manuscripts are preserved unchanged. Long-paper authorship is recorded as supplied and is not silently changed to match the new letter.
+
+F2–F6 and V1 remain the entire output inventory. No strategic agent, new source law, transport memory or calendar clock is introduced. The PDF writer now stages complete bytes in a temporary directory with automatic cleanup; that repair changes no numerical result. Private manuscript ZIPs and recovery administration stay outside the scientific source tree.

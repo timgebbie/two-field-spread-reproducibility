@@ -505,3 +505,99 @@ def diagnose_resolution(root,c,version):
         'max_acf_sum_residual':max(abs(r['sum_residual']) for p in paths for r in p['acf_decomposition'])}
     (out/('diagnosis-'+version+'.json')).write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
     return report
+
+
+def continuous_fill_reference(x,density,quote,depth,volume,direction):
+    """Exact volume and first moment of a frozen piecewise-linear density.
+
+    Consume continuously outward from quote for comparison only. No field
+    changes, new trade tape or alternate evolving solver is produced.
+    """
+    x=np.asarray(x,dtype=float);density=np.asarray(density,dtype=float)
+    if x.ndim!=1 or len(x)<2 or density.shape!=x.shape or np.any(np.diff(x)<=0):
+        raise ValueError('Invalid reference grid')
+    if not np.all(np.isfinite(x)) or not np.all(np.isfinite(density)) or np.any(density<0):
+        raise ValueError('Invalid reference density')
+    if direction not in (-1,1) or not np.all(np.isfinite([quote,depth,volume])) or depth<=0 or volume<=0:
+        raise ValueError('Invalid reference request')
+    end=quote+direction*depth
+    if not x[0]<=min(quote,end)<=max(quote,end)<=x[-1]:raise ValueError('Reference interval leaves grid')
+    distance=direction*(x-quote);knots=np.r_[0.,np.sort(distance[(distance>0)&(distance<depth)]),depth]
+    values=np.interp(quote+direction*knots,x,density)
+    remaining=float(volume);filled=moment=0.;front=float(quote)
+    for t0,t1,a,b in zip(knots[:-1],knots[1:],values[:-1],values[1:]):
+        if remaining<=0:break
+        width=t1-t0;slope=(b-a)/width;capacity=width*(a+b)/2
+        if capacity<=0:continue
+        take=min(remaining,capacity)
+        length=width if take==capacity else 2*take/(a+np.sqrt(max(0.,a*a+2*slope*take)))
+        start=quote+direction*t0
+        moment+=start*take+direction*(a*length**2/2+slope*length**3/3)
+        filled+=take;remaining-=take;front=quote+direction*(t0+length)
+    return {'filled_quantity':float(filled),'unfilled_quantity':float(max(remaining,0.)),
+        'mean_log_price':float(moment/filled) if filled>0 else None,'terminal_price':float(front)}
+
+
+def audit_discretization(root,c,version):
+    """Paper constraints and current-letter benchmarks, without evolution."""
+    out=root/'outputs';m=Model(**c['model']);subdivisions=c['audit']['execution_subdivisions']
+    comparisons=[];references=[];reaction=[]
+    with np.load(out/('density-'+version+'.npz')) as saved:
+        x=saved['x'];fields=saved['pre_consumption'];rho=saved['rho'];initial=saved['initial']
+    with (out/('density-index-'+version+'.csv')).open() as f:index=list(csv.DictReader(f))
+    for event,field in enumerate(fields):
+        obs=observe(m,field)
+        for side in (0,1):
+            for volume in c['diagnosis']['volumes']:
+                ref=continuous_fill_reference(x,field[side],obs['p_b' if side==0 else 'p_a'],m.execution_depth,volume,-1 if side==0 else 1)
+                references.append(dict(event=event,side=side,volume=volume,**ref))
+                for subdivision in subdivisions:
+                    probe=frozen_execution_probe(m,field,subdivision,volume,side)
+                    comparisons.append({'event':event,'side':side,'volume':volume,'dx':m.dx/subdivision,
+                        'nodal_price':probe['execution_log_price'],'reference_price':ref['mean_log_price'],
+                        'price_error':probe['execution_log_price']-ref['mean_log_price'],
+                        'fill_nodes':probe['fill_nodes'],'unfilled':probe['unfilled']})
+    error=[]
+    for volume in c['diagnosis']['volumes']:
+        for subdivision in subdivisions:
+            rows=[r for r in comparisons if r['volume']==volume and r['dx']==m.dx/subdivision]
+            error.append({'volume':volume,'dx':m.dx/subdivision,'max_abs_price_error':max(abs(r['price_error']) for r in rows),
+                          'rms_price_error':float(np.sqrt(np.mean([r['price_error']**2 for r in rows])))})
+    # A cell average cannot silently replace a literal nodal support formula.
+    node=float(x[np.argmin(abs(x-6.))]);q=np.array([-node-m.dx/4,node+m.dx/4])
+    left=x-m.dx/2;right=x+m.dx/2
+    averaged=np.array([np.maximum(0,np.minimum(right,q[0])-left),np.maximum(0,right-np.maximum(left,q[1]))])/m.dx
+    averaged[:,[0,-1]]=0;inward=np.array([x>q[0],x<q[1]])
+    lit,latent=external_source(m,q);original=lit+latent
+    counterexample={'q':q.tolist(),'candidate':'Cell average of the unit pilot source stored at node centres',
+        'inward_nodes_with_candidate_supply':int(np.count_nonzero((averaged>0)&inward)),
+        'inward_candidate_rate':float(m.dx*averaged[inward].sum()),'inward_nodal_rate':float(m.dx*original[inward].sum()),
+        'decision':'Rejected as a drop-in replacement: violates literal discrete nodal support. A finite-volume interpretation needs an explicit changed contract.'}
+    for frame,(field,row) in enumerate(zip(rho,index)):
+        phi=field[0]-field[1];hits=np.flatnonzero(phi[:-1]*phi[1:]<0)
+        roots=np.r_[x[phi==0],x[hits]-phi[hits]*(x[hits+1]-x[hits])/(phi[hits+1]-phi[hits])]
+        unique=len(roots)==1 and not np.any((phi[:-1]==0)&(phi[1:]==0))
+        mid=(float(row['p_b'])+float(row['p_a']))/2
+        reaction.append({'frame':frame,'u':float(row['u']),'phase':row['phase'],'root_count':len(roots),
+            'quoted_midpoint':mid,'reaction_price':float(roots[0]) if unique else None,
+            'difference':float(roots[0]-mid) if unique else None})
+    obs=observe(m,initial);q=placement(m,[0.,0.]);length=np.sqrt(m.D/m.nu)
+    depth=np.array([obs['p_b']-q[0],q[1]-obs['p_a']]);point=np.exp(-depth/length)
+    factor=-np.expm1(-m.placement_width/length)*length/m.placement_width
+    kernel={'scope':'Frozen whole-line killed-diffusion reference only; no fit or validation of the nonlinear DTRW response.',
+        'placement_width':m.placement_width,'cancellation_length':float(length),'width_over_length':float(m.placement_width/length),
+        'initial_penetration_depth':depth.tolist(),'edge_point_attenuation':point.tolist(),
+        'uniform_placement_attenuation':(point*factor).tolist(),'uniform_to_edge_point_ratio':float(factor),
+        'decision':'Use the distributed-profile convolution for this pilot. This width is not a demonstrated narrow-placement limit.'}
+    report={'version':version,'long_paper_version':'v1.1.9','letter_version':c['audit']['letter_version'],
+        'letter_sha256':c['audit']['letter_sha256'],'letter_authors':['Christopher Angstmann','Derick Diana','Tim Gebbie'],
+        'acceptance':'D2 pending; no production source/execution correction justified by this audit',
+        'core_equation_labels':['eq:bid','eq:ask','eq:litBid','eq:litAsk','eq:latentBid','eq:latentAsk','eq:placementWeights','eq:placementSupportQuote','eq:forcingCap','eq:discreteBidCrossing'],
+        'source_counterexample':counterexample,'continuous_execution_reference':references,'nodal_execution_comparison':comparisons,
+        'execution_error_summary':error,'reaction_price_samples':reaction,
+        'reaction_price_max_abs_midpoint_difference':max(abs(r['difference']) for r in reaction if r['difference'] is not None),
+        'ambiguous_reaction_price_frames':sum(r['reaction_price'] is None for r in reaction),
+        'distributed_replenishment_reference':kernel,
+        'scope':'Saved fields and fixed source geometry only. No new path, trade tape, source, equation or figure.'}
+    (out/('paper-audit-'+version+'.json')).write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    return report
