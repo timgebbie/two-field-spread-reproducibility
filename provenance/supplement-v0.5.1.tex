@@ -5,7 +5,7 @@
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 \usepackage{fancyhdr}
 \pagestyle{fancy}\fancyhf{}
-\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.0}
+\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.1}
 \cfoot{\thepage}\setlength{\headheight}{14pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
 \setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=4pt}
@@ -14,8 +14,8 @@
 \begin{document}
 \begin{center}
 {\Large\bfseries Two Field Spread: numerical algorithms}\par
-{\large v0.5.0 implementation and numerical assessment}\par
-25 September 2026
+{\large v0.5.1 implementation and numerical assessment}\par
+27 September 2026
 \end{center}
 \textbf{Status.} The Markov solver, execution tape and long-run diagnostic correlations are
 implemented and tested. Numerical convergence and scientific acceptance
@@ -240,32 +240,21 @@ F6 has the six CCFs. Every panel uses retained simulation data or the
 declared sign-input reference. No independent theory gallery is required.
 
 \newpage
-\section{Assessment and limits of v0.5.0}
+\section{Assessment and limits of v0.5.1}
 The 18-case study varies grid, time step, domain, support phase, threshold
-and execution depth while retaining the supplied equations. All 23 focused
+and execution depth while retaining the supplied equations. All 25 focused
 tests pass. Main finite trajectories have field and completion-ledger errors
 below $3.2\times10^{-15}$ and $2.6\times10^{-15}$; this verifies accounting,
 not convergence. The source and execution supports remain nodal and hard.
 
-\begin{center}
-\begin{tabular}{lrr}
-\toprule
-Grid $\dx$ & Late spread change: on-node & Between-node\\
-\midrule
-0.1    & 0.19674 & -0.00036\\
-0.05   & 0.09820 & 0.00134\\
-0.025  & 0.04973 & 0.00307\\
-0.0125 & 0.02642 & 0.00496\\
-\bottomrule
-\end{tabular}
-\end{center}
-These finite-horizon changes at $u=8$ identify a source/grid-phase effect;
-they are not permanent impact. Half-cell padding preserves reflection,
-with its small reservoir displacement assessed separately. The finest
-paired spread differences are 0.02059 on-node and 0.01224 between-node,
-both exceeding the registered 0.01 tolerance. Time-step and domain effects
-are substantially smaller over the tested pilot; execution depths 1 and 4
-produce identical paths. Source smoothing was not introduced.
+The node-aligned late spread change at $u=8$ falls from 0.19674 to
+0.02642 as $\dx$ decreases from 0.1 to 0.0125. Between-node source
+placement reduces the fine-grid offset to 0.00496. These are discretization
+and finite-horizon effects, not permanent impact. The finest paired spread
+differences remain 0.02059 on-node and 0.01224 between-node, exceeding
+the registered 0.01 tolerance. Separate domain checks assess the small
+reservoir displacement from half-cell padding. Execution depths 1 and 4
+produce identical paths; source smoothing was not introduced.
 
 The balanced programme leaves the same total post-event pending stock as
 the directional programme after the sixth child, approximately 0.1379,
@@ -275,20 +264,38 @@ midpoint effect is 0, 0.01494 and 0.00737 on successive grids. At the coarse
 grid the moving centre does not change source-node membership. It would be
 incorrect to infer from that zero that centre feedback is absent.
 
-Long-path refinement changes midpoint-increment ACFs by up to 0.225 and
-spread ACFs by up to 0.193. Their current curves are not numerically accepted.
-The order-splitting mean lag-one midpoint ACF is about 0.319, so returns
-are not white. Independent-sign trade returns have lag-one ACF about
-$-0.496$, consistent with strong bid/ask bounce. Absolute trade increments
-have an alternating short-lag pattern. Eight paths and a finite cap do not
-establish universal long memory, volatility clustering or stationary limits.
-Signed spread-change correlations and magnitude/spread correlations answer
-different symmetry questions; neither establishes causality.
-
-The next focused patch must investigate grid resolution of threshold quotes
-and price-priority execution with the same physical child volume. No extra
-agent, new equation or desired statistical signature is introduced to repair
-a discretization problem. Numerical acceptance remains open.
+The v0.5.1 comparison holds the same two full tapes and physical child
+volume fixed. It uses $\dx=0.025,0.0125$ at common $\du=0.0000625$;
+the existing $\dx=0.025,\du=0.00025$ paths provide the time control.
+For pre/post-execution threshold midpoints,
+\[
+ \Delta m_n=(m_n^+-m_n^-)+(m_n^--m_{n-1}^+).
+\]
+Actual fill counts and support-membership changes at every field update
+are recorded without feeding back into the recurrence. The maximum
+correlation changes over the two pairs and retained lags are:
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Refinement & Midpoint ACF & Spread ACF & Any CCF\\
+\midrule
+Time only & 0.00389 & 0.00547 & 0.01130\\
+Space only & 0.10340 & 0.12893 & 0.11826\\
+\bottomrule
+\end{tabular}
+\end{center}
+Every retained child fills one node on the coarser grid and two on the
+finer grid. Source support changes within approximately 11--12\% versus
+24--25\% of event intervals. Execution-jump standard deviation falls from
+about 0.0182 to 0.0152; its cancellation with between-event movement also
+changes. This identifies spatial support/execution resolution as the main
+remaining correlation sensitivity, without assigning a unique cause.
+Time refinement still gives occasional spread differences up to 0.02461;
+small ACF changes do not establish pathwise quote accuracy. Fine-grid
+lag-one midpoint ACF is 0.636--0.651, so whitening is not demonstrated.
+Trade-return ACF changes are below 0.000175 in the spatial pairs. Eight
+benchmark paths and two refinement pairs establish neither universal
+price statistics nor asymptotic long memory. Numerical acceptance remains open.
 
 \textbf{Square-root impact and equilibrium.} A programme of one volume
 supplies no impact exponent. A future spread/meta-order study needs matched

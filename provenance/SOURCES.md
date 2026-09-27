@@ -1,4 +1,4 @@
-# Source provenance v0.5.0
+# Source provenance v0.5.1
 
 - Accepted scaffold: `two-field-spread-reproducibility` v0.0.0, commit `53d85bfe2fbd6812ceb9195adac3b7b9e504d402`.
 - Long paper: `TwoFieldSpread-v1.1.9`, original uploaded ZIP SHA-256 `9953b97aaf8b69f2539daa117051a1875042c8f6df7fd0da32578eda8fb2f893`.
@@ -28,7 +28,7 @@ The following exact v2.0.0 components were inspected at the commit above. SHA-25
 
 The v2.2.0 tape, path-diagnostic and refresh-sampling files are byte-identical to those v2.0.0 components. Its numerical algorithms, renewal clocks and Pareto-run configuration were also inspected. The earlier finite-persistence sign fixture is not relabelled as LMF. The new observable implementation was written independently to the documented measurement convention and compared against the executable estimator. No prototype production module is shipped as a runtime dependency.
 
-The matched reaction-free, cancellation-free interior operator agrees within 2.3e-16; positive-cancellation differences equal the derived survivor difference within 3.4e-16. The new ACF agrees with the prior executable ACF within 1.2e-16 on the registered nondegenerate comparison. These checks do not establish whole-model equivalence or fractional two-side correctness. That v0.4.1 audit left the core and numerical trajectories unchanged from v0.4.0. In v0.5.0, `core.py` is still byte-identical (SHA-256 `b8c4a1349b51d730fb44f0afbdf73f5e776e0376315f0d29bc5bb12a4f853315`); new grids and registered inputs produce new trajectories. The compatibility JSON is retained as a historical component audit, not a v0.5.0 convergence certificate.
+The matched reaction-free, cancellation-free interior operator agrees within 2.3e-16; positive-cancellation differences equal the derived survivor difference within 3.4e-16. The new ACF agrees with the prior executable ACF within 1.2e-16 on the registered nondegenerate comparison. These checks do not establish whole-model equivalence or fractional two-side correctness. That v0.4.1 audit left the core and numerical trajectories unchanged from v0.4.0. In v0.5.1, `core.py` is still byte-identical (SHA-256 `b8c4a1349b51d730fb44f0afbdf73f5e776e0376315f0d29bc5bb12a4f853315`); new grids and registered inputs produce new trajectories. The compatibility JSON is retained as a historical component audit, not a v0.5.1 convergence certificate.
 
 ## Literature crosswalk
 
@@ -40,6 +40,10 @@ The matched reaction-free, cancellation-free interior operator agrees within 2.3
 
 The uploaded long-paper bibliography has mixed CAM title/year/volume metadata; this supplement uses the publisher DOI metadata above. The uploaded manuscripts remain byte-for-byte unchanged. The new draft is an algorithm specification and experiment design, not scientific acceptance of numerical agreement with their limiting analysis.
 
-## v0.5.0 scope
+## v0.5.1 scope
 
-The added assessment module supplies numerical refinement, separated market-maker controls, a stationary capped renewal input and its exact reference. No prototype production module, new strategic agent, modified field equation, source smoothing, transport memory or observation clock is introduced. All F2–F6/V1 content comes from retained numerical trajectories or their declared input reference. Numerical and scientific acceptance remains pending. The pinned original manuscript ZIPs remain unchanged.
+This patch retains the v0.5.0 numerical assessment and adds four full paired paths at a common operational time step. Field updates, physical child volume, sign tapes and measurement definitions are unchanged. The added source-support measurements do not feed back into the solver. Two focused tests check support masks and invariant paths under measurement/restart. The archived v0.5.0 F5 PDF was incomplete; this version regenerates it and checks that PDF export has completed before replacement.
+
+The 18 finite assessment cases, 23 market-maker comparisons, 26 statistical benchmark paths and four primary trajectories are carried from v0.5.0 commit `a18779fb78fadcb0f6c8fe54c7ce8b08d3916bbe`, whose numerical recovery was checked. Their numeric arrays and tapes are preserved; current version identifiers and the test-count record are updated. The complete reproduction command can regenerate every case. Four new resolution paths and their diagnostic summaries are computed in this patch.
+
+No prototype production module, new strategic agent, field equation, source smoothing, transport memory or observation clock is introduced. All F2–F6/V1 content comes from retained numerical trajectories or the declared input reference. The original manuscript ZIPs remain pinned and unchanged. Numerical acceptance remains open until the evidence supports it.

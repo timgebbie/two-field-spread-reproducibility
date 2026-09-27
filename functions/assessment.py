@@ -3,8 +3,10 @@ from dataclasses import replace
 from concurrent.futures import ProcessPoolExecutor,as_completed
 import csv
 import json
+import hashlib
+from pathlib import Path
 import numpy as np
-from functions.core import Model,State,advance,stationary,observe
+from functions.core import Model,State,advance,stationary,observe,placement
 from functions.observables import trade_record,finish_tape,lag_correlation
 
 
@@ -81,6 +83,23 @@ LONG_COLUMNS=('p_b','p_a','midpoint','spread','pre_p_b','pre_p_a','execution_log
               'Q_B_post','Q_A_post','Sigma','mu','filled_quantity')
 
 
+def source_membership(m,q):
+    """Interior support intervals [start,stop), with the core's closed edges."""
+    x=m.x[1:-1];b,a=q;w=m.placement_width
+    return np.array([np.searchsorted(x,b,side='right'),np.searchsorted(x,a,side='left'),
+        np.searchsorted(x,b-w,side='left'),np.searchsorted(x,b,side='right'),
+        np.searchsorted(x,a,side='left'),np.searchsorted(x,a+w,side='right')],dtype=np.int32)
+
+
+def membership_changes(old,new):
+    external=int(abs(new[0]-old[0])+abs(new[1]-old[1]))
+    completion=0
+    for k in (2,4):
+        l,r=old[k:k+2];ll,rr=new[k:k+2]
+        completion+=int(r-l+rr-ll-2*max(0,min(r,rr)-max(l,ll)))
+    return external,completion
+
+
 def long_run(job):
     name,base,options,c,seed,kind=job
     m=grid_model(base,**options);initial,relax=stationary(m);state=State(initial.copy())
@@ -92,24 +111,72 @@ def long_run(job):
     if gap<1 or not np.isclose(gap*m.du,c['event_du']):raise ValueError('Unaligned long-run events')
     values=np.empty((n,len(LONG_COLUMNS)));max_budget=max_ledger=unfilled=0.;min_spread=float('inf')
     fills=[];offsets=[0];first_tape=[]
-    for event in range(n):
+    diagnostic=c.get('resolution_diagnostics',False)
+    support=np.zeros((n,9),dtype=np.int32) if diagnostic else None
+    previous=source_membership(m,placement(m,state.pending)) if diagnostic else None
+    start=0;checkpoint=Path(c['_checkpoint']) if c.get('_checkpoint') else None
+    signature=hashlib.sha256(json.dumps([name,base,options,{k:v for k,v in c.items() if not k.startswith('_')},seed,kind],sort_keys=True).encode()+
+        b''.join((Path(__file__).parent/f).read_bytes() for f in ('core.py','assessment.py','observables.py'))).hexdigest()
+    if checkpoint and checkpoint.exists():
+        with np.load(checkpoint) as saved:
+            if str(saved['signature'])!=signature:raise ValueError('Changed resolution checkpoint inputs')
+            start=len(saved['values']);values[:start]=saved['values'];support[:start]=saved['support']
+            state=State(saved['rho'],saved['pending'],saved['initiated'],saved['completed'],int(saved['step']))
+            fills=saved['fills'].tolist();offsets=saved['offsets'].tolist();previous=saved['previous']
+            max_budget,max_ledger,unfilled,min_spread=saved['checks'].tolist()
+        print(f'{name}: resumed at {start}/{n} events',flush=True)
+    for event in range(start,n):
+        changed=np.zeros(3,dtype=np.int32)
         for k in range(gap):
             request=[0.,0.]
             if k==gap-1:request[1 if signs[event]>0 else 0]=c['child_volume']
             state,r,d=advance(m,state,request)
             max_budget=max(max_budget,r['budget_error']);max_ledger=max(max_ledger,r['ledger_error'])
             min_spread=min(min_spread,r['spread']);unfilled+=r['unfilled_buy']+r['unfilled_sell']
+            if diagnostic:
+                current=source_membership(m,(r['q_b'],r['q_a']));ec,cc=membership_changes(previous,current)
+                changed+=np.array([ec,cc,int(ec>0 or cc>0)]);previous=current
         t,ff=trade_record(m,r,d['removed'],event+1,int(parents[event]))
         values[event]=[t['execution_log_price'] if key=='execution_log_price' else t['filled_quantity'] if key=='filled_quantity' else r[key] for key in LONG_COLUMNS]
         for f in ff:fills.append([f['grid_index'],f['filled_quantity']])
         offsets.append(len(fills))
         if name=='lmf-moving-0':first_tape.append(t)
+        if diagnostic:support[event]=np.r_[previous,changed]
+        if checkpoint and ((event+1)%c['progress_every_events']==0 or event==n-1):
+            checkpoint.parent.mkdir(parents=True,exist_ok=True);temporary=checkpoint.with_suffix('.tmp')
+            with temporary.open('wb') as f:
+                np.savez_compressed(f,signature=signature,values=values[:event+1],support=support[:event+1],
+                    rho=state.rho,pending=state.pending,initiated=state.initiated,completed=state.completed,step=state.step,
+                    fills=np.array(fills),offsets=np.array(offsets,dtype=np.int32),previous=previous,
+                    checks=np.array([max_budget,max_ledger,unfilled,min_spread]))
+            temporary.replace(checkpoint);print(f'{name}: saved {event+1}/{n} events',flush=True)
     if unfilled>1e-9:raise ValueError('Unfilled long-run demand: '+name)
     if first_tape:finish_tape(first_tape)
-    return {'name':name,'seed':seed,'kind':kind,'options':options,'values':values,'signs':signs,'parents':parents,
+    return {**({'support':support} if diagnostic else {}),'name':name,'seed':seed,'kind':kind,'options':options,'values':values,'signs':signs,'parents':parents,
       'runs':runs,'fills':np.array(fills),'offsets':np.array(offsets,dtype=np.int32),'tape':first_tape,
       'summary':{'max_budget_error':max_budget,'max_ledger_error':max_ledger,'minimum_spread':min_spread,
                  'unfilled':unfilled,'initialization':relax,'events_including_burn':n}}
+
+
+def resolution_runs(root,c,version,cache_dir=None):
+    """Four paired paths; cache is optional scratch, never an accepted result."""
+    s=dict(c['statistics'],resolution_diagnostics=True,progress_every_events=c['resolution']['progress_every_events'])
+    jobs=[]
+    for j in c['resolution']['replicates']:
+        for dx in c['resolution']['dx']:
+            name=f'resolution-{dx}-{j}';settings=dict(s)
+            if cache_dir:settings['_checkpoint']=str(Path(cache_dir)/(name+'.npz'))
+            options={k:c['resolution'][k] for k in ('du','phase','half_width')};options['dx']=dx
+            jobs.append((name,c['model'],options,settings,s['seeds'][j],'lmf'))
+    results=execute_jobs(long_run,jobs,c['assessment']['workers']);arrays={};meta=[]
+    for r in sorted(results,key=lambda x:x['name']):
+        for key in ('values','signs','parents','runs','fills','offsets','support'):arrays[r['name']+'-'+key]=r[key]
+        meta.append({k:r[k] for k in ('name','seed','kind','options','summary')})
+    np.savez_compressed(root/'outputs'/('resolution-paths-'+version+'.npz'),columns=np.array(LONG_COLUMNS),
+        support_columns=np.array(['bid_external_stop','ask_external_start','bid_completion_start','bid_completion_stop',
+        'ask_completion_start','ask_completion_stop','external_node_flips','completion_node_flips','changed_steps']),**arrays)
+    (root/'outputs'/('resolution-runs-'+version+'.json')).write_text(json.dumps(meta,indent=2)+'\n')
+    return arrays,meta
 
 
 def execute_jobs(worker,jobs,workers):
@@ -254,3 +321,38 @@ def analyse_statistics(root,c,version):
         w=csv.DictWriter(f,fieldnames=list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
     (out/('statistics-summary-'+version+'.json')).write_text(json.dumps(summary,indent=2,allow_nan=False)+'\n')
     return summary
+
+
+def analyse_resolution(root,c,version):
+    out=root/'outputs';new=np.load(out/('resolution-paths-'+version+'.npz'))
+    old=np.load(out/('statistics-paths-'+version+'.npz'));s=c['statistics'];burn=s['burn_events'];lag=s['maximum_lag']
+    report={'paths':[],'pairs':[],'acceptance':'pending','scope':'Two matched full tapes; same physical child volume. Half-cell long paths; both source phases retained in the finite assessment.'}
+    correlations={}
+    for j in c['resolution']['replicates']:
+        names=[('time-control-'+str(j),old,'lmf-fine-'+str(j))]+[(f'resolution-{dx}-{j}',new,f'resolution-{dx}-{j}') for dx in c['resolution']['dx']]
+        for label,data,key in names:
+            v=data[key+'-values'];sign=data[key+'-signs'];post=v[:,2];pre=v[:,4:6].mean(axis=1)
+            jump=(post-pre)[burn:];field=pre[burn:]-post[burn-1:-1];total=np.diff(post[burn-1:])
+            count=np.diff(data[key+'-offsets'])[burn:];acf,ccf=path_statistics(v,sign,burn,lag)
+            correlations[label+'-acf']=acf;correlations[label+'-ccf']=ccf
+            row={'name':label,'one_node_fraction':float(np.mean(count==1)),'mean_fill_nodes':float(count.mean()),'maximum_fill_nodes':int(count.max()),
+                'execution_jump_std':float(jump.std()),'field_increment_std':float(field.std()),'mid_increment_std':float(total.std()),
+                'jump_field_correlation':float(np.corrcoef(jump,field)[0,1]),'decomposition_max_error':float(np.max(abs(total-jump-field))),
+                'placement_width_range':float(np.ptp(v[burn:,9])), 'acf_at_lag_one':dict(zip(ACF_NAMES,acf[:,1].tolist()))}
+            if data is new:
+                support=data[key+'-support'][burn:];row['external_node_flips']=int(support[:,6].sum());row['completion_node_flips']=int(support[:,7].sum())
+                row['source_changed_step_fraction']=float(support[:,8].sum()/(len(support)*round(s['event_du']/c['resolution']['du'])))
+                row['events_with_source_change_fraction']=float(np.mean(support[:,8]>0))
+            report['paths'].append(row)
+        for kind,left,right in [('time',names[0],names[1]),('space',names[1],names[2])]:
+            ln,ld,lk=left;rn,rd,rk=right
+            for key in ('signs','parents','runs'):np.testing.assert_array_equal(ld[lk+'-'+key],rd[rk+'-'+key])
+            delta=rd[rk+'-values'][burn:,:4]-ld[lk+'-values'][burn:,:4]
+            report['pairs'].append({'replicate':j,'comparison':kind,'left':ln,'right':rn,'matched_tape':True,
+                'max_bid_ask_mid_spread_difference':np.max(abs(delta),axis=0).tolist(),'rms_bid_ask_mid_spread_difference':np.sqrt(np.mean(delta**2,axis=0)).tolist(),
+                'maximum_acf_difference':dict(zip(ACF_NAMES,np.max(abs(correlations[rn+'-acf']-correlations[ln+'-acf']),axis=1).tolist())),
+                'maximum_ccf_difference':dict(zip(CCF_NAMES,np.max(abs(correlations[rn+'-ccf']-correlations[ln+'-ccf']),axis=1).tolist()))})
+    report['finite_assessment']=json.loads((out/('assessment-comparisons-'+version+'.json')).read_text())
+    np.savez_compressed(out/('resolution-correlations-'+version+'.npz'),lags=np.arange(lag+1),ccf_lags=np.arange(-lag,lag+1),**correlations)
+    (out/('resolution-summary-'+version+'.json')).write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    return report

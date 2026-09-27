@@ -1,5 +1,5 @@
 {
-  "version": "v0.5.0",
+  "version": "v0.5.1",
   "model": {
     "x_min": -12.0125,
     "x_max": 12.0125,
@@ -381,5 +381,20 @@
       64
     ],
     "interpretation": "Finite truncated stationary renewal benchmark; fixed event-to-operational spacing; no calendar subordination. Correlations are diagnostic until numerical and sampling limits are assessed."
+  },
+  "resolution": {
+    "replicates": [
+      0,
+      1
+    ],
+    "dx": [
+      0.025,
+      0.0125
+    ],
+    "du": 6.25e-05,
+    "phase": 0.5,
+    "half_width": 12.0,
+    "progress_every_events": 512,
+    "interpretation": "Paired full tapes and physical child volume; common time step. Existing lmf-fine paths control time at dx=0.025. Both source phases remain in the finite assessment. No correlation convergence tolerance is invented."
   }
 }

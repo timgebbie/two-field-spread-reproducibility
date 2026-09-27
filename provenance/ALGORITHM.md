@@ -1,6 +1,6 @@
-# Numerical algorithm v0.5.0
+# Numerical algorithm v0.5.1
 
-[Compiled supplementary algorithms](supplement-v0.5.0.pdf) ([LaTeX source](supplement-v0.5.0.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
+[Compiled supplementary algorithms](supplement-v0.5.1.pdf) ([LaTeX source](supplement-v0.5.1.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
 
 Rows are bid then ask. The uniform coordinate is log price x; du is operational time per numerical update. Interior density values represent volume per log-price and each carries quadrature weight dx. Endpoint values are fixed reservoirs and are excluded from the interior standing-volume sum.
 
@@ -71,3 +71,13 @@ Static source terms do not automatically encode individual chartist/fundamentali
 ## Future Sibuya and observation contract
 
 Keep order-splitting memory, operational Sibuya transport, finite-mean round-trip completion, and calendar subordination separate. Preserve the prototype's raw kernel, single elapsed-time survival weighting, lag indexing, transport scaling and previous-completed-state observation convention. The current core has no transport history and no calendar clock. A nonlinear two-side fractional extension requires a stated treatment of reaction, births and removal in the history; it must not resurrect consumed volume. An infinite-mean completion law would violate the stationary placement assumptions even when Sibuya transport is appropriate. These are design constraints, not a claim of implemented plug-in compatibility.
+
+## Paired resolution measurements
+
+The same two complete renewal tapes are run at dx=0.025 and 0.0125, both with du=0.0000625. Physical child volume, event spacing, burn-in and retained event count are fixed. The stored dx=0.025, du=0.00025 paths provide the separate time-step comparison. These long paths use symmetric half-cell padding; both source phases remain in the finite assessment.
+
+For each executed event n, let m_n^- and m_n^+ be the pre- and post-consumption threshold midpoints. The exact decomposition is
+
+`m_n^+ - m_(n-1)^+ = (m_n^+ - m_n^-) + (m_n^- - m_(n-1)^+)`.
+
+The first component measures the execution jump; the second measures the field evolution since the preceding event. Actual fill counts come from recorded removed node volumes. At every field update, the external and completion support intervals are compared with those used on the preceding update. Count the nodes entering or leaving each support, including repeated changes within an event interval; event-level snapshots alone would miss those changes. These diagnostics do not alter the state update. Event-indexed ACFs and CCFs use the same estimator and lags as the benchmark.

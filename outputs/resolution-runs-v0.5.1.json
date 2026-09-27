@@ -1,0 +1,98 @@
+[
+  {
+    "name": "resolution-0.0125-0",
+    "seed": 41001,
+    "kind": "lmf",
+    "options": {
+      "du": 6.25e-05,
+      "phase": 0.5,
+      "half_width": 12.0,
+      "dx": 0.0125
+    },
+    "summary": {
+      "max_budget_error": 3.4366422129394024e-15,
+      "max_ledger_error": 6.007971897759035e-13,
+      "minimum_spread": 8.781114576410701,
+      "unfilled": 8.630249292984615e-16,
+      "initialization": {
+        "steps": 270854,
+        "operational_duration": 16.928375,
+        "max_rate_residual": 9.99911264898401e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "resolution-0.0125-1",
+    "seed": 41002,
+    "kind": "lmf",
+    "options": {
+      "du": 6.25e-05,
+      "phase": 0.5,
+      "half_width": 12.0,
+      "dx": 0.0125
+    },
+    "summary": {
+      "max_budget_error": 3.590106795289989e-15,
+      "max_ledger_error": 1.0113437864944785e-12,
+      "minimum_spread": 8.781114576410701,
+      "unfilled": 8.786374405822528e-16,
+      "initialization": {
+        "steps": 270854,
+        "operational_duration": 16.928375,
+        "max_rate_residual": 9.99911264898401e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "resolution-0.025-0",
+    "seed": 41001,
+    "kind": "lmf",
+    "options": {
+      "du": 6.25e-05,
+      "phase": 0.5,
+      "half_width": 12.0,
+      "dx": 0.025
+    },
+    "summary": {
+      "max_budget_error": 3.639982636323164e-15,
+      "max_ledger_error": 6.007971897759035e-13,
+      "minimum_spread": 8.781131032511457,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 270880,
+        "operational_duration": 16.93,
+        "max_rate_residual": 9.99911264898401e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  },
+  {
+    "name": "resolution-0.025-1",
+    "seed": 41002,
+    "kind": "lmf",
+    "options": {
+      "du": 6.25e-05,
+      "phase": 0.5,
+      "half_width": 12.0,
+      "dx": 0.025
+    },
+    "summary": {
+      "max_budget_error": 3.6808731518518656e-15,
+      "max_ledger_error": 1.0113437864944785e-12,
+      "minimum_spread": 8.781131032511457,
+      "unfilled": 0.0,
+      "initialization": {
+        "steps": 270880,
+        "operational_duration": 16.93,
+        "max_rate_residual": 9.99911264898401e-09,
+        "tolerance": 1e-08
+      },
+      "events_including_burn": 10240
+    }
+  }
+]

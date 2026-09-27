@@ -12,7 +12,7 @@ import matplotlib
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from functions.experiments import VERSION,load_config,run_experiments,dump,save_manifest,verify_manifest
-from functions.assessment import assess,market_maker_runs,statistical_runs,comparison_report,analyse_statistics
+from functions.assessment import assess,market_maker_runs,statistical_runs,comparison_report,analyse_statistics,resolution_runs,analyse_resolution
 
 
 def main():
@@ -33,6 +33,8 @@ def main():
         market_maker_runs(ROOT,c,VERSION)
         statistical_runs(ROOT,c,VERSION)
         analyse_statistics(ROOT,c,VERSION)
+        resolution_runs(ROOT,c,VERSION)
+        analyse_resolution(ROOT,c,VERSION)
         report=run_experiments(ROOT,c,m,result.testsRun)
         dump(ROOT/'outputs'/('environment-'+VERSION+'.json'),{'python':platform.python_version(),'numpy':np.__version__,
             'matplotlib':matplotlib.__version__,'platform':platform.system(),

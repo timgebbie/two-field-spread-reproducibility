@@ -1,36 +1,36 @@
 # Two Field Spread Reproducibility
 
-**v0.5.0 — numerical assessment and market-maker/correlation diagnostics.** The requested density-derived figures and trade tape are implemented. Numerical convergence and scientific acceptance remain pending: midpoint and spread correlations are sensitive to resolution. The Markov DTRW core is unchanged from v0.4.1; no manuscript equation has been modified.
+**v0.5.1 — controlled spatial/time refinement and execution diagnostics.** The requested density-derived figures and trade tape are implemented. Numerical convergence and scientific acceptance remain pending: midpoint and spread correlations are sensitive to resolution. The Markov DTRW core is unchanged from v0.4.1; no manuscript equation has been modified.
 
 [Figures](#focused-numerical-outputs) · [Reproduce](#reproduce) · [Configuration](#configuration-and-retained-data) · [Assessment](#verification-and-current-limits) · [Market maker](#aggregate-agents-and-the-market-maker) · [DTRW lineage](#dtrw-compatibility)
 
-The model evolves bid and ask densities in operational time through nearest-neighbour diffusion, cancellation and symmetric reaction. Actual aggressive executions initiate causal opposite-side replenishment. Pending exposure controls placement width and centre; inward density thresholds determine observed bid, ask, midpoint and spread. [Algorithm](provenance/ALGORITHM.md) and [supplement](provenance/supplement-v0.5.0.pdf) specify chronology, source geometry, execution and observation conventions.
+The model evolves bid and ask densities in operational time through nearest-neighbour diffusion, cancellation and symmetric reaction. Actual aggressive executions initiate causal opposite-side replenishment. Pending exposure controls placement width and centre; inward density thresholds determine observed bid, ask, midpoint and spread. [Algorithm](provenance/ALGORITHM.md) and [supplement](provenance/supplement-v0.5.1.pdf) specify chronology, source geometry, execution and observation conventions.
 
 ## Focused numerical outputs
 
-![Density evolution](figures/density-v0.5.0.png)
+![Density evolution](figures/density-v0.5.1.png)
 
 **F2. Density evolution.** Nine snapshots from six buys of volume 0.05 at u=1, 1.4, 1.8, 2.2, 2.6 and 3. Blue/red: bid/ask densities; grey: numerically relaxed initial field. Dotted placement quotes q differ from dashed threshold quotes p. The density threshold is 0.1. Pre/post pairs retain the execution impulse. Fixed display window [-8,8]; simulated domain [-12.0125,12.0125], dx=0.025, du=0.00025. Initial placement edges lie between grid nodes.
 
-![Prices and market-maker state](figures/timeseries-v0.5.0.png)
+![Prices and market-maker state](figures/timeseries-v0.5.1.png)
 
 **F3. Same-run time series.** Observed bid/ask/midpoint and actual fill-weighted execution log prices; observed spread and placement width; total and signed post-event pending stock; cumulative execution/completion; placement centre. Placement uses the residual old stock after delivery, before the current execution. The cumulative-flow panel is in volume units. Midpoint is the midpoint in log price.
 
-![Matched market-maker controls](figures/controls-v0.5.0.png)
+![Matched market-maker controls](figures/controls-v0.5.1.png)
 
 **F4. Market-maker controls.** One-sided and alternating buy/sell programmes have the same six absolute child volumes. Compare moving placement, next-update completion, both feedbacks off, width feedback off and centre feedback off. The displayed grid matches F2/F3. Responses subtract each case's initial stationary value; empty-pending reference dynamics coincide. Pending panels show post-event stock. The saved coarse/fine comparisons test sensitivity of the apparent feedback effect.
 
-![Event-time paths and autocorrelations](figures/autocorrelations-v0.5.0.png)
+![Event-time paths and autocorrelations](figures/autocorrelations-v0.5.1.png)
 
-**F5. Paths and ACFs.** Top: first 512 retained events of seed 41001. Lower panels: true signs, midpoint increments, execution-log-price increments, their absolute increments, and spread. Each curve averages eight independent paths of 8192 retained events after 2048 burn events. Compare order splitting/moving placement, independent signs/moving placement, and the same splitting tapes/fixed placement. The dashed sign reference is the exact finite-cap stationary renewal benchmark. Bands are descriptive mean ± two between-path standard errors. These long paths use dx=0.05, du=0.001; two paired refinements expose material midpoint/spread sensitivity. They are diagnostic figures, not accepted limiting laws.
+**F5. Paths and ACFs.** Top: first 512 retained events of seed 41001. Lower panels: true signs, midpoint increments, execution-log-price increments, their absolute increments, and spread. Each coloured curve averages eight independent paths of 8192 retained events after 2048 burn events. Compare order splitting/moving placement, independent signs/moving placement, and the same splitting tapes/fixed placement. The dashed sign reference is the exact finite-cap stationary renewal benchmark. Bands are descriptive mean ± two between-path standard errors. The coloured curves use dx=0.05, du=0.001. In the midpoint and spread panels, the black dotted/dashed curves compare the same two full tapes at dx=0.025/0.0125, both with du=0.0000625; they have no ensemble uncertainty band. They are diagnostic figures, not accepted limiting laws.
 
-![Cross-correlations](figures/cross-correlations-v0.5.0.png)
+![Cross-correlations](figures/cross-correlations-v0.5.1.png)
 
-**F6. Cross-correlations.** Same paths and uncertainty convention as F5. Positive lag means the first observable leads the second. Signed sign/spread-change and midpoint/spread-change correlations can cancel under buy/sell symmetry; magnitude/spread correlations address a different question. Correlation does not establish causality.
+**F6. Cross-correlations.** Same benchmark paths and uncertainty convention as F5, with the two-path common-step refinements shown as black dotted/dashed curves. Positive lag means the first observable leads the second. Signed sign/spread-change and midpoint/spread-change correlations can cancel under buy/sell symmetry; magnitude/spread correlations address a different question. Correlation does not establish causality.
 
-[![Video preview](figures/video-poster-v0.5.0.png)](figures/density-v0.5.0.mp4)
+[![Video preview](figures/video-poster-v0.5.1.png)](figures/density-v0.5.1.mp4)
 
-**V1. [24-second profile video](figures/density-v0.5.0.mp4).** The F2/F3 trajectory, fixed axes, operational-time/phase labels, spread and pending-stock cursors. Stored states are held between frames; children have consecutive pre/post frames. No interpolation across execution impulses. Five PNG/PDF figure pairs and one video constitute the focused inventory; no standalone theory gallery.
+**V1. [24-second profile video](figures/density-v0.5.1.mp4).** The F2/F3 trajectory, fixed axes, operational-time/phase labels, spread and pending-stock cursors. Stored states are held between frames; children have consecutive pre/post frames. No interpolation across execution impulses. Five PNG/PDF figure pairs and one video constitute the focused inventory; no standalone theory gallery.
 
 ## Reproduce
 
@@ -59,11 +59,11 @@ if ($LASTEXITCODE -ne 0) { throw 'Install FFmpeg with libx264 and add it to PATH
 if ($LASTEXITCODE -ne 0) { throw 'Reproduction failed' }
 ```
 
-The command runs 23 focused tests, 18 numerical assessment cases, 23 market-maker comparisons, 26 long paths, and the four main pilot/control trajectories, then produces all figures and the video. A repeat uses the same command. `python scripts/run_all.py --render-only` verifies the configuration/code/data hashes and redraws from saved states without solving. A changed input requires the complete route. The tested runtime is Python 3.12.14, NumPy 2.3.5 and Matplotlib 3.10.8 on Linux; Windows execution remains a later milestone.
+The command runs 25 focused tests, 18 numerical assessment cases, 23 market-maker comparisons, 26 benchmark paths plus four common-step resolution paths, and the four main pilot/control trajectories, then produces all figures and the video. A repeat uses the same command. `python scripts/run_all.py --render-only` verifies the configuration/code/data hashes and redraws from saved states without solving. A changed input requires the complete route. The tested runtime is Python 3.12.14, NumPy 2.3.5 and Matplotlib 3.10.8 on Linux; Windows execution remains a later milestone.
 
 ## Configuration and retained data
 
-`config/experiments-v0.5.0.json` is the sole active configuration. All parameters are dimensionless and illustrative. D=nu=1, kappa=0.5, Sigma0=12, chi_s=2, chi_m=0.5, completion time=1, placement width=0.5. Equal lit/latent amplitudes and lengths make total external supply constant outside placement edges. There is no empirical calibration.
+`config/experiments-v0.5.1.json` is the sole active configuration. All parameters are dimensionless and illustrative. D=nu=1, kappa=0.5, Sigma0=12, chi_s=2, chi_m=0.5, completion time=1, placement width=0.5. Equal lit/latent amplitudes and lengths make total external supply constant outside placement edges. There is no empirical calibration.
 
 | Directory | Active content |
 |---|---|
@@ -75,21 +75,32 @@ The command runs 23 focused tests, 18 numerical assessment cases, 23 market-make
 | `figures/` | F2–F6 PNG/PDF pairs; V1 MP4 and poster |
 | `provenance/` | Algorithm, supplement, source identities and the retained v0.4.1 lineage audit |
 
-The density archive retains incoming/pre/post states, actual removal profiles and source increments. Long-path NPZ data retain all 10240 events per path, signs, distinct parent IDs, parent lengths/ages, actual node fills and offsets; `columns` names the state matrix. `example-trades` is the complete first moving-path CSV with observation conventions and arithmetic/geometric prices. Correlation CSVs include pair counts. Budgets and admissibility are checked on every update, not just saved samples. Old generated versions remain in Git history and immutable checkpoints, outside the active file set.
+The density archive retains incoming/pre/post states, actual removal profiles and source increments. Long-path NPZ data retain all 10240 events per path, signs, distinct parent IDs, parent lengths/ages, actual node fills and offsets; `columns` names the state matrix. `example-trades` is the complete first moving-path CSV with observation conventions and arithmetic/geometric prices. Correlation CSVs include pair counts. The four `resolution-paths` retain the same state/fill records and named support columns: half-open intervals among interior node centres, external/completion membership flips during each event interval, and the number of field steps with a support change. `resolution-summary` separates common-grid time refinement from common-step spatial refinement. Budgets and admissibility are checked on every update, not just saved samples. Old generated versions remain in Git history and immutable checkpoints, outside the active file set.
 
 The aggregate input has independent centred parent signs and capped integer lengths L=min(floor(2(1-U)^(-1/1.5)),512). Its first parent is length-biased with uniform age. New parents retain distinct IDs even when signs agree. Child volume is 0.002 every 0.01 operational units; seeds are 41001–41008, with a separate offset for the independent-sign null. The exact reference is E[(L-k)+]/E[L]. This is a single-active-parent renewal benchmark, not the full concurrent-parent LMF population. A fit window is reserved in the configuration, but no exponent has been fitted or accepted. Finite-cap data cannot establish asymptotic long memory.
 
 ## Verification and current limits
 
-The 23 tests cover transport, reaction, budgets, positivity, causal completion, execution caps, threshold selection, reflection, initialization, trade measurements, lag alignment and the stationary parent-law/reference. Main trajectories fill the requested 0.3; maximum field/ledger errors are below 3.2e-15/2.6e-15 and no-event drift below 9.5e-9. All registered assessment and statistical paths completed without material unfilled demand. Accounting consistency does not establish convergence.
+The 25 tests cover transport, reaction, budgets, positivity, causal completion, execution caps, threshold selection, reflection, initialization, trade measurements, lag alignment the stationary parent-law/reference, source-support measurements and restart invariance. Main trajectories fill the requested 0.3; maximum field/ledger errors are below 3.2e-15/2.6e-15 and no-event drift below 9.5e-9. All registered assessment and statistical paths completed without material unfilled demand. Accounting consistency does not establish convergence.
 
 The large late spread offset on the original node-aligned grid decreases with dx: approximately 0.1967, 0.0982, 0.0497, 0.0264 for dx=0.1, 0.05, 0.025, 0.0125. Placing the initial edges between nodes makes these offsets much smaller. This identifies a discretization effect; finite-horizon offsets are not permanent impact. Time-step/domain effects are much smaller in the tested pilot, and execution depths 1 and 4 give identical paths. No source smoothing was introduced.
 
 The finest midpoint/spread comparison still fails the registered 0.01 spread tolerance: maximum spread differences are 0.02059 on-node and 0.01224 between-node. Long-path paired refinement changes midpoint-increment ACFs by up to 0.225 and spread ACFs by up to 0.193. F5/F6 therefore cannot yet support a physical claim about those statistics. Trade-price increment statistics are less sensitive in these two pairs, which is not a general convergence result.
 
+The controlled v0.5.1 comparison separates these effects. Maximum changes over the two matched paths and retained lags are:
+
+| Refinement | Midpoint ACF | Spread ACF | Trade-return ACF | Any CCF |
+|---|---:|---:|---:|---:|
+| Time only, dx=0.025 | 0.00389 | 0.00547 | 0.000079 | 0.01130 |
+| Space only, common du=0.0000625 | 0.10340 | 0.12893 | 0.000174 | 0.11826 |
+
+Every retained child consumes one node at dx=0.025 and two at dx=0.0125. Source membership changes during about 11–12% versus 24–25% of retained event intervals. The midpoint execution-jump standard deviation falls from about 0.0182 to 0.0152; its partial cancellation with between-event field movement also changes. These observations identify spatial support/execution resolution as the principal remaining correlation sensitivity in this comparison; they do not isolate a single cause or establish convergence.
+
+Time refinement still produces occasional spread differences up to 0.02461 (RMS about 0.0033–0.0034); spatial refinement produces differences up to 0.02144. Small ACF changes are therefore not a certificate of pathwise quote accuracy. At the finer grid, lag-one midpoint ACF is 0.636–0.651. The returns have not become white. Trade-return ACF is much less sensitive in these pairs, without establishing a general result.
+
 Order-splitting sign persistence is present as a declared input. Mean lag-one midpoint-increment ACF is about 0.319; returns are not white in this run. Independent-sign trade returns show strong bid/ask bounce (about -0.496 at lag one). Absolute trade increments have an alternating short-lag pattern; no universal volatility-clustering or square-root-impact claim is made. Spread half-window means are retained for inspection, but stationarity and sampling adequacy are not scientifically accepted.
 
-The immediate next patch targets resolution of threshold quotes and price-priority execution under the same physical child volume. It must explain the sensitivity before expanding scientific scope. Supplement/caption finalization and portable reproduction follow; D1 design is accepted, D2 science and D3 release remain pending.
+The paired resolution experiment holds both complete input tapes and physical child volume fixed. It compares dx=0.025 and 0.0125 at common du=0.0000625, with the existing dx=0.025, du=0.00025 paths as time-step controls. Each path retains 8192 events after 2048 burn events. Both source phases and the original spread tolerance remain in the finite assessment. The recorded midpoint increment is decomposed into its execution jump and evolution since the preceding trade; source-support changes are counted at every field update. Numerical interpretation must follow the resolution evidence.
 
 ## Aggregate agents and the market maker
 

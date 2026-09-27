@@ -42,7 +42,12 @@ def event_band(ax,c):
 def save(fig,folder,name):
     stem=folder/(name+'-'+VERSION)
     fig.savefig(str(stem)+'.png',dpi=160)
-    fig.savefig(str(stem)+'.pdf',metadata={'CreationDate':None,'ModDate':None});plt.close(fig)
+    target=folder/(name+'-'+VERSION+'.pdf');temporary=target.with_suffix('.pdf.tmp')
+    fig.savefig(temporary,format='pdf',metadata={'CreationDate':None,'ModDate':None});plt.close(fig)
+    content=temporary.read_bytes()
+    if not content.startswith(b'%PDF-') or not content.rstrip().endswith(b'%%EOF'):
+        raise ValueError('Incomplete PDF export: '+str(target))
+    temporary.replace(target)
 
 
 def draw_density(ax,x,rho,initial,row,m):
@@ -162,6 +167,12 @@ def render_assessment(root,c):
     signs=paths['lmf-moving-0-signs'][b:b+512];n=np.arange(1,len(sample)+1)
     groups=[('lmf-moving',BLUE,'Order splitting / moving'),('iid-moving',RED,'Independent signs / moving'),
             ('lmf-fixed',GREEN,'Order splitting / fixed')]
+    refinement=np.load(out/('resolution-correlations-'+VERSION+'.npz'))
+    def paired(ax,kind,k,lags):
+        for dx,style in [(0.025,':'),(0.0125,'--')]:
+            a=np.mean([refinement[f'resolution-{dx}-{j}-{kind}'][k] for j in c['resolution']['replicates']],axis=0)
+            if kind=='acf':a=a[1:]
+            ax.plot(lags,a,color='black',ls=style,lw=.9,label=f'Paired 2 paths / dx={dx}')
     fig,axs=plt.subplots(3,3,figsize=(11,11))
     axs[0,0].plot(n,sample[:,6],color='#d95f02',lw=.7,label='Execution log price')
     axs[0,0].plot(n,sample[:,2],color='black',lw=1,label='Log midpoint');axs[0,0].legend(frameon=False,fontsize=7)
@@ -177,12 +188,14 @@ def render_assessment(root,c):
             values=corr[group+'-acf'][:,k,1:];mean=values.mean(axis=0);se=values.std(axis=0,ddof=1)/np.sqrt(len(values))
             ax.plot(lag,mean,color=color,label=label,lw=1.2);ax.fill_between(lag,mean-2*se,mean+2*se,color=color,alpha=.10,lw=0)
         if k==0:ax.plot(lag,corr['renewal_reference'][1:],color='black',ls='--',lw=1,label='Truncated renewal reference')
+        if k in (1,5):paired(ax,'acf',k,lag)
         ax.axhline(0,color=GREY,lw=.6);ax.set_xscale('log');ax.set_xlim(1,s['maximum_lag'])
         axis(ax,f'({chr(100+k)}) '+labels[k],xlabel='Lag in executed trades',ylabel='Pearson ACF')
     handles,labels=axs[1,0].get_legend_handles_labels()
+    hh,ll=axs[1,1].get_legend_handles_labels();handles+=hh[-2:];labels+=ll[-2:]
     fig.legend(handles,labels,loc='lower center',ncol=2,frameon=False,fontsize=8)
     fig.suptitle('F5  Event-time paths and correlations from DTRW executions',fontsize=14,y=.995)
-    fig.tight_layout(rect=(0,.065,1,.96));save(fig,folder,'autocorrelations')
+    fig.tight_layout(rect=(0,.085,1,.96));save(fig,folder,'autocorrelations')
     fig,axs=plt.subplots(2,3,figsize=(11,7.5));lag=corr['ccf_lags']
     labels=[r'Signs $\rightarrow r_m$',r'Signs $\rightarrow\Delta s$',r'$r_m\rightarrow r_T$',
             r'$r_m\rightarrow\Delta s$',r'$|r_m|\rightarrow s$',r'$|r_T|\rightarrow s$']
@@ -190,9 +203,10 @@ def render_assessment(root,c):
         for group,color,label in groups:
             values=corr[group+'-ccf'][:,k];mean=values.mean(axis=0);se=values.std(axis=0,ddof=1)/np.sqrt(len(values))
             ax.plot(lag,mean,color=color,label=label,lw=1.2);ax.fill_between(lag,mean-2*se,mean+2*se,color=color,alpha=.10,lw=0)
+        paired(ax,'ccf',k,lag)
         ax.axhline(0,color=GREY,lw=.6);ax.axvline(0,color=GREY,lw=.6,ls=':');ax.set_xlim(lag[0],lag[-1])
         axis(ax,f'({chr(97+k)}) '+labels[k],xlabel='Trade lag: positive = first leads',ylabel='Pearson CCF')
-    fig.legend(*axs[0,0].get_legend_handles_labels(),loc='lower center',ncol=3,frameon=False,fontsize=8)
+    fig.legend(*axs[0,0].get_legend_handles_labels(),loc='lower center',ncol=2,frameon=False,fontsize=8)
     fig.suptitle('F6  Signed and magnitude cross-correlations',fontsize=14,y=.995)
-    fig.tight_layout(rect=(0,.07,1,.95));save(fig,folder,'cross-correlations')
+    fig.tight_layout(rect=(0,.085,1,.95));save(fig,folder,'cross-correlations')
     print('Rendered F4 market-maker controls, F5 ACFs and F6 CCFs.',flush=True)
