@@ -1,6 +1,6 @@
-# Numerical algorithm v0.5.3
+# Numerical algorithm v0.5.4
 
-[Compiled supplementary algorithms](supplement-v0.5.3.pdf) ([LaTeX source](supplement-v0.5.3.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
+[Compiled supplementary algorithms](supplement-v0.5.4.pdf) ([LaTeX source](supplement-v0.5.4.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
 
 Rows are bid then ask. The uniform coordinate is log price x; du is operational time per numerical update. Interior density values represent volume per log-price and each carries quadrature weight dx. Endpoint values are fixed reservoirs and are excluded from the interior standing-volume sum.
 
@@ -42,7 +42,7 @@ The experiment has six buy children of volume 0.05 at u=1, 1.4, 1.8, 2.2, 2.6 an
 
 Scalar states are saved every 0.01 operational units, at every child and at its neighbouring updates. Budget, positivity and quote checks run at every numerical update. Density states are saved every 0.025 units and at requested snapshots, with both pre/post views at every child. Event arrays additionally retain incoming densities, removals, completion and separate lit/latent increments. The video holds stored density states without interpolating them and assigns consecutive pre/post frames to each child. Its frame index gives the actual operational time and phase, independently of video time.
 
-The 18-case assessment varies dx, du, domain, source/grid phase, threshold and execution depth. Symmetric half-cell padding puts initial source edges between nodes while preserving buy/sell reflection; separate domain tests bound the reservoir shift. Both tested phases fail the registered finest-grid spread comparison tolerance. Hard supports and node-centre execution are retained without smoothing. Finite-grid late offsets are not permanent impact.
+The inherited 18-case assessment varies dx, du, domain, source/grid phase, threshold and execution depth. Symmetric half-cell padding puts initial source edges between nodes while preserving buy/sell reflection; separate domain tests bound the reservoir shift. Both tested phases fail the inherited dx=0.025/0.0125 spread comparison tolerance. Hard supports and node-centre execution are retained without smoothing. Finite-grid late offsets are not permanent impact.
 
 ## Equation and prototype mapping
 
@@ -99,3 +99,9 @@ For the execution reference, integrate each frozen piecewise-linear side profile
 The current letter v1.2.0 is by Christopher Angstmann, Derick Diana and Tim Gebbie. Its reaction price is a zero of phi, distinct from the quoted midpoint. Record a reaction price only where the sampled piecewise-linear imbalance has one zero; mark multiple zeros or a zero interval ambiguous. Impulsive depletion creates three zeros in the six stored immediate post-execution fields. No selection convention is invented.
 
 For a frozen uniform receiving profile over outward distance z in [0,w], the killed-diffusion lag-integrated response relative to a same-location point is exp(-d/ell_nu)*(ell_nu/w)*(1-exp(-w/ell_nu)). This follows by averaging exp(-(d+z)/ell_nu) over the actual profile. The point-at-edge approximation requires w/ell_nu small; the current value is 0.5. This is a reference calculation under the letter's stated approximation, not validation of the nonlinear solver. Its density kernel is not a first-passage density, and neither kernel is the assumed completion law. No instantaneous local capacity is inserted into the update.
+
+## v0.5.4 matched finite refinement
+
+Append six runs to the existing assessment: for each source phase 0 and 0.5, use dx=0.0125 and 0.00625 at common du=0.000015625; halve du to 0.0000078125 at dx=0.00625. Reuse older dx=0.0125, du=0.0000625 trajectories only as time controls. Each run independently relaxes its grid to the same rate-residual tolerance, then applies the unchanged six-child programme through u=8. Physical thresholds, child volumes, placement supports, source values and event chronology remain fixed. The finest-grid diffusion contribution to the positivity load is 0.8 before time halving and 0.4 afterwards; the full load is checked on every production update.
+
+Retain common 0.02 output times including every event time, final fields, initial residuals, executed/unfilled totals, and field/ledger error maxima. Compare maximum absolute midpoint/spread differences and initial-value-subtracted responses on common samples. The original 0.01 absolute spread tolerance is unchanged. It is not a normalized response tolerance, an every-update bound or a long-path correlation acceptance criterion. Keep historical and new comparisons together, distinguishing finest spatial from finest temporal checks. The saved-data refinement route verifies input/data hashes before and after repeating the six runs.

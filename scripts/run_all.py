@@ -19,11 +19,20 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--render-only',action='store_true',help='Verify saved data and inputs; rebuild figures/video without solving')
     parser.add_argument('--diagnose-only',action='store_true',help='Verify saved data and reproduce the bounded non-evolving operator diagnosis')
+    parser.add_argument('--refine-only',action='store_true',help='Verify saved inputs/data and exactly repeat the six registered finite refinement runs')
     args=parser.parse_args()
+    if sum((args.render_only,args.diagnose_only,args.refine_only))>1:raise SystemExit('Select one saved-data route')
     if (np.__version__,matplotlib.__version__)!=('2.3.5','3.10.8'):
         raise SystemExit('Install the pinned dependencies in pyproject.toml before reproducing')
     if not shutil.which('ffmpeg'):raise SystemExit('FFmpeg with libx264 must be installed and on PATH for the video')
     c,m=load_config(ROOT)
+    if args.refine_only:
+        verify_manifest(ROOT)
+        assess(ROOT,c,VERSION,names=c['assessment']['refinement_runs'])
+        comparison_report(ROOT,c,VERSION)
+        verify_manifest(ROOT)
+        print(VERSION+' six finite refinement paths reproduced; scientific acceptance remains pending.')
+        return
     if args.diagnose_only:
         if args.render_only:raise SystemExit('Select one saved-data route')
         verify_manifest(ROOT)

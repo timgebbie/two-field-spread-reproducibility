@@ -99,8 +99,63 @@
       "max_spread_difference": 0.0,
       "max_mid_response_difference": 0.0,
       "max_spread_response_difference": 0.0
+    },
+    {
+      "comparison": "grid-refined-0.0",
+      "left": "refine-space-0.0125-0.0",
+      "right": "refine-space-0.00625-0.0",
+      "max_mid_difference": 0.0028958003086994033,
+      "max_spread_difference": 0.006268365870269577,
+      "max_mid_response_difference": 0.0028958003086998474,
+      "max_spread_response_difference": 0.010730607829863459
+    },
+    {
+      "comparison": "time-refined-0.0125-0.0",
+      "left": "mesh-0.0125-0.0",
+      "right": "refine-space-0.0125-0.0",
+      "max_mid_difference": 3.006166418018097e-05,
+      "max_spread_difference": 6.248731544289399e-05,
+      "max_mid_response_difference": 3.006166418018097e-05,
+      "max_spread_response_difference": 6.248731359903559e-05
+    },
+    {
+      "comparison": "time-refined-0.00625-0.0",
+      "left": "refine-space-0.00625-0.0",
+      "right": "refine-time-0.00625-0.0",
+      "max_mid_difference": 4.927552408773295e-06,
+      "max_spread_difference": 1.0246879227793215e-05,
+      "max_mid_response_difference": 4.9275524083292055e-06,
+      "max_spread_response_difference": 1.0246905270960838e-05
+    },
+    {
+      "comparison": "grid-refined-0.5",
+      "left": "refine-space-0.0125-0.5",
+      "right": "refine-space-0.00625-0.5",
+      "max_mid_difference": 0.00166196622786563,
+      "max_spread_difference": 0.0031736127405217474,
+      "max_mid_response_difference": 0.0016619662278651859,
+      "max_spread_response_difference": 0.0031892421219517075
+    },
+    {
+      "comparison": "time-refined-0.0125-0.5",
+      "left": "mesh-0.0125-0.5",
+      "right": "refine-space-0.0125-0.5",
+      "max_mid_difference": 2.979179218209893e-05,
+      "max_spread_difference": 6.182047574831984e-05,
+      "max_mid_response_difference": 2.979179218209893e-05,
+      "max_spread_response_difference": 6.18204859978988e-05
+    },
+    {
+      "comparison": "time-refined-0.00625-0.5",
+      "left": "refine-space-0.00625-0.5",
+      "right": "refine-time-0.00625-0.5",
+      "max_mid_difference": 4.886720081920259e-06,
+      "max_spread_difference": 1.0115602840699012e-05,
+      "max_mid_response_difference": 4.886720081920259e-06,
+      "max_spread_response_difference": 1.0115579035741007e-05
     }
   ],
-  "finest_grid_tolerance_passed": false,
-  "interpretation": "Nodal source/grid-phase effects dominate this pilot. Half-cell padding preserves reflection but shifts each reservoir outward by dx/2; the separate domain checks quantify the truncation effect. Scientific acceptance remains pending."
+  "finest_grid_tolerance_passed": true,
+  "finest_time_tolerance_passed": true,
+  "interpretation": "Maxima use the common 0.02 operational-time samples including all six event times, not every field update. Each grid is independently relaxed to the same rate-residual tolerance. Half-cell padding shifts each reservoir outward by dx/2; domain effects have separate inherited checks. Passing this bounded directional programme would not accept long-path correlations or D2."
 }

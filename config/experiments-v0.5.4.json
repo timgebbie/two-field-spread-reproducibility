@@ -1,5 +1,5 @@
 {
-  "version": "v0.5.3",
+  "version": "v0.5.4",
   "model": {
     "x_min": -12.0125,
     "x_max": 12.0125,
@@ -305,6 +305,60 @@
           "phase": 0.0,
           "half_width": 12.0
         }
+      },
+      {
+        "name": "refine-space-0.0125-0.0",
+        "options": {
+          "dx": 0.0125,
+          "du": 1.5625e-05,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "refine-space-0.00625-0.0",
+        "options": {
+          "dx": 0.00625,
+          "du": 1.5625e-05,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "refine-time-0.00625-0.0",
+        "options": {
+          "dx": 0.00625,
+          "du": 7.8125e-06,
+          "phase": 0.0,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "refine-space-0.0125-0.5",
+        "options": {
+          "dx": 0.0125,
+          "du": 1.5625e-05,
+          "phase": 0.5,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "refine-space-0.00625-0.5",
+        "options": {
+          "dx": 0.00625,
+          "du": 1.5625e-05,
+          "phase": 0.5,
+          "half_width": 12.0
+        }
+      },
+      {
+        "name": "refine-time-0.00625-0.5",
+        "options": {
+          "dx": 0.00625,
+          "du": 7.8125e-06,
+          "phase": 0.5,
+          "half_width": 12.0
+        }
       }
     ],
     "market_maker_grids": {
@@ -342,7 +396,16 @@
       "centre-fixed": {
         "chi_m": 0.0
       }
-    }
+    },
+    "refinement_runs": [
+      "refine-space-0.0125-0.0",
+      "refine-space-0.00625-0.0",
+      "refine-time-0.00625-0.0",
+      "refine-space-0.0125-0.5",
+      "refine-space-0.00625-0.5",
+      "refine-time-0.00625-0.5"
+    ],
+    "refinement_interpretation": "v0.5.4 bounded six-run finite programme. Compare dx=0.0125/0.00625 at common du=0.000015625 in both phases; halve du again at dx=0.00625. Retain inherited dx=0.0125, du=0.0000625 time controls, physical threshold, six 0.05 children and 0.01 absolute spread tolerance. Maxima are over the common 0.02 output grid including all six event times; not every field update. No new long ensemble."
   },
   "statistics": {
     "events": 8192,

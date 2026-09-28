@@ -5,7 +5,7 @@
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 \usepackage{fancyhdr}
 \pagestyle{fancy}\fancyhf{}
-\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.3}
+\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.4}
 \cfoot{\thepage}\setlength{\headheight}{14pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
 \setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=4pt}
@@ -14,8 +14,8 @@
 \begin{document}
 \begin{center}
 {\Large\bfseries Two Field Spread: numerical algorithms}\par
-{\large v0.5.3 implementation and numerical assessment}\par
-27 September 2026
+{\large v0.5.4 implementation and numerical assessment}\par
+28 September 2026
 \end{center}
 \textbf{Status.} The Markov solver, execution tape and long-run diagnostic correlations are
 implemented and tested. Numerical convergence and scientific acceptance
@@ -240,74 +240,68 @@ F6 has the six CCFs. Every panel uses retained simulation data or the
 declared sign-input reference. No independent theory gallery is required.
 
 \newpage
-\section{Assessment and limits of v0.5.3}
-All 28 focused tests pass. The Markov core, seven numerical archives and
-17 CSV tapes are unchanged. The 18-case finite assessment still fails the
-registered 0.01 spread tolerance: finest differences are 0.02059 on-node
-and 0.01224 between-node. Exact volume accounting does not establish
-convergence. Balanced and directional programmes have equal total pending
-stock but different signed stock; the centre response remains grid-sensitive.
+\section{Assessment and limits of v0.5.4}
+All 28 focused tests pass. The core and original model settings are
+unchanged. Six new runs extend the finite assessment to 24 cases, with
+$\dx=0.0125,0.00625$ at common $\du=0.000015625$, then
+$\du=0.0000078125$ at the finer grid. Repeat both source phases, 0 and
+0.5. Each grid relaxes independently to the same rate-residual tolerance
+$10^{-8}$, then executes the same six 0.05 buys through $u=8$.
+The physical threshold and absolute spread tolerance remain 0.1 and 0.01.
 
-The v0.5.1 comparison uses two complete tapes, fixed child
-volume and $\dx=0.025,0.0125$ at common $\du=0.0000625$. Existing
-$\dx=0.025,\du=0.00025$ paths control time refinement. Maximum differences
-across the two pairs and retained lags are:
 \begin{center}
-\begin{tabular}{lrrr}
+\begin{tabular}{llrr}
 \toprule
-Refinement & Midpoint ACF & Spread ACF & Any CCF\\
+Comparison & Phase & Max. midpoint difference & Max. spread difference\\
 \midrule
-Time only & 0.00389 & 0.00547 & 0.01130\\
-Space only & 0.10340 & 0.12893 & 0.11826\\
+Space & 0.0 & 0.002896 & 0.006268 \\
+Time & 0.0 & 0.000005 & 0.000010 \\
+Space & 0.5 & 0.001662 & 0.003174 \\
+Time & 0.5 & 0.000005 & 0.000010 \\
 \bottomrule
 \end{tabular}
 \end{center}
-Fine-grid lag-one midpoint ACF is 0.636--0.651; whitening is not shown.
-Writing $\Delta m_n=(m_n^+-m_n^-)+(m_n^--m_{n-1}^+)=J_n+F_n$
-separates execution from between-event evolution. Four lagged covariance
-terms, with a common total-increment normalization, reproduce the ACF
-within $8\times10^{-16}$. Their cancellation is not causal attribution.
+Both phases pass the finest spatial and temporal 0.01 spread checks. Maxima use common 0.02 output samples including all six
+execution times; they are not every-update bounds. Initial-value-subtracted
+responses and the older $\dx=0.0125$ time controls are retained in the
+comparison data. The on-node spread-response difference is 0.01073;
+response accuracy remains unresolved. Half-cell padding moves each reservoir by $\dx/2$;
+separate inherited domain checks remain available.
 
-\textbf{Paper-to-code audit.} Long-paper v1.1.9 explicitly gives nodal
-external sources and forbids inward placement nodes. Cell averaging
-assigned to those nodes changes that discrete support. The current core
-therefore remains in place. Its execution cap and interpolated threshold
-quotes agree with the specified discrete rules. The audit establishes no
-need to change an equation.
+All six runs execute 0.3 with unfilled demand below $10^{-12}$. Maximum field-budget
+and completion-ledger errors are $3.65\times10^{-15}$ and $9.7\times10^{-15}$.
+Positivity and accounting checks run on every update. These checks do not
+establish financial equilibrium or acceptance of the long-path statistics.
 
-For each of six frozen pre-event fields, integrate its piecewise-linear
-profile continuously in price priority from the observed quote. Integrate
-volume and log-price moment exactly, retaining the depth cap. This supplies
-a comparison reference, not a replacement field or trade tape. For volume
-0.002, maximum nodal execution-price errors are 0.01267, 0.00556, 0.00263,
-0.00146 and 0.00074 as $\dx$ halves from 0.025 to 0.0015625. Fixed-field
-refinement does not establish convergence of evolving midpoint or spread.
+The earlier two full-tape refinements still show midpoint and spread ACF
+changes up to 0.10340 and 0.12893 under space refinement. Fine-grid
+lag-one midpoint ACF is 0.636--0.651; whitening is not established.
+The exact $\Delta m_n=J_n+F_n$ covariance decomposition separates execution
+and inter-event movement, but does not attribute causal shares.
+No long ensemble is recomputed in this patch. F2--F6 and V1 retain their
+underlying trajectories; their numerical interpretation remains diagnostic.
+
+\textbf{Paper-to-code audit retained.} Long-paper v1.1.9 specifies nodal
+sources and zero inward placement support. Cell averaging assigned to
+existing nodes changes that specification and is not adopted. Execution caps
+and interpolated threshold quotes remain unchanged. The frozen
+piecewise-linear execution reference gives maximum small-child price errors
+falling from 0.01267 to 0.00074 over five grid levels; it creates no
+replacement field or trade tape.
 
 \textbf{Current letter.} SpreadLetter v1.2.0 is by Christopher Angstmann,
-Derick Diana and Tim Gebbie. It distinguishes reaction price $x_\phi$
-from quoted midpoint. Six saved immediate post-execution fields have three
-imbalance zeros and are marked ambiguous. On uniquely resolved frames,
-$\max|x_\phi-m|=0.31847$; no new zero-selection convention is imposed.
-The threshold bid and ask observations remain unchanged.
+Derick Diana and Tim Gebbie. Reaction price $x_\phi$ differs from quoted
+midpoint: six saved post-execution fields have three imbalance zeros and
+are marked ambiguous. On unique-zero frames, $\max|x_\phi-m|=0.31847$.
+The pilot's uniform outward placement has $w/\ell_\nu=0.5$; its integrated
+frozen killed-diffusion response is 0.78694 times the same edge-point
+reference. Use the distributed-profile convolution. Density response,
+first passage and completion lag remain distinct quantities.
 
-The pilot's uniform outward placement has width $w=0.5$ and cancellation
-length $\ell_\nu=1$. In the frozen killed-diffusion reference, its integrated
-response relative to a same-location point is
-\[
- e^{-d/\ell_\nu}\frac{\ell_\nu}{w}
- \left(1-e^{-w/\ell_\nu}\right).
-\]
-The distributed-to-edge-point factor is 0.78694. The letter's single-distance
-kernel thus requires a narrow-placement limit not demonstrated here.
-Use the distributed-profile convolution for this pilot. Density response,
-first passage and completion lag are distinct quantities; no instantaneous
-capacity is substituted into the update.
-
-Numerical acceptance remains open. One programme volume supplies no
-square-root-impact exponent; positive $\Sigma_0$ is imposed; completion
-creates neither a second executed leg nor a financial profit equilibrium.
-The next bounded check refines the finite programme while preserving the
-paper's nodal support, fixed thresholds and actual fill accounting.
+Numerical/scientific acceptance remains open. One programme volume supplies
+no square-root-impact exponent, positive $\Sigma_0$ is imposed, and
+completion is neither a second executed leg nor a dealer profit calculation.
+Next, check matched balanced-flow and market-maker controls at the tested finer grid before extending activity or long-path experiments.
 
 \newpage
 \section{Future memory and clock compatibility}

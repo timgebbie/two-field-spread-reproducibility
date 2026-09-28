@@ -188,14 +188,19 @@ def execute_jobs(worker,jobs,workers):
     return results
 
 
-def assess(root,c,version):
+def assess(root,c,version,names=None):
     a=c['assessment'];base=c['model'];out=root/'outputs'
-    jobs=[(x['name'],base,x['options'],c['events'],c['horizon'],a['sample_du']) for x in a['runs']]
+    jobs=[(x['name'],base,x['options'],c['events'],c['horizon'],a['sample_du']) for x in a['runs'] if names is None or x['name'] in names]
+    if names is not None and {j[0] for j in jobs}!=set(names):raise ValueError('Unregistered finite refinement')
     result=execute_jobs(finite_run,jobs,a['workers'])
     arrays={};summaries=[]
+    if names is not None:
+        with np.load(out/('assessment-'+version+'.npz')) as saved:arrays={k:saved[k] for k in saved.files}
+        summaries=[r for r in json.loads((out/('assessment-'+version+'.json')).read_text())['runs'] if r['name'] not in names]
     for name,rows,summary,x,rho in sorted(result):
         arrays[name]=rows;arrays[name+'-x']=x;arrays[name+'-final-density']=rho;summaries.append(summary)
-    np.savez_compressed(out/('assessment-'+version+'.npz'),**arrays)
+    summaries.sort(key=lambda r:r['name'])
+    np.savez_compressed(out/('assessment-'+version+'.npz'),**dict(sorted(arrays.items())))
     (out/('assessment-'+version+'.json')).write_text(json.dumps({'runs':summaries,'status':'numerical assessment; see comparisons'},indent=2)+'\n')
     return arrays,summaries
 
@@ -247,6 +252,10 @@ def comparison_report(root,c,version):
       ('time-coarse','time-0.001','time-0.0005'),('time-fine','time-0.0005','mesh-0.05-0.0'),
       ('domain-12-16','time-0.001','domain-16.0'),('domain-16-20','domain-16.0','domain-20.0'),
       ('execution-depth','depth-1.0','depth-4.0')]
+    for phase in (0.,.5):
+        pairs.extend([(f'grid-refined-{phase}',f'refine-space-0.0125-{phase}',f'refine-space-0.00625-{phase}'),
+          (f'time-refined-0.0125-{phase}',f'mesh-0.0125-{phase}',f'refine-space-0.0125-{phase}'),
+          (f'time-refined-0.00625-{phase}',f'refine-space-0.00625-{phase}',f'refine-time-0.00625-{phase}')])
     rows=[]
     for label,left,right in pairs:
         x,y=a[left],a[right];np.testing.assert_allclose(x[:,0],y[:,0],rtol=0,atol=1e-12)
@@ -256,8 +265,9 @@ def comparison_report(root,c,version):
           'max_spread_difference':float(delta[1]),'max_mid_response_difference':float(response[0]),
           'max_spread_response_difference':float(response[1])})
     result={'quote_tolerance':c['assessment']['quote_comparison_atol'],'comparisons':rows,
-      'finest_grid_tolerance_passed':all(x['max_spread_difference']<=c['assessment']['quote_comparison_atol'] for x in rows if x['comparison'] in ('grid-on-node-fine','grid-half-cell-fine')),
-      'interpretation':'Nodal source/grid-phase effects dominate this pilot. Half-cell padding preserves reflection but shifts each reservoir outward by dx/2; the separate domain checks quantify the truncation effect. Scientific acceptance remains pending.'}
+      'finest_grid_tolerance_passed':all(x['max_spread_difference']<=c['assessment']['quote_comparison_atol'] for x in rows if x['comparison'].startswith('grid-refined-')),
+      'finest_time_tolerance_passed':all(x['max_spread_difference']<=c['assessment']['quote_comparison_atol'] for x in rows if x['comparison'].startswith('time-refined-0.00625-')),
+      'interpretation':'Maxima use the common 0.02 operational-time samples including all six event times, not every field update. Each grid is independently relaxed to the same rate-residual tolerance. Half-cell padding shifts each reservoir outward by dx/2; domain effects have separate inherited checks. Passing this bounded directional programme would not accept long-path correlations or D2.'}
     (out/('assessment-comparisons-'+version+'.json')).write_text(json.dumps(result,indent=2)+'\n')
     return result
 

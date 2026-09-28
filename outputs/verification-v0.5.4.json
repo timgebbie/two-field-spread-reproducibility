@@ -1,5 +1,5 @@
 {
-  "assessment_file": "assessment-comparisons-v0.5.3.json",
+  "assessment_file": "assessment-comparisons-v0.5.4.json",
   "cases": {
     "fixed": {
       "completed_ask": 0.0,
@@ -94,5 +94,5 @@
   },
   "status": "diagnostic experiments; numerical convergence and scientific acceptance pending",
   "tests_passed": 28,
-  "version": "v0.5.3"
+  "version": "v0.5.4"
 }
