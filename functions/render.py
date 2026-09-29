@@ -141,34 +141,39 @@ def render(root,c,m):
 def render_assessment(root,c):
     out=root/'outputs';folder=root/'figures'
     mm=np.load(out/('market-maker-'+VERSION+'.npz'))
-    styles={'moving':(BLUE,'-','Moving placement'),'immediate':(RED,'--','Next-update completion'),
-      'fixed':(GREY,':','Both feedbacks off'),'width-fixed':('#762a83','--','Width feedback off'),
-      'centre-fixed':(GREEN,'-.','Centre feedback off')}
+    styles={'moving':(BLUE,'-','Both feedbacks'),'fixed':(GREY,':','Fixed placement'),
+      'width-fixed':('#762a83','--','Centre only'),'centre-fixed':(GREEN,'-.','Width only')}
     event_times=np.array([e['u'] for e in c['events']])
     fig,axs=plt.subplots(2,3,figsize=(11,7.6))
-    for row,flow in enumerate(('directional','balanced')):
+    for row,phase in enumerate(c['assessment']['control_refinement']['phases']):
+        prefix=f'balanced-refined-0.00625-{phase}-'
         for mode,(color,ls,label) in styles.items():
-            d=mm[flow+'-'+mode];u=[];spread=[];mid=[]
+            d=mm[prefix+mode];u=[];spread=[];mid=[]
             for r in d:
                 if np.any(np.isclose(r[0],event_times,rtol=0,atol=1e-10)):
                     u.append(r[0]);spread.append(r[12]-r[11]-d[0,4]);mid.append((r[11]+r[12])/2-d[0,3])
                 u.append(r[0]);spread.append(r[4]-d[0,4]);mid.append(r[3]-d[0,3])
             axs[row,0].plot(u,spread,color=color,ls=ls,label=label)
             axs[row,1].plot(u,mid,color=color,ls=ls,label=label)
-        d=mm[flow+'-moving'];u=[];total=[];signed=[]
+        d=mm[prefix+'moving'];u=[];total=[];signed=[]
         for r in d:
             if np.any(np.isclose(r[0],event_times,rtol=0,atol=1e-10)):
                 u.append(r[0]);total.append(r[9]+r[10]);signed.append(r[10]-r[9])
             u.append(r[0]);total.append(r[7]+r[8]);signed.append(r[8]-r[7])
         axs[row,2].plot(u,total,color=BLUE,label='Total pending')
-        axs[row,2].plot(u,signed,color=RED,ls='--',label='Signed inventory')
+        axs[row,2].plot(u,signed,color=RED,ls='--',label='Signed pending')
         axs[row,2].legend(frameon=False,fontsize=7)
-        for col,(title,unit) in enumerate([('Spread response','Change in log-price spread'),('Midpoint response','Change in log midpoint'),('Moving case: pending modes','Volume')]):
-            ax=axs[row,col];axis(ax,f'({chr(97+row*3+col)}) {flow.capitalize()}\n{title}',ylabel=unit)
+        for col,(title,unit) in enumerate([('Spread response','Change in log-price spread'),('Midpoint response','Change in log midpoint'),('Moving case: replenishment','Volume')]):
+            phase_label='Edges on nodes' if phase==0. else 'Edges between nodes'
+            ax=axs[row,col];axis(ax,f'({chr(97+row*3+col)}) {phase_label}\n{title}',ylabel=unit)
             event_band(ax,c);ax.axhline(0,color=GREY,lw=.5)
-    fig.legend(*axs[0,0].get_legend_handles_labels(),loc='lower center',ncol=3,frameon=False,fontsize=8)
-    fig.suptitle('F4  Market-maker response to one-sided and balanced programmes',fontsize=13,y=.995)
-    fig.tight_layout(rect=(0,.085,1,.95));save(fig,folder,'controls')
+    for col in range(3):
+        limits=[ax.get_ylim() for ax in axs[:,col]]
+        for ax in axs[:,col]:ax.set_ylim(min(v[0] for v in limits),max(v[1] for v in limits))
+    fig.legend(*axs[0,0].get_legend_handles_labels(),loc='lower center',ncol=4,frameon=False,fontsize=8,bbox_to_anchor=(.5,.015))
+    fig.suptitle('F4  Balanced-flow market-maker controls at two source phases',fontsize=13,y=.995)
+    fig.text(.5,.955,'Six alternating 0.05 children; dx = 0.00625; du = 0.000015625; diagnostic responses',ha='center',fontsize=9)
+    fig.tight_layout(rect=(0,.07,1,.95));save(fig,folder,'controls')
     corr=np.load(out/('correlations-'+VERSION+'.npz'));paths=np.load(out/('statistics-paths-'+VERSION+'.npz'))
     s=c['statistics'];b=s['burn_events'];sample=paths['lmf-moving-0-values'][b:b+512]
     signs=paths['lmf-moving-0-signs'][b:b+512];n=np.arange(1,len(sample)+1)

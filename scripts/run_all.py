@@ -13,6 +13,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from functions.experiments import VERSION,load_config,run_experiments,dump,save_manifest,verify_manifest
 from functions.assessment import assess,market_maker_runs,statistical_runs,comparison_report,analyse_statistics,resolution_runs,analyse_resolution,diagnose_resolution,audit_discretization
+from functions.assessment import control_report
 
 
 def main():
@@ -20,12 +21,20 @@ def main():
     parser.add_argument('--render-only',action='store_true',help='Verify saved data and inputs; rebuild figures/video without solving')
     parser.add_argument('--diagnose-only',action='store_true',help='Verify saved data and reproduce the bounded non-evolving operator diagnosis')
     parser.add_argument('--refine-only',action='store_true',help='Verify saved inputs/data and exactly repeat the six registered finite refinement runs')
+    parser.add_argument('--controls-only',action='store_true',help='Verify saved inputs/data and exactly repeat the sixteen registered balanced controls')
     args=parser.parse_args()
-    if sum((args.render_only,args.diagnose_only,args.refine_only))>1:raise SystemExit('Select one saved-data route')
+    if sum((args.render_only,args.diagnose_only,args.refine_only,args.controls_only))>1:raise SystemExit('Select one saved-data route')
     if (np.__version__,matplotlib.__version__)!=('2.3.5','3.10.8'):
         raise SystemExit('Install the pinned dependencies in pyproject.toml before reproducing')
     if not shutil.which('ffmpeg'):raise SystemExit('FFmpeg with libx264 must be installed and on PATH for the video')
     c,m=load_config(ROOT)
+    if args.controls_only:
+        verify_manifest(ROOT)
+        market_maker_runs(ROOT,c,VERSION,refined_only=True)
+        control_report(ROOT,c,VERSION)
+        verify_manifest(ROOT)
+        print(VERSION+' sixteen matched balanced controls reproduced; scientific acceptance remains pending.')
+        return
     if args.refine_only:
         verify_manifest(ROOT)
         assess(ROOT,c,VERSION,names=c['assessment']['refinement_runs'])
@@ -49,6 +58,7 @@ def main():
         assess(ROOT,c,VERSION)
         numerical=comparison_report(ROOT,c,VERSION)
         market_maker_runs(ROOT,c,VERSION)
+        control_report(ROOT,c,VERSION)
         statistical_runs(ROOT,c,VERSION)
         analyse_statistics(ROOT,c,VERSION)
         resolution_runs(ROOT,c,VERSION)

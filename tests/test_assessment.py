@@ -7,9 +7,25 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from functions.assessment import parent_distribution,order_tape,renewal_reference,grid_model,source_membership,membership_changes,long_run,increment_covariance_parts,frozen_execution_probe,source_quadrature_probe
 from functions.core import external_source,placement_weights
 from functions.assessment import continuous_fill_reference
+from functions.assessment import response_difference
 
 
 class AssessmentTests(unittest.TestCase):
+    def test_response_comparison_separates_baseline_and_rejects_misalignment(self):
+        left=np.zeros((3,13));right=left.copy()
+        left[:,0]=right[:,0]=[0,1,2]
+        left[:,3]=[2,5,4];right[:,3]=[1,3,3]
+        left[:,4]=[10,11,9];right[:,4]=[12,12,13]
+        r=response_difference(left,right)
+        self.assertEqual(r['spread']['initial_difference'],-2.)
+        self.assertEqual(r['spread']['max_absolute_difference'],4.)
+        self.assertEqual(r['spread']['max_response_difference'],2.)
+        self.assertEqual(r['spread']['response_peak_u'],2.)
+        self.assertEqual(r['midpoint']['max_response_difference'],1.)
+        right[:,0]+=.1
+        with self.assertRaisesRegex(ValueError,'Unmatched control sample times'):
+            response_difference(left,right)
+
     def test_continuous_reference_exact_moments_reflection_and_capacity(self):
         x=np.linspace(-2,2,9);y=x+3;quote=.2;volume=.7
         front=np.sqrt((quote+3)**2+2*volume)-3

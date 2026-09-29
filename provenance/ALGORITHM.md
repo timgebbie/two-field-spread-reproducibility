@@ -1,6 +1,6 @@
-# Numerical algorithm v0.5.4
+# Numerical algorithm v0.5.5
 
-[Compiled supplementary algorithms](supplement-v0.5.4.pdf) ([LaTeX source](supplement-v0.5.4.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
+[Compiled supplementary algorithms](supplement-v0.5.5.pdf) ([LaTeX source](supplement-v0.5.5.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
 
 Rows are bid then ask. The uniform coordinate is log price x; du is operational time per numerical update. Interior density values represent volume per log-price and each carries quadrature weight dx. Endpoint values are fixed reservoirs and are excluded from the interior standing-volume sum.
 
@@ -105,3 +105,11 @@ For a frozen uniform receiving profile over outward distance z in [0,w], the kil
 Append six runs to the existing assessment: for each source phase 0 and 0.5, use dx=0.0125 and 0.00625 at common du=0.000015625; halve du to 0.0000078125 at dx=0.00625. Reuse older dx=0.0125, du=0.0000625 trajectories only as time controls. Each run independently relaxes its grid to the same rate-residual tolerance, then applies the unchanged six-child programme through u=8. Physical thresholds, child volumes, placement supports, source values and event chronology remain fixed. The finest-grid diffusion contribution to the positivity load is 0.8 before time halving and 0.4 afterwards; the full load is checked on every production update.
 
 Retain common 0.02 output times including every event time, final fields, initial residuals, executed/unfilled totals, and field/ledger error maxima. Compare maximum absolute midpoint/spread differences and initial-value-subtracted responses on common samples. The original 0.01 absolute spread tolerance is unchanged. It is not a normalized response tolerance, an every-update bound or a long-path correlation acceptance criterion. Keep historical and new comparisons together, distinguishing finest spatial from finest temporal checks. The saved-data refinement route verifies input/data hashes before and after repeating the six runs.
+
+## v0.5.5 matched balanced-flow feedback assessment
+
+Six alternating children retain the same actual volumes, times and completion law. Cross dx=0.0125/0.00625 at common du=0.000015625, phases 0/0.5 and four settings: both feedbacks; fixed; centre only (chi_s=0); width only (chi_m=0). Each grid initializes independently.
+
+For midpoint or spread y, retain R_mode(u)=y_mode(u)-y_mode(0) and E_mode(u)=R_mode(u)-R_fixed(u). Compare absolute values, responses and matched effects at identical times across grids. Retain the non-additive interaction R_both-R_width-R_centre+R_fixed; it is not an allocation to causal shares. The existing 0.01 tolerance applies to absolute spread; response differences are reported without a new outcome-selected acceptance threshold.
+
+Check actual volume, field/ledger budgets, equal pending schedules and the placement formulas. Accounting is checked every update; response comparisons use common 0.02 output times with post-event states at every child. The inherited directional time tests do not certify balanced-control time convergence. F4 displays both source phases at the finer grid.

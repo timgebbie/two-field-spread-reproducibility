@@ -1,5 +1,5 @@
 {
-  "version": "v0.5.4",
+  "version": "v0.5.5",
   "model": {
     "x_min": -12.0125,
     "x_max": 12.0125,
@@ -137,7 +137,7 @@
   },
   "assessment": {
     "sample_du": 0.02,
-    "workers": 4,
+    "workers": 8,
     "quote_comparison_atol": 0.01,
     "runs": [
       {
@@ -405,7 +405,27 @@
       "refine-space-0.00625-0.5",
       "refine-time-0.00625-0.5"
     ],
-    "refinement_interpretation": "v0.5.4 bounded six-run finite programme. Compare dx=0.0125/0.00625 at common du=0.000015625 in both phases; halve du again at dx=0.00625. Retain inherited dx=0.0125, du=0.0000625 time controls, physical threshold, six 0.05 children and 0.01 absolute spread tolerance. Maxima are over the common 0.02 output grid including all six event times; not every field update. No new long ensemble."
+    "refinement_interpretation": "v0.5.4 bounded six-run finite programme. Compare dx=0.0125/0.00625 at common du=0.000015625 in both phases; halve du again at dx=0.00625. Retain inherited dx=0.0125, du=0.0000625 time controls, physical threshold, six 0.05 children and 0.01 absolute spread tolerance. Maxima are over the common 0.02 output grid including all six event times; not every field update. No new long ensemble.",
+    "control_refinement": {
+      "dx": [
+        0.0125,
+        0.00625
+      ],
+      "du": 1.5625e-05,
+      "phases": [
+        0.0,
+        0.5
+      ],
+      "half_width": 12.0,
+      "modes": [
+        "moving",
+        "fixed",
+        "width-fixed",
+        "centre-fixed"
+      ],
+      "flow": "balanced",
+      "interpretation": "Six alternating buy/sell children; unchanged volume, event times, horizon and core. Compare absolute quotes, change from each stationary initial value, and matched differences from fixed placement. Report the nonlinear interaction explicitly; do not interpret controls as additive causal shares. Common 0.02 output grid includes all events; not every-update response bounds. Existing 0.01 tolerance applies to absolute spread only; response differences are diagnostic. Time-step checks for directional moving placement do not certify these controls."
+    }
   },
   "statistics": {
     "events": 8192,

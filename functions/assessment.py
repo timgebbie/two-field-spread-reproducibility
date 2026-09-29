@@ -205,7 +205,19 @@ def assess(root,c,version,names=None):
     return arrays,summaries
 
 
-def market_maker_runs(root,c,version):
+def control_jobs(c):
+    a=c['assessment'];s=a['control_refinement'];jobs=[]
+    events=[dict(e,side='sell' if j%2 else 'buy') for j,e in enumerate(c['events'])]
+    for phase in s['phases']:
+        for dx in s['dx']:
+            for mode in s['modes']:
+                name=f'balanced-refined-{dx}-{phase}-{mode}'
+                options=dict(dx=dx,du=s['du'],phase=phase,half_width=s['half_width'],**a['market_maker_modes'][mode])
+                jobs.append((name,c['model'],options,events,c['horizon'],a['sample_du']))
+    return jobs
+
+
+def market_maker_runs(root,c,version,refined_only=False):
     a=c['assessment'];base=c['model'];jobs=[]
     for resolution,grid in a['market_maker_grids'].items():
         for flow in ('directional','balanced'):
@@ -214,11 +226,77 @@ def market_maker_runs(root,c,version):
                 if resolution=='fine' and (flow!='balanced' or mode not in ('moving','fixed','width-fixed')):continue
                 prefix='' if resolution=='primary' else resolution+'-'
                 jobs.append((prefix+flow+'-'+mode,base,dict(grid,**override),events,c['horizon'],a['sample_du']))
+    jobs=control_jobs(c) if refined_only else jobs+control_jobs(c)
     result=execute_jobs(finite_run,jobs,a['workers']);arrays={};summaries=[]
+    if refined_only:
+        with np.load(root/'outputs'/('market-maker-'+version+'.npz')) as saved:arrays={k:saved[k] for k in saved.files}
+        names={j[0] for j in jobs}
+        summaries=[r for r in json.loads((root/'outputs'/('market-maker-'+version+'.json')).read_text()) if r['name'] not in names]
     for name,rows,summary,x,rho in sorted(result):arrays[name]=rows;summaries.append(summary)
+    arrays=dict(sorted(arrays.items()));summaries.sort(key=lambda r:r['name'])
     np.savez_compressed(root/'outputs'/('market-maker-'+version+'.npz'),**arrays)
     (root/'outputs'/('market-maker-'+version+'.json')).write_text(json.dumps(summaries,indent=2)+'\n')
     return arrays,summaries
+
+
+def response_difference(left,right):
+    """Compare sampled quotes without hiding stationary baseline offsets."""
+    if left.shape!=right.shape or not np.array_equal(left[:,0],right[:,0]):
+        raise ValueError('Unmatched control sample times')
+    result={}
+    for label,k in (('midpoint',3),('spread',4)):
+        absolute=left[:,k]-right[:,k];response=absolute-absolute[0]
+        i=int(np.argmax(abs(response)))
+        result[label]={'initial_difference':float(absolute[0]),'max_absolute_difference':float(np.max(abs(absolute))),
+            'max_response_difference':float(abs(response[i])),'response_peak_u':float(left[i,0]),
+            'late_response_difference':float(response[-1])}
+    return result
+
+
+def control_report(root,c,version):
+    out=root/'outputs';s=c['assessment']['control_refinement']
+    with np.load(out/('market-maker-'+version+'.npz')) as saved:a={k:saved[k] for k in saved.files}
+    meta={r['name']:r for r in json.loads((out/('market-maker-'+version+'.json')).read_text())}
+    comparisons=[];effects=[];contrasts={};checks=c['checks']
+    target=sum(e['volume'] for e in c['events'])
+    for job in control_jobs(c):
+        name,_,options,_,_,_=job;r=meta[name];d=a[name]
+        if r['options']!=options or r['unfilled']>checks['unfilled_atol'] or abs(r['executed_volume']-target)>checks['unfilled_atol']:
+            raise ValueError('Unmatched actual control volume: '+name)
+        if r['max_budget_error']>checks['budget_atol'] or r['max_ledger_error']>checks['ledger_atol']:
+            raise ValueError('Control accounting tolerance exceeded: '+name)
+        if r['initialization']['max_rate_residual']>c['stationarity_tolerance']:
+            raise ValueError('Control initialization tolerance exceeded: '+name)
+    for phase in s['phases']:
+        for dx in s['dx']:
+            prefix=f'balanced-refined-{dx}-{phase}-';fixed=a[prefix+'fixed'];moving=a[prefix+'moving']
+            for mode in s['modes']:
+                d=a[prefix+mode];np.testing.assert_array_equal(d[:,0],fixed[:,0])
+                np.testing.assert_allclose(d[:,7:11],fixed[:,7:11],rtol=0,atol=checks['ledger_atol'])
+                np.testing.assert_allclose(d[0,1:5],fixed[0,1:5],rtol=0,atol=checks['no_event_drift_atol'])
+                override=c['assessment']['market_maker_modes'][mode];model=dict(c['model'],**override)
+                np.testing.assert_allclose(d[:,5],model['Sigma0']+model['chi_s']*(d[:,9]+d[:,10]),rtol=0,atol=checks['ledger_atol'])
+                np.testing.assert_allclose(d[:,6],model['mu0']-model['chi_m']*(d[:,10]-d[:,9]),rtol=0,atol=checks['ledger_atol'])
+                if mode=='fixed':continue
+                z=d.copy();z[:,1:7]-=fixed[:,1:7];contrasts[(dx,phase,mode)]=z
+                effects.append({'dx':dx,'phase':phase,'mode':mode,**response_difference(d,fixed)})
+            z=moving.copy();z[:,1:7]=moving[:,1:7]-a[prefix+'width-fixed'][:,1:7]-a[prefix+'centre-fixed'][:,1:7]+fixed[:,1:7]
+            contrasts[(dx,phase,'interaction')]=z
+            zero=z.copy();zero[:,1:7]=0.
+            effects.append({'dx':dx,'phase':phase,'mode':'interaction',**response_difference(z,zero)})
+        lo,hi=s['dx']
+        for mode in s['modes']:
+            left=a[f'balanced-refined-{lo}-{phase}-{mode}'];right=a[f'balanced-refined-{hi}-{phase}-{mode}']
+            comparisons.append({'kind':'trajectory','phase':phase,'mode':mode,**response_difference(left,right)})
+        for mode in ('moving','width-fixed','centre-fixed','interaction'):
+            comparisons.append({'kind':'effect-from-fixed' if mode!='interaction' else 'interaction','phase':phase,'mode':mode,
+                **response_difference(contrasts[(lo,phase,mode)],contrasts[(hi,phase,mode)])})
+    report={'version':version,'registered_matrix':s,'new_runs':len(control_jobs(c)),'comparisons':comparisons,'effects':effects,
+        'absolute_spread_tolerance':c['assessment']['quote_comparison_atol'],
+        'all_absolute_spread_comparisons_passed':all(r['spread']['max_absolute_difference']<=c['assessment']['quote_comparison_atol'] for r in comparisons if r['kind']=='trajectory'),
+        'interpretation':s['interpretation'],'status':'diagnostic controls; D2 numerical/scientific acceptance remains pending'}
+    (out/('control-comparisons-'+version+'.json')).write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    return report
 
 
 def statistical_runs(root,c,version):

@@ -43,7 +43,7 @@ The uploaded long-paper bibliography has mixed CAM title/year/volume metadata; t
 
 ## Retained numerical lineage and current audit
 
-v0.5.1 added four full common-step paths to the v0.5.0 numerical assessment and repaired the incomplete F5 PDF. v0.5.2 added the frozen-operator and covariance diagnostics. These stages are not relabelled as newly computed v0.5.4 trajectories. Their six non-assessment NPZ archives and 17 CSV tapes remain byte-identical under the active versioned names. The assessment archive retains every inherited array exactly and adds six v0.5.4 refinements. Prior full numerical recovery evidence applies to those unchanged arrays.
+v0.5.1 added four full common-step paths to the v0.5.0 numerical assessment and repaired the incomplete F5 PDF. v0.5.2 added the frozen-operator and covariance diagnostics. These stages are not relabelled as newly computed v0.5.4 trajectories. At v0.5.4, their six non-assessment NPZ archives and 17 CSV tapes remained byte-identical under the active versioned names. The assessment archive retains every inherited array exactly and adds six v0.5.4 refinements. Prior full numerical recovery evidence applies to those unchanged arrays.
 
 v0.5.3 checked the literal nodal source support, normalization, forcing cap and threshold interpolation against long-paper v1.1.9. The production core remains unchanged. A cell-average source assigned to node centres is rejected as an unchanged implementation of the discrete equations. Continuous integration is used only as a frozen execution-price reference. The retained paper-audit JSON records reference errors, source-support counterexample, reaction-zero multiplicity and the distributed-placement response benchmark.
 
@@ -54,3 +54,9 @@ The current letter's sentence immediately after the field decomposition should d
 F2–F6 and V1 remain the entire output inventory. No strategic agent, new source law, transport memory or calendar clock is introduced. The PDF writer now stages complete bytes in a temporary directory with automatic cleanup; that repair changes no numerical result. Private manuscript ZIPs and recovery administration stay outside the scientific source tree.
 
 The v0.5.4 six-run matrix uses dx=0.0125/0.00625 at common du=0.000015625 and halves du on the finer grid to 0.0000078125, for source phases 0 and 0.5. The existing dx=0.0125, du=0.0000625 paths supply additional time controls. Each uses the same six 0.05 buys and physical threshold 0.1, ending at u=8. The unchanged finite runner relaxes each field independently to rate-residual tolerance 1e-8. Comparisons use the common 0.02 output times including all six event times. They do not certify the maximum between saved samples. No long path, market-maker control or display trajectory is replaced by these refinements.
+
+## v0.5.5 control refinement
+
+Sixteen registered balanced controls use unchanged `finite_run`, `grid_model`, `long_run` and `core.py`. All inherited scientific configuration values remain unchanged; worker count only changes scheduling. The 23 inherited market-maker arrays and summaries are retained exactly. Six unaffected numerical archives and 17 CSV tapes retain v0.5.4 bytes. F4 now displays refined balanced controls; the other figure/video trajectories remain unchanged. The sole new output family is the control comparison JSON, within the existing outputs directory.
+
+The supplement corrects a reversed verbal description: aggressive buys consume ask liquidity and initiate bid replenishment Q_B; aggressive sells consume bid liquidity and initiate ask replenishment Q_A. This agrees with long-paper equations `eq:pendingBid`, `eq:pendingAsk` and the existing `actual[::-1]` initiation in `core.py`. No code recurrence or manuscript equation is changed.
