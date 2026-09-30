@@ -104,108 +104,108 @@
     "pending_total": 0.0009291881663236056
   },
   {
-    "executed_volume": 0.30000000000000004,
-    "initial_spread": 8.774880295148305,
-    "initialization": {
-      "max_rate_residual": 9.99733629214461e-09,
-      "operational_duration": 16.928046875,
-      "steps": 1083395,
-      "tolerance": 1e-08
+    "name": "balanced-refined-0.00625-0.0-centre-fixed",
+    "options": {
+      "dx": 0.00625,
+      "du": 1.5625e-05,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_m": 0.0
     },
+    "initial_spread": 8.774880295148305,
     "late_spread_change": 0.015375776453902645,
+    "maximum_spread_change": 0.7851433720030538,
     "max_budget_error": 3.201336036675684e-15,
     "max_ledger_error": 4.056217167702769e-15,
     "max_positivity_load": 0.8000234373795436,
-    "maximum_spread_change": 0.7851433720030538,
     "minimum_spread": 8.774880175205737,
-    "name": "balanced-refined-0.00625-0.0-centre-fixed",
-    "options": {
-      "chi_m": 0.0,
-      "du": 1.5625e-05,
-      "dx": 0.00625,
-      "half_width": 12.0,
-      "phase": 0.0
-    },
-    "pending_total": 0.0009291881663235978,
-    "unfilled": 1.3877787807814457e-17
-  },
-  {
-    "executed_volume": 0.30000000000000004,
-    "initial_spread": 8.774880295148305,
+    "unfilled": 1.3877787807814457e-17,
     "initialization": {
-      "max_rate_residual": 9.99733629214461e-09,
-      "operational_duration": 16.928046875,
       "steps": 1083395,
+      "operational_duration": 16.928046875,
+      "max_rate_residual": 9.99733629214461e-09,
       "tolerance": 1e-08
     },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235978
+  },
+  {
+    "name": "balanced-refined-0.00625-0.0-fixed",
+    "options": {
+      "dx": 0.00625,
+      "du": 1.5625e-05,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_s": 0.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.774880295148305,
     "late_spread_change": -0.004499116160387118,
+    "maximum_spread_change": 0.6306319157836864,
     "max_budget_error": 3.19247035457501e-15,
     "max_ledger_error": 4.083972743318398e-15,
     "max_positivity_load": 0.8000234373842254,
-    "maximum_spread_change": 0.6306319157836864,
     "minimum_spread": 8.756556295935873,
-    "name": "balanced-refined-0.00625-0.0-fixed",
-    "options": {
-      "chi_m": 0.0,
-      "chi_s": 0.0,
-      "du": 1.5625e-05,
-      "dx": 0.00625,
-      "half_width": 12.0,
-      "phase": 0.0
-    },
-    "pending_total": 0.0009291881663235978,
-    "unfilled": 0.0
-  },
-  {
-    "executed_volume": 0.30000000000000004,
-    "initial_spread": 8.774880295148305,
+    "unfilled": 0.0,
     "initialization": {
-      "max_rate_residual": 9.99733629214461e-09,
-      "operational_duration": 16.928046875,
       "steps": 1083395,
+      "operational_duration": 16.928046875,
+      "max_rate_residual": 9.99733629214461e-09,
       "tolerance": 1e-08
     },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235978
+  },
+  {
+    "name": "balanced-refined-0.00625-0.0-moving",
+    "options": {
+      "dx": 0.00625,
+      "du": 1.5625e-05,
+      "phase": 0.0,
+      "half_width": 12.0
+    },
+    "initial_spread": 8.774880295148305,
     "late_spread_change": 0.015388159633188181,
+    "maximum_spread_change": 0.7832802310773932,
     "max_budget_error": 3.2010857913793297e-15,
     "max_ledger_error": 4.083972743318398e-15,
     "max_positivity_load": 0.800023437379726,
-    "maximum_spread_change": 0.7832802310773932,
     "minimum_spread": 8.774880175205737,
-    "name": "balanced-refined-0.00625-0.0-moving",
-    "options": {
-      "du": 1.5625e-05,
-      "dx": 0.00625,
-      "half_width": 12.0,
-      "phase": 0.0
-    },
-    "pending_total": 0.0009291881663235978,
-    "unfilled": 0.0
-  },
-  {
-    "executed_volume": 0.3,
-    "initial_spread": 8.774880295148305,
+    "unfilled": 0.0,
     "initialization": {
-      "max_rate_residual": 9.99733629214461e-09,
-      "operational_duration": 16.928046875,
       "steps": 1083395,
+      "operational_duration": 16.928046875,
+      "max_rate_residual": 9.99733629214461e-09,
       "tolerance": 1e-08
     },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235978
+  },
+  {
+    "name": "balanced-refined-0.00625-0.0-width-fixed",
+    "options": {
+      "dx": 0.00625,
+      "du": 1.5625e-05,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_s": 0.0
+    },
+    "initial_spread": 8.774880295148305,
     "late_spread_change": 0.0017365635699899684,
+    "maximum_spread_change": 0.6344014789061418,
     "max_budget_error": 3.3375477225610034e-15,
     "max_ledger_error": 4.083972743318398e-15,
     "max_positivity_load": 0.8000234373841684,
-    "maximum_spread_change": 0.6344014789061418,
     "minimum_spread": 8.762621376908058,
-    "name": "balanced-refined-0.00625-0.0-width-fixed",
-    "options": {
-      "chi_s": 0.0,
-      "du": 1.5625e-05,
-      "dx": 0.00625,
-      "half_width": 12.0,
-      "phase": 0.0
+    "unfilled": 4.85722573273506e-17,
+    "initialization": {
+      "steps": 1083395,
+      "operational_duration": 16.928046875,
+      "max_rate_residual": 9.99733629214461e-09,
+      "tolerance": 1e-08
     },
-    "pending_total": 0.0009291881663235978,
-    "unfilled": 4.85722573273506e-17
+    "executed_volume": 0.3,
+    "pending_total": 0.0009291881663235978
   },
   {
     "name": "balanced-refined-0.00625-0.5-centre-fixed",
@@ -312,108 +312,108 @@
     "pending_total": 0.0009291881663235978
   },
   {
-    "executed_volume": 0.30000000000000004,
-    "initial_spread": 8.768614753733047,
-    "initialization": {
-      "max_rate_residual": 9.99733629214461e-09,
-      "operational_duration": 16.928671875,
-      "steps": 1083435,
-      "tolerance": 1e-08
+    "name": "balanced-refined-0.0125-0.0-centre-fixed",
+    "options": {
+      "dx": 0.0125,
+      "du": 1.5625e-05,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_m": 0.0
     },
+    "initial_spread": 8.768614753733047,
     "late_spread_change": 0.02612908921913082,
+    "maximum_spread_change": 0.7890141653028984,
     "max_budget_error": 3.682347200938325e-15,
     "max_ledger_error": 4.083972743318398e-15,
     "max_positivity_load": 0.20002343725978428,
-    "maximum_spread_change": 0.7890141653028984,
     "minimum_spread": 8.76861463379474,
-    "name": "balanced-refined-0.0125-0.0-centre-fixed",
-    "options": {
-      "chi_m": 0.0,
-      "du": 1.5625e-05,
-      "dx": 0.0125,
-      "half_width": 12.0,
-      "phase": 0.0
-    },
-    "pending_total": 0.0009291881663235978,
-    "unfilled": 2.0816681711721685e-17
-  },
-  {
-    "executed_volume": 0.30000000000000004,
-    "initial_spread": 8.768614753733047,
+    "unfilled": 2.0816681711721685e-17,
     "initialization": {
-      "max_rate_residual": 9.99733629214461e-09,
-      "operational_duration": 16.928671875,
       "steps": 1083435,
+      "operational_duration": 16.928671875,
+      "max_rate_residual": 9.99733629214461e-09,
       "tolerance": 1e-08
     },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235978
+  },
+  {
+    "name": "balanced-refined-0.0125-0.0-fixed",
+    "options": {
+      "dx": 0.0125,
+      "du": 1.5625e-05,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_s": 0.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.768614753733047,
     "late_spread_change": -0.004490991592149385,
+    "maximum_spread_change": 0.6308609224639348,
     "max_budget_error": 3.4136564916079993e-15,
     "max_ledger_error": 4.083972743318398e-15,
     "max_positivity_load": 0.20002343726921626,
-    "maximum_spread_change": 0.6308609224639348,
     "minimum_spread": 8.750371343065092,
-    "name": "balanced-refined-0.0125-0.0-fixed",
-    "options": {
-      "chi_m": 0.0,
-      "chi_s": 0.0,
-      "du": 1.5625e-05,
-      "dx": 0.0125,
-      "half_width": 12.0,
-      "phase": 0.0
-    },
-    "pending_total": 0.0009291881663235978,
-    "unfilled": 1.3877787807814457e-17
-  },
-  {
-    "executed_volume": 0.30000000000000004,
-    "initial_spread": 8.768614753733047,
+    "unfilled": 1.3877787807814457e-17,
     "initialization": {
-      "max_rate_residual": 9.99733629214461e-09,
-      "operational_duration": 16.928671875,
       "steps": 1083435,
+      "operational_duration": 16.928671875,
+      "max_rate_residual": 9.99733629214461e-09,
       "tolerance": 1e-08
     },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235978
+  },
+  {
+    "name": "balanced-refined-0.0125-0.0-moving",
+    "options": {
+      "dx": 0.0125,
+      "du": 1.5625e-05,
+      "phase": 0.0,
+      "half_width": 12.0
+    },
+    "initial_spread": 8.768614753733047,
     "late_spread_change": 0.026141757653341813,
+    "maximum_spread_change": 0.7902424670487704,
     "max_budget_error": 3.3125057758105812e-15,
     "max_ledger_error": 4.083972743318398e-15,
     "max_positivity_load": 0.20002343726013938,
-    "maximum_spread_change": 0.7902424670487704,
     "minimum_spread": 8.76861463379474,
-    "name": "balanced-refined-0.0125-0.0-moving",
-    "options": {
-      "du": 1.5625e-05,
-      "dx": 0.0125,
-      "half_width": 12.0,
-      "phase": 0.0
-    },
-    "pending_total": 0.0009291881663235978,
-    "unfilled": 1.3877787807814457e-17
-  },
-  {
-    "executed_volume": 0.30000000000000004,
-    "initial_spread": 8.768614753733047,
+    "unfilled": 1.3877787807814457e-17,
     "initialization": {
-      "max_rate_residual": 9.99733629214461e-09,
-      "operational_duration": 16.928671875,
       "steps": 1083435,
+      "operational_duration": 16.928671875,
+      "max_rate_residual": 9.99733629214461e-09,
       "tolerance": 1e-08
     },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235978
+  },
+  {
+    "name": "balanced-refined-0.0125-0.0-width-fixed",
+    "options": {
+      "dx": 0.0125,
+      "du": 1.5625e-05,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_s": 0.0
+    },
+    "initial_spread": 8.768614753733047,
     "late_spread_change": 0.00798123242731208,
+    "maximum_spread_change": 0.6405976756027592,
     "max_budget_error": 3.5432863344464586e-15,
     "max_ledger_error": 4.083972743318398e-15,
     "max_positivity_load": 0.20002343726880537,
-    "maximum_spread_change": 0.6405976756027592,
     "minimum_spread": 8.762537943470463,
-    "name": "balanced-refined-0.0125-0.0-width-fixed",
-    "options": {
-      "chi_s": 0.0,
-      "du": 1.5625e-05,
-      "dx": 0.0125,
-      "half_width": 12.0,
-      "phase": 0.0
+    "unfilled": 1.3877787807814457e-17,
+    "initialization": {
+      "steps": 1083435,
+      "operational_duration": 16.928671875,
+      "max_rate_residual": 9.99733629214461e-09,
+      "tolerance": 1e-08
     },
-    "pending_total": 0.0009291881663235978,
-    "unfilled": 1.3877787807814457e-17
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235978
   },
   {
     "name": "balanced-refined-0.0125-0.5-centre-fixed",
