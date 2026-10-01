@@ -1,4 +1,6 @@
-# Source provenance v0.5.4
+# Source provenance
+
+Reproducibility software for the forthcoming preprint **A Finite Bid–Ask Spread from Replenishment Displaced from the Quote**, by **Christopher Angstmann, Derick Diana and Tim Gebbie**.
 
 - Accepted scaffold: `two-field-spread-reproducibility` v0.0.0, commit `53d85bfe2fbd6812ceb9195adac3b7b9e504d402`.
 - Long paper: `TwoFieldSpread-v1.1.9`, original uploaded ZIP SHA-256 `9953b97aaf8b69f2539daa117051a1875042c8f6df7fd0da32578eda8fb2f893`.
@@ -60,3 +62,7 @@ The v0.5.4 six-run matrix uses dx=0.0125/0.00625 at common du=0.000015625 and ha
 Sixteen registered balanced controls use unchanged `finite_run`, `grid_model`, `long_run` and `core.py`. All inherited scientific configuration values remain unchanged; worker count only changes scheduling. The 23 inherited market-maker arrays and summaries are retained exactly. Six unaffected numerical archives and 17 CSV tapes retain v0.5.4 bytes. F4 now displays refined balanced controls; the other figure/video trajectories remain unchanged. The sole new output family is the control comparison JSON, within the existing outputs directory.
 
 The supplement corrects a reversed verbal description: aggressive buys consume ask liquidity and initiate bid replenishment Q_B; aggressive sells consume bid liquidity and initiate ask replenishment Q_A. This agrees with long-paper equations `eq:pendingBid`, `eq:pendingAsk` and the existing `actual[::-1]` initiation in `core.py`. No code recurrence or manuscript equation is changed.
+
+## v0.5.6 response refinement
+
+Twelve targeted controls refine time and space with the same production worker and source geometry. All 39 inherited control arrays and numerical summaries remain exact. The six unaffected NPZ archives and 17 CSV tapes are byte-identical to v0.5.5 under the active versioned names. F4 displays the finer grid with both/fixed/width-only settings; centre-only and interaction comparisons remain retained at their previous resolution. No mathematical formulation, long ensemble, agent, memory law or clock is added.

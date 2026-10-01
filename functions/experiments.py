@@ -8,7 +8,7 @@ import numpy as np
 from functions.core import Model, State, advance, observe, placement, stationary
 from functions.observables import trade_record,finish_tape
 
-VERSION='v0.5.5'
+VERSION='v0.5.6'
 CONFIG='config/experiments-'+VERSION+'.json'
 
 

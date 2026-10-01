@@ -217,6 +217,18 @@ def control_jobs(c):
     return jobs
 
 
+def response_jobs(c):
+    a=c['assessment'];s=a['response_refinement'];jobs=[]
+    events=[dict(e,side='sell' if j%2 else 'buy') for j,e in enumerate(c['events'])]
+    for phase in s['phases']:
+        for dx in s['dx']:
+            for mode in s['modes']:
+                name=f'balanced-response-{dx}-{phase}-{mode}'
+                options=dict(dx=dx,du=s['du'],phase=phase,half_width=s['half_width'],**a['market_maker_modes'][mode])
+                jobs.append((name,c['model'],options,events,c['horizon'],a['sample_du']))
+    return jobs
+
+
 def market_maker_runs(root,c,version,refined_only=False):
     a=c['assessment'];base=c['model'];jobs=[]
     for resolution,grid in a['market_maker_grids'].items():
@@ -226,7 +238,7 @@ def market_maker_runs(root,c,version,refined_only=False):
                 if resolution=='fine' and (flow!='balanced' or mode not in ('moving','fixed','width-fixed')):continue
                 prefix='' if resolution=='primary' else resolution+'-'
                 jobs.append((prefix+flow+'-'+mode,base,dict(grid,**override),events,c['horizon'],a['sample_du']))
-    jobs=control_jobs(c) if refined_only else jobs+control_jobs(c)
+    jobs=response_jobs(c) if refined_only else jobs+control_jobs(c)+response_jobs(c)
     result=execute_jobs(finite_run,jobs,a['workers']);arrays={};summaries=[]
     if refined_only:
         with np.load(root/'outputs'/('market-maker-'+version+'.npz')) as saved:arrays={k:saved[k] for k in saved.files}
@@ -259,7 +271,7 @@ def control_report(root,c,version):
     meta={r['name']:r for r in json.loads((out/('market-maker-'+version+'.json')).read_text())}
     comparisons=[];effects=[];contrasts={};checks=c['checks']
     target=sum(e['volume'] for e in c['events'])
-    for job in control_jobs(c):
+    for job in control_jobs(c)+response_jobs(c):
         name,_,options,_,_,_=job;r=meta[name];d=a[name]
         if r['options']!=options or r['unfilled']>checks['unfilled_atol'] or abs(r['executed_volume']-target)>checks['unfilled_atol']:
             raise ValueError('Unmatched actual control volume: '+name)
@@ -291,7 +303,32 @@ def control_report(root,c,version):
         for mode in ('moving','width-fixed','centre-fixed','interaction'):
             comparisons.append({'kind':'effect-from-fixed' if mode!='interaction' else 'interaction','phase':phase,'mode':mode,
                 **response_difference(contrasts[(lo,phase,mode)],contrasts[(hi,phase,mode)])})
-    report={'version':version,'registered_matrix':s,'new_runs':len(control_jobs(c)),'comparisons':comparisons,'effects':effects,
+    refined=c['assessment']['response_refinement'];fine_comparisons=[];fine_effects=[];matched={}
+    coarse,fine=refined['dx']
+    for phase in refined['phases']:
+        for dx in refined['dx']:
+            prefix=f'balanced-response-{dx}-{phase}-';fixed=a[prefix+'fixed']
+            for mode in refined['modes']:
+                d=a[prefix+mode];np.testing.assert_array_equal(d[:,0],fixed[:,0])
+                np.testing.assert_allclose(d[:,7:11],fixed[:,7:11],rtol=0,atol=checks['ledger_atol'])
+                np.testing.assert_allclose(d[0,1:5],fixed[0,1:5],rtol=0,atol=checks['no_event_drift_atol'])
+                model=dict(c['model'],**c['assessment']['market_maker_modes'][mode])
+                np.testing.assert_allclose(d[:,5],model['Sigma0']+model['chi_s']*(d[:,9]+d[:,10]),rtol=0,atol=checks['ledger_atol'])
+                np.testing.assert_allclose(d[:,6],model['mu0']-model['chi_m']*(d[:,10]-d[:,9]),rtol=0,atol=checks['ledger_atol'])
+                if mode!='fixed':
+                    fine_effects.append({'dx':dx,'phase':phase,'mode':mode,**response_difference(d,fixed)})
+                    z=d.copy();z[:,1:7]-=fixed[:,1:7];matched[(dx,phase,mode)]=z
+        for mode in refined['modes']:
+            left=a[f'balanced-response-{coarse}-{phase}-{mode}'];right=a[f'balanced-response-{fine}-{phase}-{mode}']
+            baseline=a[f'balanced-refined-{coarse}-{phase}-{mode}']
+            fine_comparisons.append({'kind':'time','phase':phase,'mode':mode,**response_difference(baseline,left)})
+            fine_comparisons.append({'kind':'space','phase':phase,'mode':mode,**response_difference(left,right)})
+        for mode in ('moving','centre-fixed'):
+            fine_comparisons.append({'kind':'effect-from-fixed-space','phase':phase,'mode':mode,
+                **response_difference(matched[(coarse,phase,mode)],matched[(fine,phase,mode)])})
+    report={'version':version,'registered_matrix':s,'new_runs':len(response_jobs(c)),'inherited_refinement_runs':len(control_jobs(c)),'comparisons':comparisons,'effects':effects,
+        'response_refinement':{'registered_matrix':refined,'comparisons':fine_comparisons,'effects':fine_effects,
+            'all_absolute_spread_comparisons_passed':all(r['spread']['max_absolute_difference']<=c['assessment']['quote_comparison_atol'] for r in fine_comparisons if r['kind'] in ('time','space'))},
         'absolute_spread_tolerance':c['assessment']['quote_comparison_atol'],
         'all_absolute_spread_comparisons_passed':all(r['spread']['max_absolute_difference']<=c['assessment']['quote_comparison_atol'] for r in comparisons if r['kind']=='trajectory'),
         'interpretation':s['interpretation'],'status':'diagnostic controls; D2 numerical/scientific acceptance remains pending'}

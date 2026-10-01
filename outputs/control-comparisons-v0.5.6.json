@@ -1,5 +1,5 @@
 {
-  "version": "v0.5.5",
+  "version": "v0.5.6",
   "registered_matrix": {
     "dx": [
       0.0125,
@@ -20,7 +20,8 @@
     "flow": "balanced",
     "interpretation": "Six alternating buy/sell children; unchanged volume, event times, horizon and core. Compare absolute quotes, change from each stationary initial value, and matched differences from fixed placement. Report the nonlinear interaction explicitly; do not interpret controls as additive causal shares. Common 0.02 output grid includes all events; not every-update response bounds. Existing 0.01 tolerance applies to absolute spread only; response differences are diagnostic. Time-step checks for directional moving placement do not certify these controls."
   },
-  "new_runs": 16,
+  "new_runs": 12,
+  "inherited_refinement_runs": 16,
   "comparisons": [
     {
       "kind": "trajectory",
@@ -633,6 +634,488 @@
       }
     }
   ],
+  "response_refinement": {
+    "registered_matrix": {
+      "dx": [
+        0.00625,
+        0.003125
+      ],
+      "du": 3.90625e-06,
+      "phases": [
+        0.0,
+        0.5
+      ],
+      "half_width": 12.0,
+      "modes": [
+        "moving",
+        "fixed",
+        "centre-fixed"
+      ],
+      "flow": "balanced",
+      "interpretation": "Twelve targeted controls. Both feedbacks, fixed placement and width only; retain both source phases. Compare time at dx=0.00625 against v0.5.5 du=0.000015625 (fourfold refinement), and space at common du=0.00000390625. Unchanged six alternating children, volume, horizon, threshold and nodal supports. Report absolute, baseline-subtracted and fixed-control differences on common 0.02 post-event samples. No inferred order from two grids, outcome-selected tolerance, centre-only/interaction refinement, new long ensemble or extra agent."
+    },
+    "comparisons": [
+      {
+        "kind": "time",
+        "phase": 0.0,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 5.121208787706166e-06,
+          "max_response_difference": 5.121208787706166e-06,
+          "response_peak_u": 1.08,
+          "late_response_difference": 2.0418394974797138e-08
+        },
+        "spread": {
+          "initial_difference": 1.290061391046038e-10,
+          "max_absolute_difference": 1.4582206313562551e-05,
+          "max_response_difference": 1.4582335319701656e-05,
+          "response_peak_u": 3.08,
+          "late_response_difference": -1.8975518933928015e-07
+        }
+      },
+      {
+        "kind": "space",
+        "phase": 0.0,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": 1.3322676295501878e-15,
+          "max_absolute_difference": 0.0014876908591889837,
+          "max_response_difference": 0.001487690859190316,
+          "response_peak_u": 1.4000000000000001,
+          "late_response_difference": 9.684615037963695e-05
+        },
+        "spread": {
+          "initial_difference": -0.0031194552770283934,
+          "max_absolute_difference": 0.005197899406345741,
+          "max_response_difference": 0.004393342794362098,
+          "response_peak_u": 8.0,
+          "late_response_difference": 0.004393342794362098
+        }
+      },
+      {
+        "kind": "time",
+        "phase": 0.0,
+        "mode": "fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 5.093419294777135e-06,
+          "max_response_difference": 5.093419294777135e-06,
+          "response_peak_u": 1.08,
+          "late_response_difference": 7.736248086587239e-09
+        },
+        "spread": {
+          "initial_difference": 1.290061391046038e-10,
+          "max_absolute_difference": 1.4623502293531487e-05,
+          "max_response_difference": 1.4623631299670592e-05,
+          "response_peak_u": 3.08,
+          "late_response_difference": 2.242778052163885e-08
+        }
+      },
+      {
+        "kind": "space",
+        "phase": 0.0,
+        "mode": "fixed",
+        "midpoint": {
+          "initial_difference": 1.3322676295501878e-15,
+          "max_absolute_difference": 0.0010392218164390066,
+          "max_response_difference": 0.0010392218164403388,
+          "response_peak_u": 1.0,
+          "late_response_difference": 3.7571547917281123e-07
+        },
+        "spread": {
+          "initial_difference": -0.0031194552770283934,
+          "max_absolute_difference": 0.005197899406345741,
+          "max_response_difference": 0.0020784441293173472,
+          "response_peak_u": 1.0,
+          "late_response_difference": -5.333663031237279e-06
+        }
+      },
+      {
+        "kind": "time",
+        "phase": 0.0,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 5.111738467178384e-06,
+          "max_response_difference": 5.111738467178384e-06,
+          "response_peak_u": 1.08,
+          "late_response_difference": 7.647826816281622e-09
+        },
+        "spread": {
+          "initial_difference": 1.290061391046038e-10,
+          "max_absolute_difference": 1.4850167350033416e-05,
+          "max_response_difference": 1.4850296356172521e-05,
+          "response_peak_u": 3.08,
+          "late_response_difference": -1.791365633607711e-07
+        }
+      },
+      {
+        "kind": "space",
+        "phase": 0.0,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": 1.3322676295501878e-15,
+          "max_absolute_difference": 0.0010392218164390066,
+          "max_response_difference": 0.0010392218164403388,
+          "response_peak_u": 1.0,
+          "late_response_difference": 1.9843340037795087e-07
+        },
+        "spread": {
+          "initial_difference": -0.0031194552770283934,
+          "max_absolute_difference": 0.005197899406345741,
+          "max_response_difference": 0.004392058863601278,
+          "response_peak_u": 8.0,
+          "late_response_difference": 0.004392058863601278
+        }
+      },
+      {
+        "kind": "effect-from-fixed-space",
+        "phase": 0.0,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.001213475989470858,
+          "max_response_difference": 0.001213475989470858,
+          "response_peak_u": 1.4000000000000001,
+          "late_response_difference": 9.647043490046414e-05
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.004398676457393336,
+          "max_response_difference": 0.004398676457393336,
+          "response_peak_u": 8.0,
+          "late_response_difference": 0.004398676457393336
+        }
+      },
+      {
+        "kind": "effect-from-fixed-space",
+        "phase": 0.0,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.0005746728989697303,
+          "max_response_difference": 0.0005746728989697303,
+          "response_peak_u": 2.6,
+          "late_response_difference": -1.7728207879486035e-07
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.004397392526632515,
+          "max_response_difference": 0.004397392526632515,
+          "response_peak_u": 8.0,
+          "late_response_difference": 0.004397392526632515
+        }
+      },
+      {
+        "kind": "time",
+        "phase": 0.5,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 5.121198941804295e-06,
+          "max_response_difference": 5.121198941804295e-06,
+          "response_peak_u": 1.08,
+          "late_response_difference": -5.877341724414009e-09
+        },
+        "spread": {
+          "initial_difference": 1.2371437208003044e-10,
+          "max_absolute_difference": 1.4781972755173456e-05,
+          "max_response_difference": 1.4782096469545536e-05,
+          "response_peak_u": 3.08,
+          "late_response_difference": -2.2395418319831606e-07
+        }
+      },
+      {
+        "kind": "space",
+        "phase": 0.5,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": -8.881784197001252e-16,
+          "max_absolute_difference": 0.0011775893782628444,
+          "max_response_difference": 0.0011775893782637326,
+          "response_peak_u": 2.6,
+          "late_response_difference": 2.570355047648576e-05
+        },
+        "spread": {
+          "initial_difference": 5.500792257251419e-06,
+          "max_absolute_difference": 0.00238324912166199,
+          "max_response_difference": 0.0023777483294047386,
+          "response_peak_u": 2.6,
+          "late_response_difference": -0.0016846281912012984
+        }
+      },
+      {
+        "kind": "time",
+        "phase": 0.5,
+        "mode": "fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 5.093427297708786e-06,
+          "max_response_difference": 5.093427297708786e-06,
+          "response_peak_u": 1.08,
+          "late_response_difference": 7.744474839199711e-09
+        },
+        "spread": {
+          "initial_difference": 1.2371437208003044e-10,
+          "max_absolute_difference": 1.4625187958472452e-05,
+          "max_response_difference": 1.4625311672844532e-05,
+          "response_peak_u": 3.08,
+          "late_response_difference": 2.2538594990351157e-08
+        }
+      },
+      {
+        "kind": "space",
+        "phase": 0.5,
+        "mode": "fixed",
+        "midpoint": {
+          "initial_difference": -8.881784197001252e-16,
+          "max_absolute_difference": 0.0010392132995451497,
+          "max_response_difference": 0.0010392132995442616,
+          "response_peak_u": 1.0,
+          "late_response_difference": 7.114748790115755e-10
+        },
+        "spread": {
+          "initial_difference": 5.500792257251419e-06,
+          "max_absolute_difference": 0.0020729262968117723,
+          "max_response_difference": 0.0020784270890690237,
+          "response_peak_u": 1.0,
+          "late_response_difference": -9.390153676847035e-06
+        }
+      },
+      {
+        "kind": "time",
+        "phase": 0.5,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 5.111738648810871e-06,
+          "max_response_difference": 5.111738648810871e-06,
+          "response_peak_u": 1.08,
+          "late_response_difference": 7.678170543812257e-09
+        },
+        "spread": {
+          "initial_difference": 1.2371437208003044e-10,
+          "max_absolute_difference": 1.4864491426180848e-05,
+          "max_response_difference": 1.4864615140552928e-05,
+          "response_peak_u": 3.08,
+          "late_response_difference": -2.619580978802105e-07
+        }
+      },
+      {
+        "kind": "space",
+        "phase": 0.5,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": -8.881784197001252e-16,
+          "max_absolute_difference": 0.0013628886500862691,
+          "max_response_difference": 0.001362888650085381,
+          "response_peak_u": 3.0,
+          "late_response_difference": 6.884060570477857e-07
+        },
+        "spread": {
+          "initial_difference": 5.500792257251419e-06,
+          "max_absolute_difference": 0.0027351546959479833,
+          "max_response_difference": 0.002729653903690732,
+          "response_peak_u": 3.0,
+          "late_response_difference": -0.001713845857898022
+        }
+      },
+      {
+        "kind": "effect-from-fixed-space",
+        "phase": 0.5,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.0013262565021330275,
+          "max_response_difference": 0.0013262565021330275,
+          "response_peak_u": 1.4000000000000001,
+          "late_response_difference": 2.5702839001606748e-05
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.0026496369160806665,
+          "max_response_difference": 0.0026496369160806665,
+          "response_peak_u": 1.4000000000000001,
+          "late_response_difference": -0.0016752380375244513
+        }
+      },
+      {
+        "kind": "effect-from-fixed-space",
+        "phase": 0.5,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.001124595453470878,
+          "max_response_difference": 0.001124595453470878,
+          "response_peak_u": 3.0,
+          "late_response_difference": 6.876945821687741e-07
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.0022556331950802644,
+          "max_response_difference": 0.0022556331950802644,
+          "response_peak_u": 3.0,
+          "late_response_difference": -0.001704455704221175
+        }
+      }
+    ],
+    "effects": [
+      {
+        "dx": 0.00625,
+        "phase": 0.0,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.00620155455966831,
+          "max_response_difference": 0.00620155455966831,
+          "response_peak_u": 1.86,
+          "late_response_difference": -0.00039188741069517974
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.18701758824288994,
+          "max_response_difference": 0.18701758824288994,
+          "response_peak_u": 3.74,
+          "late_response_difference": 0.01988748797654516
+        }
+      },
+      {
+        "dx": 0.00625,
+        "phase": 0.0,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.001893179038300996,
+          "max_response_difference": 0.001893179038300996,
+          "response_peak_u": 1.92,
+          "late_response_difference": 4.109470463475873e-06
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.18719153418539847,
+          "max_response_difference": 0.18719153418539847,
+          "response_peak_u": 3.74,
+          "late_response_difference": 0.019875094178633645
+        }
+      },
+      {
+        "dx": 0.003125,
+        "phase": 0.0,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.006173520617682726,
+          "max_response_difference": 0.006173520617682726,
+          "response_peak_u": 1.86,
+          "late_response_difference": -0.0004883578455956439
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.18423442325381423,
+          "max_response_difference": 0.18423442325381423,
+          "response_peak_u": 3.74,
+          "late_response_difference": 0.015488811519151824
+        }
+      },
+      {
+        "dx": 0.003125,
+        "phase": 0.0,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.0018660807139903035,
+          "max_response_difference": 0.0018660807139903035,
+          "response_peak_u": 1.92,
+          "late_response_difference": 4.286752542270733e-06
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.18438527843074048,
+          "max_response_difference": 0.18438527843074048,
+          "response_peak_u": 3.74,
+          "late_response_difference": 0.01547770165200113
+        }
+      },
+      {
+        "dx": 0.00625,
+        "phase": 0.5,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.00614065989843704,
+          "max_response_difference": 0.00614065989843704,
+          "response_peak_u": 1.86,
+          "late_response_difference": -0.0005838137421432243
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.18144353549046954,
+          "max_response_difference": 0.18144353549046954,
+          "response_peak_u": 3.74,
+          "late_response_difference": 0.011091065329363659
+        }
+      },
+      {
+        "dx": 0.00625,
+        "phase": 0.5,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.0018365172601146895,
+          "max_response_difference": 0.0018365172601146895,
+          "response_peak_u": 1.92,
+          "late_response_difference": 4.464212122190503e-06
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.18157123761776717,
+          "max_response_difference": 0.18157123761776717,
+          "response_peak_u": 3.74,
+          "late_response_difference": 0.011079205699040529
+        }
+      },
+      {
+        "dx": 0.003125,
+        "phase": 0.5,
+        "mode": "moving",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.0058724372864005225,
+          "max_response_difference": 0.0058724372864005225,
+          "response_peak_u": 1.8800000000000001,
+          "late_response_difference": -0.0006095165811448311
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.1814680152174546,
+          "max_response_difference": 0.1814680152174546,
+          "response_peak_u": 3.74,
+          "late_response_difference": 0.01276630336688811
+        }
+      },
+      {
+        "dx": 0.003125,
+        "phase": 0.5,
+        "mode": "centre-fixed",
+        "midpoint": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.0018395156860613326,
+          "max_response_difference": 0.0018395156860613326,
+          "response_peak_u": 1.9000000000000001,
+          "late_response_difference": 3.776517540021729e-06
+        },
+        "spread": {
+          "initial_difference": 0.0,
+          "max_absolute_difference": 0.18160432425573347,
+          "max_response_difference": 0.18160432425573347,
+          "response_peak_u": 3.74,
+          "late_response_difference": 0.012783661403261704
+        }
+      }
+    ],
+    "all_absolute_spread_comparisons_passed": true
+  },
   "absolute_spread_tolerance": 0.01,
   "all_absolute_spread_comparisons_passed": true,
   "interpretation": "Six alternating buy/sell children; unchanged volume, event times, horizon and core. Compare absolute quotes, change from each stationary initial value, and matched differences from fixed placement. Report the nonlinear interaction explicitly; do not interpret controls as additive causal shares. Common 0.02 output grid includes all events; not every-update response bounds. Existing 0.01 tolerance applies to absolute spread only; response differences are diagnostic. Time-step checks for directional moving placement do not certify these controls.",

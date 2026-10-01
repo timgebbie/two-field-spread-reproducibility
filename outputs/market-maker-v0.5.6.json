@@ -520,6 +520,318 @@
     "pending_total": 0.0009291881663235975
   },
   {
+    "name": "balanced-response-0.003125-0.0-centre-fixed",
+    "options": {
+      "dx": 0.003125,
+      "du": 3.90625e-06,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.777999750296328,
+    "late_spread_change": 0.010983896726864728,
+    "maximum_spread_change": 0.7830863956894198,
+    "max_budget_error": 3.468831238410299e-15,
+    "max_ledger_error": 6.157509398196925e-15,
+    "max_positivity_load": 0.8000058593599213,
+    "minimum_spread": 8.777999630926551,
+    "unfilled": 2.0816681711721685e-17,
+    "initialization": {
+      "steps": 4333937,
+      "operational_duration": 16.92944140625,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235884
+  },
+  {
+    "name": "balanced-response-0.003125-0.0-fixed",
+    "options": {
+      "dx": 0.003125,
+      "du": 3.90625e-06,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_s": 0.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.777999750296328,
+    "late_spread_change": -0.004493804925136402,
+    "maximum_spread_change": 0.6305787758185097,
+    "max_budget_error": 3.3271803039844068e-15,
+    "max_ledger_error": 6.185481814247051e-15,
+    "max_positivity_load": 0.8000058593605042,
+    "minimum_spread": 8.759644979568227,
+    "unfilled": 1.3877787807814457e-17,
+    "initialization": {
+      "steps": 4333937,
+      "operational_duration": 16.92944140625,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235889
+  },
+  {
+    "name": "balanced-response-0.003125-0.0-moving",
+    "options": {
+      "dx": 0.003125,
+      "du": 3.90625e-06,
+      "phase": 0.0,
+      "half_width": 12.0
+    },
+    "initial_spread": 8.777999750296328,
+    "late_spread_change": 0.010995006594015422,
+    "maximum_spread_change": 0.7812298421078943,
+    "max_budget_error": 3.290932931904978e-15,
+    "max_ledger_error": 6.157509398196925e-15,
+    "max_positivity_load": 0.800005859359945,
+    "minimum_spread": 8.777999630926551,
+    "unfilled": 1.3877787807814457e-17,
+    "initialization": {
+      "steps": 4333937,
+      "operational_duration": 16.92944140625,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235884
+  },
+  {
+    "name": "balanced-response-0.003125-0.5-centre-fixed",
+    "options": {
+      "dx": 0.003125,
+      "du": 3.90625e-06,
+      "phase": 0.5,
+      "half_width": 12.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.781124706777668,
+    "late_spread_change": 0.00828579667909679,
+    "maximum_spread_change": 0.7795932786496316,
+    "max_budget_error": 3.4516639749907654e-15,
+    "max_ledger_error": 6.101564566096673e-15,
+    "max_positivity_load": 0.8000058593599234,
+    "minimum_spread": 8.78112458741268,
+    "unfilled": 6.938893903907228e-17,
+    "initialization": {
+      "steps": 4333958,
+      "operational_duration": 16.929523437500002,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.3,
+    "pending_total": 0.0009291881663235881
+  },
+  {
+    "name": "balanced-response-0.003125-0.5-fixed",
+    "options": {
+      "dx": 0.003125,
+      "du": 3.90625e-06,
+      "phase": 0.5,
+      "half_width": 12.0,
+      "chi_s": 0.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.781124706777668,
+    "late_spread_change": -0.004497864724164913,
+    "maximum_spread_change": 0.6305119356579745,
+    "max_budget_error": 3.2698399652512186e-15,
+    "max_ledger_error": 6.185264973812554e-15,
+    "max_positivity_load": 0.8000058593605027,
+    "minimum_spread": 8.762730048789404,
+    "unfilled": 1.3877787807814457e-17,
+    "initialization": {
+      "steps": 4333958,
+      "operational_duration": 16.929523437500002,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235884
+  },
+  {
+    "name": "balanced-response-0.003125-0.5-moving",
+    "options": {
+      "dx": 0.003125,
+      "du": 3.90625e-06,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "initial_spread": 8.781124706777668,
+    "late_spread_change": 0.008268438642723197,
+    "maximum_spread_change": 0.7792078689843258,
+    "max_budget_error": 3.286688827000646e-15,
+    "max_ledger_error": 6.101564566096673e-15,
+    "max_positivity_load": 0.8000058593599481,
+    "minimum_spread": 8.78112458741268,
+    "unfilled": 2.0816681711721685e-17,
+    "initialization": {
+      "steps": 4333958,
+      "operational_duration": 16.929523437500002,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235881
+  },
+  {
+    "name": "balanced-response-0.00625-0.0-centre-fixed",
+    "options": {
+      "dx": 0.00625,
+      "du": 3.90625e-06,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.7748802950193,
+    "late_spread_change": 0.015375955590466006,
+    "maximum_spread_change": 0.7851440105508516,
+    "max_budget_error": 3.632107479844965e-15,
+    "max_ledger_error": 6.101564566096673e-15,
+    "max_positivity_load": 0.2000058593448859,
+    "minimum_spread": 8.77488017515309,
+    "unfilled": 6.938893903907228e-18,
+    "initialization": {
+      "steps": 4333761,
+      "operational_duration": 16.92875390625,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235881
+  },
+  {
+    "name": "balanced-response-0.00625-0.0-fixed",
+    "options": {
+      "dx": 0.00625,
+      "du": 3.90625e-06,
+      "phase": 0.0,
+      "half_width": 12.0,
+      "chi_s": 0.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.7748802950193,
+    "late_spread_change": -0.004499138588167639,
+    "maximum_spread_change": 0.6306326689998745,
+    "max_budget_error": 3.5163469644110153e-15,
+    "max_ledger_error": 6.157509398196925e-15,
+    "max_positivity_load": 0.20000585934605633,
+    "minimum_spread": 8.75655669023704,
+    "unfilled": 1.3877787807814457e-17,
+    "initialization": {
+      "steps": 4333761,
+      "operational_duration": 16.92875390625,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235884
+  },
+  {
+    "name": "balanced-response-0.00625-0.0-moving",
+    "options": {
+      "dx": 0.00625,
+      "du": 3.90625e-06,
+      "phase": 0.0,
+      "half_width": 12.0
+    },
+    "initial_spread": 8.7748802950193,
+    "late_spread_change": 0.01538834938837752,
+    "maximum_spread_change": 0.7832807582055938,
+    "max_budget_error": 3.516851812591191e-15,
+    "max_ledger_error": 6.185264973812554e-15,
+    "max_positivity_load": 0.2000058593449315,
+    "minimum_spread": 8.77488017515309,
+    "unfilled": 0.0,
+    "initialization": {
+      "steps": 4333761,
+      "operational_duration": 16.92875390625,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.30000000000000004,
+    "pending_total": 0.0009291881663235886
+  },
+  {
+    "name": "balanced-response-0.00625-0.5-centre-fixed",
+    "options": {
+      "dx": 0.00625,
+      "du": 3.90625e-06,
+      "phase": 0.5,
+      "half_width": 12.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.781130207569925,
+    "late_spread_change": 0.006571950821198769,
+    "maximum_spread_change": 0.7810113978359698,
+    "max_budget_error": 3.484828746020952e-15,
+    "max_ledger_error": 6.157509398196925e-15,
+    "max_positivity_load": 0.20000585934489365,
+    "minimum_spread": 8.781130087714958,
+    "unfilled": 5.551115123125783e-17,
+    "initialization": {
+      "steps": 4333806,
+      "operational_duration": 16.928929687500002,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.3,
+    "pending_total": 0.0009291881663235884
+  },
+  {
+    "name": "balanced-response-0.00625-0.5-fixed",
+    "options": {
+      "dx": 0.00625,
+      "du": 3.90625e-06,
+      "phase": 0.5,
+      "half_width": 12.0,
+      "chi_s": 0.0,
+      "chi_m": 0.0
+    },
+    "initial_spread": 8.781130207569925,
+    "late_spread_change": -0.00450725487784176,
+    "maximum_spread_change": 0.6304991754231803,
+    "max_budget_error": 3.4033030523837548e-15,
+    "max_ledger_error": 6.129320141712302e-15,
+    "max_positivity_load": 0.20000585934605072,
+    "minimum_spread": 8.762726744446905,
+    "unfilled": 7.632783294297951e-17,
+    "initialization": {
+      "steps": 4333806,
+      "operational_duration": 16.928929687500002,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.29999999999999993,
+    "pending_total": 0.0009291881663235881
+  },
+  {
+    "name": "balanced-response-0.00625-0.5-moving",
+    "options": {
+      "dx": 0.00625,
+      "du": 3.90625e-06,
+      "phase": 0.5,
+      "half_width": 12.0
+    },
+    "initial_spread": 8.781130207569925,
+    "late_spread_change": 0.006583810451521899,
+    "maximum_spread_change": 0.779154579901574,
+    "max_budget_error": 3.330212681935577e-15,
+    "max_ledger_error": 6.185264973812554e-15,
+    "max_positivity_load": 0.20000585934494275,
+    "minimum_spread": 8.781130087714958,
+    "unfilled": 4.85722573273506e-17,
+    "initialization": {
+      "steps": 4333806,
+      "operational_duration": 16.928929687500002,
+      "max_rate_residual": 9.990230864787009e-09,
+      "tolerance": 1e-08
+    },
+    "executed_volume": 0.3,
+    "pending_total": 0.0009291881663235884
+  },
+  {
     "name": "balanced-width-fixed",
     "options": {
       "dx": 0.025,

@@ -1,6 +1,6 @@
-# Numerical algorithm v0.5.5
+# Numerical algorithm v0.5.6
 
-[Compiled supplementary algorithms](supplement-v0.5.5.pdf) ([LaTeX source](supplement-v0.5.5.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
+[Compiled supplementary algorithms](supplement-v0.5.6.pdf) ([LaTeX source](supplement-v0.5.6.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
 
 Rows are bid then ask. The uniform coordinate is log price x; du is operational time per numerical update. Interior density values represent volume per log-price and each carries quadrature weight dx. Endpoint values are fixed reservoirs and are excluded from the interior standing-volume sum.
 
@@ -113,3 +113,7 @@ Six alternating children retain the same actual volumes, times and completion la
 For midpoint or spread y, retain R_mode(u)=y_mode(u)-y_mode(0) and E_mode(u)=R_mode(u)-R_fixed(u). Compare absolute values, responses and matched effects at identical times across grids. Retain the non-additive interaction R_both-R_width-R_centre+R_fixed; it is not an allocation to causal shares. The existing 0.01 tolerance applies to absolute spread; response differences are reported without a new outcome-selected acceptance threshold.
 
 Check actual volume, field/ledger budgets, equal pending schedules and the placement formulas. Accounting is checked every update; response comparisons use common 0.02 output times with post-event states at every child. The inherited directional time tests do not certify balanced-control time convergence. F4 displays both source phases at the finer grid.
+
+## v0.5.6 targeted time and spatial checks
+
+Cross dx=0.00625/0.003125 at common du=0.00000390625, phases 0/0.5 and both/fixed/width-only feedback (12 cases). At dx=0.00625 compare against the retained du=0.000015625 run. Hold every physical event and model parameter fixed. Apply the same absolute, baseline-subtracted and fixed-control response comparisons above. Centre-only and nonlinear interaction are not recomputed at this finer grid. No response tolerance or convergence order is inferred from the two spacings.

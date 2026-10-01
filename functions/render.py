@@ -124,7 +124,7 @@ def render(root,c,m):
         axis(ax,'',ylabel=label,square=False);event_band(ax,c)
         cursors.append(ax.axvline(0,color='black',lw=1));dots.append(ax.plot([],[],'o',color='black',ms=3)[0])
     title=fig.suptitle('',fontsize=12,y=.98);fig.subplots_adjust(left=.13,right=.97,bottom=.08,top=.90)
-    writer=FFMpegWriter(fps=video['fps'],codec='libx264',metadata={'title':'Two-field spread numerical pilot '+VERSION},extra_args=['-crf','23','-pix_fmt','yuv420p','-threads','1'])
+    writer=FFMpegWriter(fps=video['fps'],codec='libx264',metadata={'title':'Two-field spread numerical pilot v0.5.5'},extra_args=['-crf','23','-pix_fmt','yuv420p','-threads','1'])
     with writer.saving(fig,str(folder/('density-'+VERSION+'.mp4')),dpi=video['dpi']):
         for k,i in enumerate(selected):
             r=row(i)
@@ -133,7 +133,7 @@ def render(root,c,m):
             for line in cursors:line.set_xdata([r['u'],r['u']])
             dots[0].set_data([r['u']],[r['spread']]);dots[1].set_data([r['u']],[r['Q_sum']])
             phase='pre execution' if r['phase']=='pre' else ('post execution' if any(abs(r['u']-e['u'])<1e-10 for e in c['events']) else 'stored state')
-            title.set_text(f"Numerical pilot {VERSION}   |   u = {r['u']:.3f}   |   {phase}");writer.grab_frame()
+            title.set_text(f"Numerical pilot v0.5.5   |   u = {r['u']:.3f}   |   {phase}");writer.grab_frame()
             if k==round(3/c['horizon']*(count-1)):fig.savefig(folder/('video-poster-'+VERSION+'.png'),dpi=video['dpi'])
     plt.close(fig);print('Rendered F2, F3 and trajectory video from saved states.',flush=True)
 
@@ -142,11 +142,11 @@ def render_assessment(root,c):
     out=root/'outputs';folder=root/'figures'
     mm=np.load(out/('market-maker-'+VERSION+'.npz'))
     styles={'moving':(BLUE,'-','Both feedbacks'),'fixed':(GREY,':','Fixed placement'),
-      'width-fixed':('#762a83','--','Centre only'),'centre-fixed':(GREEN,'-.','Width only')}
+      'centre-fixed':(GREEN,'-.','Width only')}
     event_times=np.array([e['u'] for e in c['events']])
     fig,axs=plt.subplots(2,3,figsize=(11,7.6))
-    for row,phase in enumerate(c['assessment']['control_refinement']['phases']):
-        prefix=f'balanced-refined-0.00625-{phase}-'
+    for row,phase in enumerate(c['assessment']['response_refinement']['phases']):
+        prefix=f'balanced-response-0.003125-{phase}-'
         for mode,(color,ls,label) in styles.items():
             d=mm[prefix+mode];u=[];spread=[];mid=[]
             for r in d:
@@ -170,9 +170,9 @@ def render_assessment(root,c):
     for col in range(3):
         limits=[ax.get_ylim() for ax in axs[:,col]]
         for ax in axs[:,col]:ax.set_ylim(min(v[0] for v in limits),max(v[1] for v in limits))
-    fig.legend(*axs[0,0].get_legend_handles_labels(),loc='lower center',ncol=4,frameon=False,fontsize=8,bbox_to_anchor=(.5,.015))
+    fig.legend(*axs[0,0].get_legend_handles_labels(),loc='lower center',ncol=3,frameon=False,fontsize=8,bbox_to_anchor=(.5,.015))
     fig.suptitle('F4  Balanced-flow market-maker controls at two source phases',fontsize=13,y=.995)
-    fig.text(.5,.955,'Six alternating 0.05 children; dx = 0.00625; du = 0.000015625; diagnostic responses',ha='center',fontsize=9)
+    fig.text(.5,.955,'Six alternating 0.05 children; dx = 0.003125; du = 0.00000390625; diagnostic responses',ha='center',fontsize=9)
     fig.tight_layout(rect=(0,.07,1,.95));save(fig,folder,'controls')
     corr=np.load(out/('correlations-'+VERSION+'.npz'));paths=np.load(out/('statistics-paths-'+VERSION+'.npz'))
     s=c['statistics'];b=s['burn_events'];sample=paths['lmf-moving-0-values'][b:b+512]

@@ -21,7 +21,7 @@ def main():
     parser.add_argument('--render-only',action='store_true',help='Verify saved data and inputs; rebuild figures/video without solving')
     parser.add_argument('--diagnose-only',action='store_true',help='Verify saved data and reproduce the bounded non-evolving operator diagnosis')
     parser.add_argument('--refine-only',action='store_true',help='Verify saved inputs/data and exactly repeat the six registered finite refinement runs')
-    parser.add_argument('--controls-only',action='store_true',help='Verify saved inputs/data and exactly repeat the sixteen registered balanced controls')
+    parser.add_argument('--controls-only',action='store_true',help='Verify saved inputs/data and exactly repeat the twelve registered targeted controls')
     args=parser.parse_args()
     if sum((args.render_only,args.diagnose_only,args.refine_only,args.controls_only))>1:raise SystemExit('Select one saved-data route')
     if (np.__version__,matplotlib.__version__)!=('2.3.5','3.10.8'):
@@ -33,7 +33,7 @@ def main():
         market_maker_runs(ROOT,c,VERSION,refined_only=True)
         control_report(ROOT,c,VERSION)
         verify_manifest(ROOT)
-        print(VERSION+' sixteen matched balanced controls reproduced; scientific acceptance remains pending.')
+        print(VERSION+' twelve targeted balanced controls reproduced; scientific acceptance remains pending.')
         return
     if args.refine_only:
         verify_manifest(ROOT)
