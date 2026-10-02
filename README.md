@@ -2,9 +2,9 @@
 
 Reproducibility software for the forthcoming preprint **A Finite Bid–Ask Spread from Replenishment Displaced from the Quote**, by **Christopher Angstmann, Derick Diana and Tim Gebbie**.
 
-**v0.5.6 — targeted time and spatial refinement.** The density-derived figures, execution tape and correlations are implemented. Numerical/scientific acceptance remains pending: spread responses and long-path midpoint/spread correlations remain sensitive to resolution. The Markov DTRW core is unchanged from v0.4.1.
+**v0.6.0 — documentation consolidation.** The finite two-density DTRW mechanism and matched market-maker comparisons are accepted for qualitative and bounded quantitative interpretation at the retained resolution. F2/F3/F4 and V1 fall within that scope; F5/F6 remain diagnostic with unresolved spatial sensitivity. The v0.5.6 numerical source, configuration, arrays, diagnostics, plots and video are unchanged. The Markov DTRW core is unchanged from v0.4.1.
 
-[Figures](#focused-numerical-outputs) · [Reproduce](#reproduce) · [Assessment](#v056-result) · [Algorithm](provenance/ALGORITHM.md) · [Supplement](provenance/supplement-v0.5.6.pdf) · [Sources](provenance/SOURCES.md)
+[Figures](#focused-numerical-outputs) · [Reproduce](#reproduce) · [Assessment](#accepted-finite-grid-result) · [Algorithm](provenance/ALGORITHM.md) · [Supplement](provenance/supplement-v0.6.0.pdf) · [Sources](provenance/SOURCES.md)
 
 Two densities evolve in operational time by nearest-neighbour diffusion, cancellation and symmetric reaction. Aggressive executions initiate causal opposite-side replenishment. Total pending stock sets placement width; signed pending stock sets its centre. Inward density thresholds define the observed bid, ask, log midpoint and spread. A buy consumes ask liquidity and initiates bid replenishment; a sell consumes bid liquidity and initiates ask replenishment.
 
@@ -24,11 +24,11 @@ Two densities evolve in operational time by nearest-neighbour diffusion, cancell
 
 ![Event-time paths and autocorrelations](figures/autocorrelations-v0.5.6.png)
 
-**F5. Paths and ACFs.** First 512 retained events of seed 41001; then true signs, midpoint increments, execution-log-price increments, their absolute increments and spread. Coloured curves average eight paths of 8192 retained events after 2048 burn events, comparing order splitting/moving, independent signs/moving and the same splitting tapes/fixed placement. Bands are descriptive mean ± two between-path standard errors. Dashed sign reference: exact finite-cap stationary renewal benchmark. Coloured curves use dx=0.05, du=0.001. Black midpoint/spread curves compare two matched full tapes at dx=0.025/0.0125, common du=0.0000625; they have no ensemble band. These remain diagnostic, not accepted limiting laws.
+**F5. Diagnostic paths and ACFs.** First 512 retained events of seed 41001; then true signs, midpoint increments, execution-log-price increments, their absolute increments and spread. Coloured curves average eight paths of 8192 retained events after 2048 burn events, comparing order splitting/moving, independent signs/moving and the same splitting tapes/fixed placement. Bands are descriptive mean ± two between-path standard errors. Dashed sign reference: exact finite-cap stationary renewal benchmark. Coloured curves use dx=0.05, du=0.001. Black midpoint/spread curves compare two matched full tapes at dx=0.025/0.0125, common du=0.0000625; they have no ensemble band. These remain diagnostic, not accepted limiting laws.
 
 ![Cross-correlations](figures/cross-correlations-v0.5.6.png)
 
-**F6. Cross-correlations.** Same paths and uncertainty convention. Positive lag means the first observable leads the second. Signed sign/spread-change and midpoint/spread-change correlations can cancel under buy/sell symmetry; magnitude/spread correlations address a different question. Correlation does not establish causality.
+**F6. Diagnostic cross-correlations.** Same paths and uncertainty convention. Spatial sensitivity remains unresolved. Positive lag means the first observable leads the second. Signed sign/spread-change and midpoint/spread-change correlations can cancel under buy/sell symmetry; magnitude/spread correlations address a different question. Correlation does not establish causality.
 
 [![Video preview](figures/video-poster-v0.5.6.png)](figures/density-v0.5.6.mp4)
 
@@ -61,7 +61,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Install FFmpeg with libx264 and add it to PATH
 if ($LASTEXITCODE -ne 0) { throw 'Reproduction failed' }
 ```
 
-The command runs 29 focused tests, 24 numerical assessment cases, 51 market-maker comparisons, 26 benchmark paths plus four common-step resolution paths, and the four main pilot/control trajectories, then produces all figures and the video. A repeat uses the same command. `python scripts/run_all.py --render-only` verifies the configuration/code/data hashes and redraws from saved states without solving. `python scripts/run_all.py --diagnose-only` verifies the saved inputs/data and exactly reproduces the bounded operator diagnosis and paper audit without evolving a path. `python scripts/run_all.py --refine-only` verifies saved inputs/data, repeats the six registered v0.5.4 finite refinement paths, and requires exact reproduction of the assessment arrays and comparison report. It preserves the inherited paths. `python scripts/run_all.py --controls-only` verifies saved inputs/data, independently repeats all 12 targeted control refinements and their comparison report, and requires exact output identity. The 39 inherited controls are preserved. A changed dynamical input requires the complete route. The tested runtime is Python 3.12.14, NumPy 2.3.5 and Matplotlib 3.10.8 on Linux; Windows execution remains a later milestone.
+The command runs 29 focused tests, 24 numerical assessment cases, 51 market-maker comparisons, 26 benchmark paths plus four common-step resolution paths, and the four main pilot/control trajectories, then produces all figures and the video. A repeat uses the same command. `python scripts/run_all.py --render-only` verifies the configuration/code/data hashes and redraws from saved states without solving. `python scripts/run_all.py --diagnose-only` verifies the saved inputs/data and exactly reproduces the bounded operator diagnosis and paper audit without evolving a path. `python scripts/run_all.py --refine-only` verifies saved inputs/data, repeats the six registered v0.5.4 finite refinement paths, and requires exact reproduction of the assessment arrays and comparison report. It preserves the inherited paths. `python scripts/run_all.py --controls-only` verifies saved inputs/data, independently repeats all 12 targeted control refinements and their comparison report, and requires exact output identity. The 39 inherited controls are preserved. A changed dynamical input requires the complete route. The tested runtime is Python 3.12.14, NumPy 2.3.5 and Matplotlib 3.10.8 on Linux; Windows execution remains unconfirmed. For this documentation stage, reuse saved arrays and use only `--diagnose-only` and `--render-only` in a separate validation copy. The accepted S5 numerical programme is not rerun. Executable/package versions and numerical filenames remain v0.5.6 to preserve their exact source/configuration/data manifest. Historical pending wording in retained runner messages and generated reports describes the pre-acceptance state; the current interpretation is stated here and in the v0.6.0 supplement.
 
 ## Configuration and retained data
 
@@ -81,7 +81,7 @@ The density archive retains incoming/pre/post fields, actual removals and source
 
 The sign input is a stationary single-active-parent renewal benchmark with independent centred parent signs and capped integer lengths L=min(floor(2(1-U)^(-1/1.5)),512). The first parent is length-biased with uniform age. Child volume is 0.002 every 0.01 operational units; seeds 41001–41008. The exact sign reference is E[(L-k)+]/E[L]. It is not the full concurrent-parent LMF population, and no asymptotic exponent has been fitted or accepted.
 
-## v0.5.6 result
+## Accepted finite-grid result
 
 Twelve targeted balanced controls cross dx=0.00625/0.003125 at common du=0.00000390625, both source phases and both/fixed/width-only feedback. Time comparisons use the retained dx=0.00625, du=0.000015625 runs; space comparisons hold the new step fixed. The six alternating 0.05 children and horizon 8 are unchanged.
 
@@ -104,7 +104,7 @@ All new absolute-spread comparisons meet the unchanged 0.01 tolerance: **True**.
 
 All 12 runs satisfy the registered execution, initialization, field-budget, completion-ledger and placement checks. Maximum budget/ledger errors are 3.63e-15/6.19e-15. Each programme fills gross volume 0.3 with unfilled volume below 1e-12. Matched effects against fixed placement and their spatial differences are retained. Centre-only and interaction results remain at v0.5.5 resolution. The long-path correlation ensemble is unchanged.
 
-Numerical/scientific acceptance remains pending. Review the measured response accuracy before registering any further numerical extension; this stage adds no agent, source smoothing, memory or clock.
+The retained finite-grid mechanism and these matched market-maker comparisons are sufficiently resolved for qualitative and bounded quantitative claims of this reproducibility study. All six successive spatial response differences decrease: on-node both, width-only and fixed change from 0.01075360, 0.01075331 and 0.00339765 to 0.00439334, 0.00439206 and 0.00207844; between-node values change from 0.00598659, 0.00619008 and 0.00347890 to 0.00237775, 0.00272965 and 0.00207843. This does not prove a continuum limit or convergence order. Acceptance concerns the density-defined quoted spread/midpoint at retained resolution, balanced-flow comparisons and the distinct roles of total-pending width and signed-pending centre feedback. Centre-only and interaction results retain their earlier resolution; no new precision is assigned to them.
 
 ## Remaining numerical and modelling limits
 
@@ -112,7 +112,7 @@ The inherited directional refinement passes the 0.01 absolute-spread comparison 
 
 Two full-tape spatial refinements change midpoint and spread ACFs by up to 0.10340 and 0.12893. Fine-grid lag-one midpoint ACF is 0.636–0.651; whitening is not established. Trade-return statistics are less sensitive in those pairs, without a general convergence result. Frozen-operator diagnostics and a continuous execution-price reference separate some discretization effects; neither replaces the evolving solver. See the retained diagnosis and paper-audit outputs.
 
-The fields aggregate order activity with an order-level DTRW interpretation. Static sources do not specify chartist/fundamentalist strategies, and the present mechanism tests require no additional agent population. Total and signed pending stocks differ even under balanced gross activity. Opposite-side replenishment is a completion-equivalent source closure, not an explicit second executed leg or a dealer profit calculation. Exact accounting does not establish financial equilibrium. Positive Sigma0 is imposed, so this pilot does not establish spread emergence from zero standoff. One programme size supplies no square-root-impact exponent. Systematic spread-dependent meta-order response and impact remains future v1.1.0.
+The fields aggregate order activity with an order-level DTRW interpretation. Static sources do not specify chartist/fundamentalist strategies, and the present mechanism tests require no additional agent population. Total and signed pending stocks differ even under balanced gross activity. Opposite-side replenishment is a completion-equivalent source closure, not an explicit second executed leg or a dealer profit calculation. Exact accounting does not establish financial equilibrium. Positive Sigma0 is imposed, so this pilot does not establish spread emergence from zero standoff. The diagnostic paths establish neither an asymptotic LMF/SQLR law nor universal volatility clustering. One programme size supplies no square-root-impact exponent. Systematic spread-dependent meta-order response and impact remains future v1.1.0.
 
 ## DTRW compatibility and paper provenance
 

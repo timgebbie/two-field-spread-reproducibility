@@ -5,7 +5,7 @@
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 \usepackage{fancyhdr}
 \pagestyle{fancy}\fancyhf{}
-\lhead{Two Field Spread}\rhead{Algorithm supplement v0.5.6}
+\lhead{Two Field Spread}\rhead{Algorithm supplement v0.6.0}
 \cfoot{\thepage}\setlength{\headheight}{14pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
 \setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=4pt}
@@ -14,15 +14,16 @@
 \begin{document}
 \begin{center}
 {\Large\bfseries Two Field Spread: numerical algorithms}\par
-{\large v0.5.6 implementation and numerical assessment}\par
-1 October 2026
+{\large v0.6.0 documentation of the retained implementation}\par
+2 October 2026
 \end{center}
 {\small \textbf{Companion paper.} Christopher Angstmann, Derick Diana and Tim Gebbie, \emph{A Finite Bid--Ask Spread from Replenishment Displaced from the Quote}. Forthcoming preprint.}\par
 
 \textbf{Status.} The Markov solver, execution tape and long-run diagnostic correlations are
-implemented and tested. Numerical convergence and scientific acceptance
-remain pending; fractional transport and calendar subordination are future work. This draft describes the actual
-software; it does not amend the supplied theory paper or letter.
+implemented and tested. The finite-grid mechanism and matched market-maker
+comparisons are accepted at retained resolution; F5/F6 remain diagnostic.
+Continuum convergence is not established. This supplement describes the
+unchanged v0.5.6 numerical implementation and does not amend either manuscript.
 
 \section{Model, agents and the inherited numerical construction}
 The state is two nonnegative densities, $\rho_B(x_j,u_n)$ and
@@ -166,7 +167,7 @@ claim is available from this run.
 
 \section{Algorithm 3: lagged correlation}
 The estimator and the registered long-run protocol below are implemented.
-The resulting correlations remain diagnostic pending numerical acceptance. For aligned finite series $X,Y$, define
+F5/F6 remain diagnostic because their spatial sensitivity is unresolved. For aligned finite series $X,Y$, define
 \[
  \widehat C_{XY}(k)=
  \frac{\sum_{n\in I_k}(X_n-\bar X_k)(Y_{n+k}-\bar Y_k)}
@@ -290,8 +291,14 @@ are retained; centre-only and nonlinear interaction stay at their prior resoluti
 No long ensemble is recomputed. Earlier full-tape spatial refinements changed
 midpoint/spread ACFs by 0.10340/0.12893; fine lag-one midpoint ACF was
 0.636--0.651. Whitening and limiting impact laws remain unestablished.
-Review measured response accuracy before registering another extension.
-Numerical/scientific acceptance remains open.
+The finite-grid mechanism, density-defined quotes and matched balanced-flow
+comparisons are accepted for qualitative and bounded quantitative interpretation.
+Total pending stock controls width; signed pending stock controls centre.
+Centre-only and interaction retain v0.5.5 resolution. All six successive spatial
+response differences decrease; no continuum limit or convergence order follows.
+No response tolerance is introduced. F2/F3/F4/V1 retain their stated limits;
+F5/F6 remain diagnostic. No asymptotic LMF/SQLR law, universal volatility
+clustering, square-root impact or dealer-profit equilibrium is established.
 
 \textbf{Paper and lineage.} Retain the supplied long paper v1.1.9 and current SpreadLetter v1.2.0.
 The letter authors are Christopher Angstmann, Derick Diana and Tim Gebbie. Reaction price differs

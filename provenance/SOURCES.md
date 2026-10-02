@@ -66,3 +66,9 @@ The supplement corrects a reversed verbal description: aggressive buys consume a
 ## v0.5.6 response refinement
 
 Twelve targeted controls refine time and space with the same production worker and source geometry. All 39 inherited control arrays and numerical summaries remain exact. The six unaffected NPZ archives and 17 CSV tapes are byte-identical to v0.5.5 under the active versioned names. F4 displays the finer grid with both/fixed/width-only settings; centre-only and interaction comparisons remain retained at their previous resolution. No mathematical formulation, long ensemble, agent, memory law or clock is added.
+
+## v0.6.0 documentation and accepted interpretation
+
+The scientific parent is v0.5.6, commit `47bc56d20b03e6c90d33ca9727902ff0d33017cf`. Its numerical source/configuration, arrays, diagnostic reports, figure/video bytes and original manuscript identities are retained unchanged. Numerical filenames and executable/package versions remain v0.5.6; v0.6.0 identifies the consolidated README, algorithm qualifications and supplement. Historical pending wording in immutable generated reports is not rewritten.
+
+The finite-grid two-density mechanism and matched market-maker comparisons are accepted for qualitative and bounded quantitative claims at the retained resolution. All new absolute-spread comparisons meet the unchanged 0.01 tolerance; no response tolerance is introduced. All six successive spatial response differences decrease, without establishing continuum limit or convergence order. F2/F3/F4/V1 retain their existing limits. Centre-only/interaction remain at v0.5.5 resolution. F5/F6 remain diagnostic with unresolved spatial sensitivity. No model, equation, tolerance, agent, source smoothing, transport memory or clock is changed. Private acceptance and recovery records remain outside this scientific tree.
