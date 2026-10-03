@@ -1,0 +1,23 @@
+% Minimal algorithm layout, using only the standard list and float packages.
+\floatstyle{ruled}
+\newfloat{algorithm}{htbp}{loa}
+\floatname{algorithm}{Algorithm}
+\newcounter{algline}
+\newcounter{algdepth}
+\newcommand{\algorithmicrequire}{\textbf{Input:}}
+\newcommand{\algorithmicensure}{\textbf{Output:}}
+\let\algrenewcommand\renewcommand
+\newenvironment{algorithmic}[1][]{%
+\setcounter{algline}{0}\setcounter{algdepth}{0}%
+\begin{list}{}{\setlength{\leftmargin}{2.1em}\setlength{\labelwidth}{1.6em}\setlength{\labelsep}{.5em}\setlength{\itemsep}{.12em}\setlength{\parsep}{0pt}\setlength{\topsep}{.4em}}%
+}{\end{list}}
+\newcommand{\State}{\stepcounter{algline}\item[\scriptsize\arabic{algline}:]\hspace*{\value{algdepth}em}}
+\newcommand{\Require}{\item[]\algorithmicrequire\ }
+\newcommand{\Ensure}{\item[]\algorithmicensure\ }
+\newcommand{\ForAll}[1]{\State\textbf{for all} #1 \textbf{do}\stepcounter{algdepth}}
+\newcommand{\For}[1]{\State\textbf{for} #1 \textbf{do}\stepcounter{algdepth}}
+\newcommand{\If}[1]{\State\textbf{if} #1 \textbf{then}\stepcounter{algdepth}}
+\newcommand{\Else}{\addtocounter{algdepth}{-1}\State\textbf{else}\stepcounter{algdepth}}
+\newcommand{\EndFor}{\addtocounter{algdepth}{-1}}
+\newcommand{\EndIf}{\addtocounter{algdepth}{-1}}
+

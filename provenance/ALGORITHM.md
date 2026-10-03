@@ -1,6 +1,6 @@
 # Numerical algorithm v0.5.6
 
-[Compiled supplementary algorithms](supplement-v0.5.6.pdf) ([LaTeX source](supplement-v0.5.6.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. Scientific acceptance and future memory/clock extensions remain pending.
+[Compiled supplementary algorithms](../supplementary-materials/SUPPLEMENTARY-MATERIAL-v1.0.0-rc1.pdf) ([LaTeX source](../supplementary-materials/SUPPLEMENTARY-MATERIAL-v1.0.0-rc1.tex)) describe the implemented field update, execution tape, stationary renewal input and diagnostic correlations. The core equations and core source are unchanged from v0.4.1; grids and experiment inputs are explicit in the current configuration. The finite-grid spread comparisons are accepted within the limits below; F5/F6 remain diagnostic. Transport memory and calendar clocks remain future extensions.
 
 Rows are bid then ask. The uniform coordinate is log price x; du is operational time per numerical update. Interior density values represent volume per log-price and each carries quadrature weight dx. Endpoint values are fixed reservoirs and are excluded from the interior standing-volume sum.
 

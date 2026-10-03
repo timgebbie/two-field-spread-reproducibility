@@ -41,7 +41,7 @@ The matched reaction-free, cancellation-free interior operator agrees within 2.3
 - [Lillo, Mike and Farmer](https://arxiv.org/abs/cond-mat/0412708): persistent signs from order splitting with heavy-tailed parent sizes. This supplies a conditional order-flow benchmark, not a result already demonstrated by the current simulation.
 - [Donier et al.](https://arxiv.org/abs/1412.0141): reduced reaction-diffusion impact limits. A future scaling comparison must establish its applicable regime; it is not guaranteed by sharing a DTRW lineage.
 
-The uploaded long-paper bibliography has mixed CAM title/year/volume metadata; this supplement uses the publisher DOI metadata above. The uploaded manuscripts remain byte-for-byte unchanged. The new draft is an algorithm specification and experiment design, not scientific acceptance of numerical agreement with their limiting analysis.
+The uploaded long-paper bibliography has mixed CAM title/year/volume metadata; this supplement uses the publisher DOI metadata above. The uploaded manuscripts remain byte-for-byte unchanged. The computational supplement specifies the implemented algorithms and retained experiments. The accepted finite-grid interpretation does not establish numerical agreement with a continuum limit.
 
 ## Retained numerical lineage and current audit
 
@@ -72,3 +72,7 @@ Twelve targeted controls refine time and space with the same production worker a
 The scientific parent is v0.5.6, commit `47bc56d20b03e6c90d33ca9727902ff0d33017cf`. Its numerical source/configuration, arrays, diagnostic reports, figure/video bytes and original manuscript identities are retained unchanged. Numerical filenames and executable/package versions remain v0.5.6; v0.6.0 identifies the consolidated README, algorithm qualifications and supplement. Historical pending wording in immutable generated reports is not rewritten.
 
 The finite-grid two-density mechanism and matched market-maker comparisons are accepted for qualitative and bounded quantitative claims at the retained resolution. All new absolute-spread comparisons meet the unchanged 0.01 tolerance; no response tolerance is introduced. All six successive spatial response differences decrease, without establishing continuum limit or convergence order. F2/F3/F4/V1 retain their existing limits. Centre-only/interaction remain at v0.5.5 resolution. F5/F6 remain diagnostic with unresolved spatial sensitivity. No model, equation, tolerance, agent, source smoothing, transport memory or clock is changed. Private acceptance and recovery records remain outside this scientific tree.
+
+## v1.0.0 rc1 computational supplement
+
+The [accepted computational supplement](../supplementary-materials/SUPPLEMENTARY-MATERIAL-v1.0.0-rc1.pdf) and matching LaTeX source expand the model definitions, four pseudocode algorithms, parameter and evidence tables, and F2–F6/V1 discussion. Its structure and algorithm layout follow the correlation-emergence v2.2.0 supplement. The PDF and source retain the exact accepted revision of 3 October 2026. Numerical code, configuration, data and original figure/video files are unchanged. The v0.6.0 supplement remains a historical record. The formal v1.0.0 tag and release await the preprint.

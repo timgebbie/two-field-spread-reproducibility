@@ -10,8 +10,8 @@ Supplementary code and materials for:
 
 The supplementary-materials document is included here:
 
-> [Two Field Spread: numerical algorithms](provenance/supplement-v0.6.0.pdf)
-> ([LaTeX source](provenance/supplement-v0.6.0.tex)).
+> [Two Field Spread: computational supplement](supplementary-materials/SUPPLEMENTARY-MATERIAL-v1.0.0-rc1.pdf)
+> ([LaTeX source](supplementary-materials/SUPPLEMENTARY-MATERIAL-v1.0.0-rc1.tex)).
 
 This repository is a quantitative-finance reproducibility bundle. It implements
 bid and ask liquidity as separate densities on a log-price lattice and studies
@@ -341,7 +341,8 @@ fractional transport and calendar clocks remain future extensions.
 | `tests/` | Numerical update, accounting, observations and assessment checks |
 | `outputs/` | Saved states, execution tapes, correlations, refinement reports and hashes |
 | `figures/` | F2–F6 PDF/PNG pairs, V1 MP4 and poster |
-| `provenance/` | Computational supplement, source identities and equation-to-code mapping |
+| `supplementary-materials/` | Accepted computational supplement, matching LaTeX source and build instructions |
+| `provenance/` | Source identities, equation-to-code mapping and historical supplement |
 
 [`experiments-v0.5.6.json`](config/experiments-v0.5.6.json) is the sole active
 configuration. The density archive retains incoming/pre/post fields, removals
@@ -352,7 +353,7 @@ and the execution/field decomposition of midpoint increments.
 
 Scientific object versions remain in filenames where they identify accepted
 inputs and outputs. Numerical/package identities remain v0.5.6; the current
-supplement is v0.6.0. The v0.6.1 correction concerns recovery only. Earlier
+supplement is the accepted v1.0.0 rc1 document. The v0.6.1 correction concerns recovery only. Earlier
 scientific outputs remain in Git history.
 
 ## Installation
@@ -423,16 +424,19 @@ For selected numerical repeats, `--refine-only` repeats six registered finite
 refinement paths, while `--controls-only` repeats twelve targeted balanced
 controls and preserves the 39 inherited controls. Both require exact saved
 array/report reproduction. A changed dynamical input requires the complete
-route. Pending acceptance wording in retained executable messages describes
-the earlier development state; the scientific interpretation above and in
-the supplement is current.
+route. Historical status messages in the retained executables and reports
+predate acceptance; the finite-grid interpretation above and in the current
+supplement applies.
 
 ## Verification status
 
 In the controlled cloud environment, all 29 tests passed. Saved-data diagnoses,
 all five PNG/PDF figure pairs, V1, the poster and frame index reproduced
-exactly. The six-page supplement was compiled twice from its exact source,
-matched the retained PDF, and was visually inspected on all six pages.
+exactly. The historical six-page v0.6.0 supplement was reproduced during
+recovery. The accepted 19-page v1.0.0 rc1 supplement was compiled from its
+matching LaTeX source, checked for references and layout, and visually
+inspected on every page. Its figures retain the v0.5.6 bytes. See the
+[build instructions](supplementary-materials/BUILD.md).
 The verified runtime was Python 3.12.14, NumPy 2.3.5, Matplotlib 3.10.8,
 FFmpeg 6.1.1 with libx264, and pdfTeX 1.40.25 / TeX Live 2023.
 
@@ -448,7 +452,7 @@ inferred from the cloud checks. The finite-grid numerical comparisons and
 measurement conventions determine the scientific scope; regeneration alone
 does not establish a continuum limit or a statistical scaling law.
 
-## Version-control policy
+## Version history
 
 The development versions retain the scientific lineage:
 
@@ -457,8 +461,9 @@ The development versions retain the scientific lineage:
 | v0.0.0 | Minimal repository scaffold | Historical baseline |
 | v0.4.1 | Markov operator and measurement compatibility inspection | Core and component audit retained |
 | v0.5.6 | Targeted time/space refinement of balanced-flow response | Numerical source, data and figures retained |
-| v0.6.0 | Algorithm supplement and finite-grid interpretation | Current scientific documentation |
-| v0.6.1 | Recovery-helper correction | Same scientific/document snapshot |
+| v0.6.0 | Algorithm supplement and finite-grid interpretation | Historical supplement retained |
+| v0.6.1 | Recovery-helper correction | Verified recovery baseline |
+| v1.0.0 rc1 supplement | Expanded computational supplement, algorithms and evidence tables | Accepted documentation; numerical assets unchanged |
 | v1.0.0 | First formal release accompanying the preprint | Planned; no tag or release yet |
 
 The planned public asset is `two-field-spread-reproducibility-v1.0.0.zip`.
@@ -477,7 +482,7 @@ Suggested paper citation, pending the preprint identifier:
 | Item | Value |
 |---|---|
 | Associated paper | Forthcoming preprint |
-| Supplementary PDF | [Two Field Spread: numerical algorithms](provenance/supplement-v0.6.0.pdf) |
+| Supplementary PDF | [Two Field Spread: computational supplement](supplementary-materials/SUPPLEMENTARY-MATERIAL-v1.0.0-rc1.pdf) |
 | GitHub repository | [two-field-spread-reproducibility](https://github.com/timgebbie/two-field-spread-reproducibility) |
 | Software DOI | Not recorded in the current repository |
 | Code and supplementary-content licenses | Not yet declared in the current repository |
