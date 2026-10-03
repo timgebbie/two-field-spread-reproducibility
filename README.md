@@ -27,41 +27,42 @@ All experiments use declared synthetic inputs.
 [Reproduce](#reproducing-the-active-outputs) ·
 [Citation](#doi-citation-and-license)
 
-## Key figure: balanced-flow spread response
+## Key figure: density depletion and delayed replenishment
 
-![Figure F4: balanced-flow spread, midpoint and pending replenishment](figures/controls-v0.5.6.png)
+[![Video V1: density profiles, quoted spread and pending replenishment](figures/video-poster-v0.5.6.png)](figures/density-v0.5.6.mp4)
 
-**Figure F4. Spread response under balanced buying and selling.**
-Panels (a,d) show the change in quoted spread, (b,e) the change in log
-midpoint, and (c,f) total and signed pending replenishment in the moving case.
-The upper row places the initial supply edges on lattice nodes; the lower row
-places them between nodes. Blue curves use both width and centre feedback,
-grey dotted curves use fixed placement, and green dash-dotted curves use width
-feedback alone. Each programme contains six alternating buy/sell children of
-volume 0.05 at $u=1,1.4,1.8,2.2,2.6,3$, followed to $u=8$.
-Responses subtract each case's stationary initial value. The grid is
-$\Delta x=0.003125$, $\Delta u=0.00000390625$; corresponding columns have
-common axes, and pre/post-event values retain the execution jumps.
+**Video V1. The density trajectory through six aggressive executions.**
+[Watch the 24-second video](figures/density-v0.5.6.mp4).
+The upper panel shows bid density in blue, ask density in red and the relaxed
+initial field in grey. Dotted vertical lines mark the supply-placement edges
+$q_b,q_a$; dashed lines mark the observed density-threshold quotes $p_b,p_a$.
+The lower panels show quoted spread and total pending replenishment, with
+moving markers identifying the state displayed above. Six buy children of
+volume 0.05 arrive at $u=1,1.4,1.8,2.2,2.6,3$; the trajectory continues to
+$u=8$. The pilot uses $\Delta x=0.025$, $\Delta u=0.00025$, threshold 0.1
+and computational domain $[-12.0125,12.0125]$, with density profiles displayed
+on $[-8,8]$. Axes remain fixed throughout.
 
-Balanced signed flow can leave a substantial total pending stock. At these
-parameters, the spread response with width feedback alone closely follows the
-response with both feedbacks, while fixed placement gives a different
-relaxation. The figure makes the distinction between gross pending exposure
-and its signed imbalance visible. It does not assign additive causal shares
-to width and centre feedback.
+Consecutive pre/post-execution frames separate immediate ask-side consumption
+from the subsequent evolution of the fields. Each buy initiates pending
+bid-side replenishment. Old pending cohorts deliver supply before the field
+update; replenishment initiated by the current execution cannot complete in
+that same update. The pending stock affects the width and centre of supply
+placement, while the observed quotes are measured from the densities. The
+movie therefore connects local depletion, delayed supply and the changing
+quoted spread without identifying placement edges with executable quotes.
 
-The twelve targeted time/space comparisons meet the unchanged 0.01
-absolute-spread tolerance. Maximum baseline-subtracted spread-response
-differences are 0.00001486 for time and 0.00439334 for space; all six
-successive spatial response differences decrease. These support the retained
-finite-grid comparison without establishing a continuum limit or convergence
-order. No separate response tolerance is introduced.
-
-The [PDF export](figures/controls-v0.5.6.pdf),
-[saved control trajectories](outputs/market-maker-v0.5.6.npz) and
-[paired comparison report](outputs/control-comparisons-v0.5.6.json)
-accompany the supplement. Centre-only and interaction results remain available
-at their earlier resolution.
+Stored states are held between frames, with no interpolation across execution
+impulses. Playback seconds are a presentation coordinate, rather than a
+calendar-time model. The operational-time and phase labels, together with the
+[frame index](outputs/video-frames-v0.5.6.csv), identify every displayed state.
+The [density archive](outputs/density-v0.5.6.npz),
+[state series](outputs/moving-v0.5.6.csv) and
+[execution tape](outputs/moving-trades-v0.5.6.csv) retain the underlying values.
+F2 supplies selected snapshots and F3 the associated price and pending-stock
+series. F4 below tests the spread response under balanced buying and selling
+on a finer grid. V1 illustrates the finite buy programme; the matched controls
+and resolution comparisons provide the quantitative evidence.
 
 ## Current situation: v0.6.1
 
@@ -157,6 +158,42 @@ volume from an observed transaction. The [PDF](figures/timeseries-v0.5.6.pdf),
 [state series](outputs/moving-v0.5.6.csv) and
 [execution tape](outputs/moving-trades-v0.5.6.csv) provide the numerical values.
 
+### Figure F4: balanced-flow spread response
+
+![Figure F4: balanced-flow spread, midpoint and pending replenishment](figures/controls-v0.5.6.png)
+
+**Figure F4. Spread response under balanced buying and selling.**
+Panels (a,d) show the change in quoted spread, (b,e) the change in log
+midpoint, and (c,f) total and signed pending replenishment in the moving case.
+The upper row places the initial supply edges on lattice nodes; the lower row
+places them between nodes. Blue curves use both width and centre feedback,
+grey dotted curves use fixed placement, and green dash-dotted curves use width
+feedback alone. Each programme contains six alternating buy/sell children of
+volume 0.05 at $u=1,1.4,1.8,2.2,2.6,3$, followed to $u=8$.
+Responses subtract each case's stationary initial value. The grid is
+$\Delta x=0.003125$, $\Delta u=0.00000390625$; corresponding columns have
+common axes, and pre/post-event values retain the execution jumps.
+
+Balanced signed flow can leave a substantial total pending stock. At these
+parameters, the spread response with width feedback alone closely follows the
+response with both feedbacks, while fixed placement gives a different
+relaxation. The figure makes the distinction between gross pending exposure
+and its signed imbalance visible. It does not assign additive causal shares
+to width and centre feedback.
+
+The twelve targeted time/space comparisons meet the unchanged 0.01
+absolute-spread tolerance. Maximum baseline-subtracted spread-response
+differences are 0.00001486 for time and 0.00439334 for space; all six
+successive spatial response differences decrease. These support the retained
+finite-grid comparison without establishing a continuum limit or convergence
+order. No separate response tolerance is introduced.
+
+The [PDF export](figures/controls-v0.5.6.pdf),
+[saved control trajectories](outputs/market-maker-v0.5.6.npz) and
+[paired comparison report](outputs/control-comparisons-v0.5.6.json)
+accompany the supplement. Centre-only and interaction results remain available
+at their earlier resolution.
+
 ### Figure F5: order-flow memory and event-time autocorrelations
 
 ![Figure F5: executed paths and event-time autocorrelations](figures/autocorrelations-v0.5.6.png)
@@ -204,18 +241,6 @@ magnitude/spread correlations describe another aspect of dependence.
 Spatial sensitivity remains unresolved, and these correlations do not
 identify causal effects. The [PDF](figures/cross-correlations-v0.5.6.pdf) and
 [correlation archive](outputs/correlations-v0.5.6.npz) accompany F5.
-
-### Video V1: the density trajectory through executions
-
-[![Video V1: density-profile preview](figures/video-poster-v0.5.6.png)](figures/density-v0.5.6.mp4)
-
-**Video V1. Density profiles and market-maker state through the finite programme.**
-The [24-second video](figures/density-v0.5.6.mp4) follows the F2/F3 trajectory
-with fixed axes and operational-time/phase labels. Stored density states are
-held between frames. Each execution has consecutive pre/post frames, with
-no interpolation across the impulse. Video time is a presentation coordinate;
-the [frame index](outputs/video-frames-v0.5.6.csv) records the corresponding
-operational time and phase.
 
 ### DTRW and reaction-diffusion provenance
 
