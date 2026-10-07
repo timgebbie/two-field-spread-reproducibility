@@ -1,12 +1,12 @@
 # Two field spread reproducibility bundle
 
-Version: v0.6.1
+Version: v1.0.0
 
 Supplementary code and materials for:
 
 > Christopher Angstmann, Derick Diana and Tim Gebbie,
 > **“A Finite Bid–Ask Spread from Replenishment Displaced from the Quote.”**
-> Forthcoming preprint.
+> [arXiv:2610.07985](https://arxiv.org/abs/2610.07985) (2026).
 
 The supplementary-materials document is included here:
 
@@ -20,7 +20,7 @@ change the quoted spread. The code regenerates or verifies five selected
 figures, a profile video and the numerical evidence used in the supplement.
 All experiments use declared synthetic inputs.
 
-[Current situation](#current-situation-v061) ·
+[Current situation](#current-situation-v100) ·
 [Future situation](#future-situation-possible-extensions) ·
 [Scientific boundary](#scientific-boundary) ·
 [Provenance](#dtrw-and-reaction-diffusion-provenance) ·
@@ -64,7 +64,7 @@ series. F4 below tests the spread response under balanced buying and selling
 on a finer grid. V1 illustrates the finite buy programme; the matched controls
 and resolution comparisons provide the quantitative evidence.
 
-## Current situation: v0.6.1
+## Current situation: v1.0.0
 
 The current bundle separates the model into three operations:
 
@@ -464,24 +464,26 @@ The development versions retain the scientific lineage:
 | v0.6.0 | Algorithm supplement and finite-grid interpretation | Historical supplement retained |
 | v0.6.1 | Recovery-helper correction | Verified recovery baseline |
 | v1.0.0 rc1 supplement | Expanded computational supplement, algorithms and evidence tables | Accepted documentation; numerical assets unchanged |
-| v1.0.0 | First formal release accompanying the preprint | Planned; no tag or release yet |
+| v1.0.0 | First formal release accompanying arXiv:2610.07985 | Annotated tag published; GitHub release pending |
 
 The planned public asset is `two-field-spread-reproducibility-v1.0.0.zip`.
-Its tag and citation will be finalized after the preprint is public.
+The annotated `v1.0.0` tag identifies commit `6791615d9b82bbbb8e803b31086c69d1301aaca4`.
+The arXiv citation was added to the README after tagging; numerical assets are unchanged.
 Versioned scientific filenames are preserved rather than renamed solely to
 match a release number.
 
 ## DOI, citation and license
 
-Suggested paper citation, pending the preprint identifier:
+Suggested paper citation:
 
 > Angstmann, Christopher; Diana, Derick; Gebbie, Tim.
 > *A Finite Bid–Ask Spread from Replenishment Displaced from the Quote*.
-> Forthcoming preprint.
+> [arXiv:2610.07985](https://arxiv.org/abs/2610.07985) (2026).
 
 | Item | Value |
 |---|---|
-| Associated paper | Forthcoming preprint |
+| Associated paper | [arXiv:2610.07985](https://arxiv.org/abs/2610.07985) (2026) |
+| Paper DOI | [10.48550/arXiv.2610.07985](https://doi.org/10.48550/arXiv.2610.07985) |
 | Supplementary PDF | [Two Field Spread: computational supplement](supplementary-materials/SUPPLEMENTARY-MATERIAL-v1.0.0-rc1.pdf) |
 | GitHub repository | [two-field-spread-reproducibility](https://github.com/timgebbie/two-field-spread-reproducibility) |
 | Software DOI | Not recorded in the current repository |
